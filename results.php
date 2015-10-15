@@ -6,7 +6,7 @@ $data = new Spreadsheet_Excel_Reader("ctv_data.xls");
 error_reporting(E_ALL ^ E_NOTICE);
 
 
-
+$requesttimeout = 700;
 $submit_type = $_POST['submitValue'];
 
 if($submit_type == "single")
@@ -228,7 +228,6 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 //Compound not found in flat file, process through chembench
 if($chemBench)
 {
-  
   $smilesValue = $_POST['smilee'];
   $cutoff = 'cutoff=999';
   $url = "https://chembench.mml.unc.edu/makeSmilesPrediction?smiles=".$smilesValue."&cutoff=N/A&predictorIds=";
@@ -250,6 +249,7 @@ if($chemBench)
   curl_setopt($loginRequest, CURLOPT_URL, $loginUrl);
   curl_setopt($loginRequest, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($loginRequest, CURLOPT_COOKIEJAR, $cookieJar);
+  curl_setopt($loginRequest, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 
   $loginResult = curl_exec($loginRequest);
     if ($loginResult === false) {
@@ -275,16 +275,8 @@ if($chemBench)
     curl_setopt($REFD_CDK, CURLOPT_ENCODING, $REFD_CDK_url);
 	curl_setopt($REFD_CDK, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($REFD_CDK, CURLOPT_COOKIEFILE, $cookieJar);
+	curl_setopt($REFD_CDK, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$REFD_CDK);
-	/*
-	$REFD_ISIDA_predictorIDs = '27644';
-	$REFD_ISIDA_url = $url.$REFD_ISIDA_predictorIDs;
-    $REFD_ISIDA = curl_init();
-	curl_setopt($REFD_ISIDA, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($REFD_ISIDA, CURLOPT_URL, $REFD_ISIDA_url);
-    curl_setopt($REFD_ISIDA, CURLOPT_ENCODING, $REFD_ISIDA_url);
-    curl_setopt($REFD_ISIDA, CURLOPT_RETURNTRANSFER, 1);
-	curl_multi_add_handle($mh,$REFD_ISIDA); */
   }
   if($_POST['refConc'] == "true")
   {
@@ -296,17 +288,8 @@ if($chemBench)
     curl_setopt($RFC_CDK, CURLOPT_ENCODING, $RFC_CDK_url);
     curl_setopt($RFC_CDK, CURLOPT_RETURNTRANSFER, TRUE);
 	curl_setopt($RFC_CDK, CURLOPT_COOKIEFILE, $cookieJar); 
+	curl_setopt($RFC_CDK, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$RFC_CDK);
-	/*
-	$RFC_ISIDA_predictorIDs = '27632';
-	$RFC_ISIDA_url = $url.$RFC_ISIDA_predictorIDs;
-    $RFC_ISIDA = curl_init();
-	curl_setopt($RFC_ISIDA, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($RFC_ISIDA, CURLOPT_URL, $RFC_ISIDA_url);
-    curl_setopt($RFC_ISIDA, CURLOPT_ENCODING, $RFC_ISIDA_url);
-    curl_setopt($RFC_ISIDA, CURLOPT_RETURNTRANSFER, 1);
-	curl_multi_add_handle($mh,$RFC_ISIDA);*/
-    
   }
   if($_POST['oralSlope'] == "true")
   {
@@ -318,17 +301,8 @@ if($chemBench)
     curl_setopt($OSF_CDK, CURLOPT_ENCODING, $OSF_CDK_url);
 	curl_setopt($OSF_CDK, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($OSF_CDK, CURLOPT_COOKIEFILE, $cookieJar);
+	curl_setopt($OSF_CDK, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$OSF_CDK);
-	/*
-	$OSF_ISIDA_predictorIDs = '27620';
-	$OSF_ISIDA_url = $url.$OSF_ISIDA_predictorIDs;
-    $OSF_ISIDA = curl_init();
-	curl_setopt($OSF_ISIDA, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($OSF_ISIDA, CURLOPT_URL, $OSF_ISIDA_url);
-    curl_setopt($OSF_ISIDA, CURLOPT_ENCODING, $OSF_ISIDA_url);
-    curl_setopt($OSF_ISIDA, CURLOPT_RETURNTRANSFER, 1);
-	curl_multi_add_handle($mh,$OSF_ISIDA); */
-
   }
   if($_POST['ihalUnit'] == "true")
   {
@@ -340,17 +314,8 @@ if($chemBench)
     curl_setopt($IUR_CDK, CURLOPT_ENCODING, $IUR_CDK_url);
 	curl_setopt($IUR_CDK, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($IUR_CDK, CURLOPT_COOKIEFILE, $cookieJar);
+	curl_setopt($IUR_CDK, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$IUR_CDK);
-	/*
-	$IUR_ISIDA_predictorIDs = '27608';
-	$IUR_ISIDA_url = $url.$IUR_ISIDA_predictorIDs;
-    $IUR_ISIDA = curl_init();
-	curl_setopt($IUR_ISIDA, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($IUR_ISIDA, CURLOPT_URL, $IUR_ISIDA_url);
-    curl_setopt($IUR_ISIDA, CURLOPT_ENCODING, $IUR_ISIDA_url);
-    curl_setopt($IUR_ISIDA, CURLOPT_RETURNTRANSFER, 1);
-	curl_multi_add_handle($mh,$IUR_ISIDA); */
-
   }
   if($_POST['cancPot'] == "true")
   {
@@ -362,21 +327,9 @@ if($chemBench)
     curl_setopt($CPV_CDK, CURLOPT_ENCODING, $CPV_CDK_url);
 	curl_setopt($CPV_CDK, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($CPV_CDK, CURLOPT_COOKIEFILE, $cookieJar);
+	curl_setopt($CPV_CDK, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$CPV_CDK);
-	/*
-	$CPV_ISIDA_predictorIDs = '27596';
-	$CPV_ISIDA_url = $url.$CPV_ISIDA_predictorIDs;
-    $CPV_ISIDA = curl_init();
-	curl_setopt($CPV_ISIDA, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($CPV_ISIDA, CURLOPT_URL, $CPV_ISIDA_url);
-    curl_setopt($CPV_ISIDA, CURLOPT_ENCODING, $CPV_ISIDA_url);
-    curl_setopt($CPV_ISIDA, CURLOPT_RETURNTRANSFER, 1);
-	curl_multi_add_handle($mh,$CPV_ISIDA);*/
   }
-
-
-
-
   
   $active = null;
 //execute the handles
@@ -681,6 +634,7 @@ $file_location = $_POST['fileName'];
    curl_setopt($loginRequest, CURLOPT_URL, $loginUrl);
    curl_setopt($loginRequest, CURLOPT_RETURNTRANSFER, true);
    curl_setopt($loginRequest, CURLOPT_COOKIEJAR, $cookieJar);
+   curl_setopt($loginRequest, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 
    $loginResult = curl_exec($loginRequest);
    if ($loginResult === false) {
@@ -712,6 +666,7 @@ $file_location = $_POST['fileName'];
     curl_setopt($REFD_CDK[$i], CURLOPT_ENCODING, $REFD_CDK_url);
 	curl_setopt($REFD_CDK[$i], CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($REFD_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar); 
+	curl_setopt($REFD_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$REFD_CDK[$i]);
 	
 	$RFC_CDK_predictorIDs = '47685';
@@ -722,6 +677,7 @@ $file_location = $_POST['fileName'];
     curl_setopt($RFC_CDK[$i], CURLOPT_ENCODING, $RFC_CDK_url);
     curl_setopt($RFC_CDK[$i], CURLOPT_RETURNTRANSFER, TRUE);
 	curl_setopt($RFC_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar);
+	curl_setopt($RFC_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$RFC_CDK[$i]);
 
 	$OSF_CDK_predictorIDs = '47693';
@@ -732,6 +688,7 @@ $file_location = $_POST['fileName'];
     curl_setopt($OSF_CDK[$i], CURLOPT_ENCODING, $OSF_CDK_url);
 	curl_setopt($OSF_CDK[$i], CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($OSF_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar);
+	curl_setopt($OSF_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$OSF_CDK[$i]);
 
 	$IUR_CDK_predictorIDs = '47711';
@@ -742,6 +699,7 @@ $file_location = $_POST['fileName'];
     curl_setopt($IUR_CDK[$i], CURLOPT_ENCODING, $IUR_CDK_url);
 	curl_setopt($IUR_CDK[$i], CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($IUR_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar);
+	curl_setopt($IUR_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$IUR_CDK[$i]);
 
 	$CPV_CDK_predictorIDs = '47717';
@@ -752,6 +710,7 @@ $file_location = $_POST['fileName'];
     curl_setopt($CPV_CDK[$i], CURLOPT_ENCODING, $CPV_CDK_url);
 	curl_setopt($CPV_CDK[$i], CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($CPV_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar);
+	curl_setopt($CPV_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$CPV_CDK[$i]);
   
   $active = null;
