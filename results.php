@@ -244,14 +244,14 @@ if($chemBench)
   curl_setopt($loginRequest, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($loginRequest, CURLOPT_COOKIEJAR, $cookieJar);
   curl_setopt($loginRequest, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-    echo "Good so far.";
+    // echo "Good so far.";
 	
 	
 	
 	
 	
   $loginResult = curl_exec($loginRequest);
-  echo "Good so far.";
+  // echo "Good so far.";
     if ($loginResult === false) {
 		echo "what?";
       die(curl_error($loginRequest));
