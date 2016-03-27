@@ -2,18 +2,27 @@
 /* Excel reader setup to read from CTV flat file */
 //require_once 'Excel/reader.php';
 require_once 'Excel/excel_reader2.php';
+echo "This site is temporary out of service. <br>";
 $data = new Spreadsheet_Excel_Reader("ctv_data.xls");
 error_reporting(E_ALL ^ E_NOTICE);
+
+
 $requesttimeout = 700;
 $submit_type = $_POST['submitValue'];
+
 if($submit_type == "single")
 {
 $search_var=$_POST['compoundName'];  //Retrieve compound name from user
  $mol_Weight =$_POST['MolWeight']; //Retrieve molecular weight
  $chemBench = true;  //By default chembench is set to true, it becomes false if compound is found in flat file.
 // Process flat file
+echo "*";
+print_r($_POST);
 for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
-	if(strcasecmp($data->val($i,2), $search_var) ==0) {
+	// echo "# ";
+	if(strcasecmp($data->val($i,2), $search_var) ==0) {			// String comparison
+		// val() read values from an excell cell.
+		echo "#- ";
 	  $chemBench = false; //Compound is in flat file, don't make API call to chembench 
 	  echo '<link href="css/bootstrap.css" rel="stylesheet">';
 	  echo '<script type="text/javascript" src="js/customScript.js"></script>';
@@ -129,6 +138,7 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 	      echo'</td>';
           echo'</tr>';		  
 		}  
+
 	 if($_POST['ihalUnit'] == "true")
 	 {    
 	      $col = 34;
@@ -219,10 +229,12 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
      	 
     }
 }
+
 //*******************************************************************************************************************************************************//
 //Compound not found in flat file, process through chembench
-if($chemBench)
-{
+echo "<br>This compound was not found.<br>";
+if($chemBench){
+  echo "Going ChemBench <br>";
   $smilesValue = $_POST['smilee'];
   $cutoff = 'cutoff=999';
   $url = "https://chembench.mml.unc.edu/makeSmilesPrediction?smiles=".$smilesValue."&cutoff=N/A&predictorIds=";
@@ -230,6 +242,7 @@ if($chemBench)
   $mh = curl_multi_init();
   //login into chembench
   $useDev = false;
+
   $devSuffix = ($useDev === true ? '-dev' : '');
   $username = 'soidowu';
   $password = '5uns939r';
@@ -239,22 +252,112 @@ if($chemBench)
   $loginUrl = $baseUrl . "login?username={$username}&password={$password}";
   $loginRequest = curl_init();
   curl_setopt($loginRequest, CURLOPT_SSL_VERIFYPEER, false);
-  curl_setopt($loginRequest, CURLOPT_SSL_VERIFYHOST, false);
-  curl_setopt($loginRequest, CURLOPT_URL, $loginUrl);
-  curl_setopt($loginRequest, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($loginRequest, CURLOPT_COOKIEJAR, $cookieJar);
-  curl_setopt($loginRequest, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-    echo "Good so far.";
-	
-	
-	
-	
-	
+  curl_setopt($loginRequest, CURLOPT_SSL_VERIFYPEER, false);
+  // curl_setopt($loginRequest, CURLOPT_SSL_VERIFYHOST, false);
+  // curl_setopt($loginRequest, CURLOPT_URL, $loginUrl);
+  curl_setopt($loginRequest, CURLOPT_URL, "https://chembench.mml.unc.edu/");
+  // curl_setopt($loginRequest, CURLOPT_RETURNTRANSFER, true);
+  // curl_setopt($loginRequest, CURLOPT_COOKIEJAR, $cookieJar);
+  // curl_setopt($loginRequest, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
+  
+  echo '$loginUrl = '. $loginUrl. "<br>";
+  echo '$loginRequest = '. $loginRequest. "<br>";
+  
+  
+  /*
+  $url = "https://chembench.mml.unc.edu/";
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  2);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+$data = curl_exec($ch);
+curl_close($ch);
+
+echo '$data = '. $data. '<br>';
+  
+*/  
+  
+  
+  
+  
+
+  
+  // Initialize session and set URL.
+$ch = curl_init();
+$url =  "https://example.com/";
+$url =  "https://mail.google.com/mail/u/0/#inbox";
+$url =  "https://chembench.mml.unc.edu/";
+// $url =  "https://connectcarolina.unc.edu/";
+// $url =  "https://sso.unc.edu/idp/Authn/UserPassword";
+
+curl_setopt($ch, CURLOPT_URL, $url);
+
+// Set so curl_exec returns the result instead of outputting it.
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    
+// Get the response and close the channel.
+$response = curl_exec($ch);
+
+
+    if ($response) {
+	  echo "Connected! :) <br>";
+     }
+
+// echo '$response = '. $response. " aa<br>";
+curl_close($ch);
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /*
+  $ch = curl_init();
+
+// set URL and other appropriate options
+curl_setopt($ch, CURLOPT_URL, "http://www.example.com/");
+curl_setopt($ch, CURLOPT_HEADER, false);
+
+// grab URL and pass it to the browser
+curl_exec($ch);
+
+// close cURL resource, and free up system resources
+curl_close($ch);
+  
+  */
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
   $loginResult = curl_exec($loginRequest);
-  echo "Good so far.";
     if ($loginResult === false) {
-		echo "what?";
+	  echo '$loginResult = '. $loginResult. "<br>";
       die(curl_error($loginRequest));
+	  echo "Died? <br>";
      }
    curl_close($loginRequest);
   //end of login
@@ -337,6 +440,7 @@ if($chemBench)
 do {
     $mrc = curl_multi_exec($mh, $active);
 } while ($mrc == CURLM_CALL_MULTI_PERFORM);
+
 while ($active && $mrc == CURLM_OK) {
     if (curl_multi_select($mh) != -1) {
         do {
@@ -353,6 +457,8 @@ while ($active && $mrc == CURLM_OK) {
 }
 //$results = curl_multi_getcontent($REFD_CDK);
 //print_r($results);
+
+
           if($_POST['refDose'] == "true")
           {
 		     if(curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE) == 500)  //|| (curl_getinfo($REFD_ISIDA, CURLINFO_HTTP_CODE) == 500))
@@ -364,8 +470,10 @@ while ($active && $mrc == CURLM_OK) {
 			  
              $rdfs_cdk = curl_multi_getcontent($REFD_CDK);
              //$rdfs_isida = curl_multi_getcontent($REFD_ISIDA);
+
              $rdfs_cdk = explode('&',$rdfs_cdk);
              //$rdfs_isida = explode('&',$rdfs_isida);
+
              $results = explode('RfDs_RF_CDK', $rdfs_cdk[1]);
              //$resultss = explode('RfDs_CTV_RF_ISIDA', $rdfs_isida[2]);
              $rdfs_cdk = $results[1];
@@ -383,6 +491,7 @@ while ($active && $mrc == CURLM_OK) {
              echo'<tr><td>LogMole +/- SD';
 			 echo'</td><td class="ui-helper-center">';
 			 echo 'mg/kg-day</td>';
+
 		     echo'</tr>';
 		     echo'<tr>';
 		     echo'<td bgcolor="#56A0D3">';
@@ -404,6 +513,7 @@ while ($active && $mrc == CURLM_OK) {
 			 else{
              $rconc_cdk = curl_multi_getcontent($RFC_CDK);
              //$rconc_isida = curl_multi_getcontent($RFC_ISIDA);
+
              $rconc_cdk = explode('&',$rconc_cdk);
 			 //$rconc_isida = explode('&',$rconc_isida);
 			 
@@ -419,15 +529,18 @@ while ($active && $mrc == CURLM_OK) {
 			 $MolWe = sprintf("%.2e",(pow(10, $nrconc_final) * 1000 * $mol_Weight));
 			 $SD = sprintf("%.2e",(pow(10, 1.08) * 1000 * $mol_Weight));
 			 $rconc_final = round($rconc_final, 2);
+
 		     echo'<tr><td><B> CTV Reference Concentration </B></td></tr>';
              echo'<tr><td>LogMole +/- SD';
 		     echo'</td><td class="ui-helper-center">mg/m<sup>3</sup></td>';
+
 		     echo'</tr>';
 		     echo'<tr>';
 		     echo'<td bgcolor="#56A0D3">';
              echo"$rconc_final  +/-  1.08</td>";
 		     echo'<td bgcolor="#56A0D3">';
 			 echo"$MolWe  +/-  $SD</td>";
+
              echo'</tr>';		
             }			 
           }
@@ -442,10 +555,13 @@ while ($active && $mrc == CURLM_OK) {
 			 else{
 		     $oral_cdk = curl_multi_getcontent($OSF_CDK);
              //$oral_isida = curl_multi_getcontent($OSF_ISIDA);
+
              $oral_cdk = explode('&',$oral_cdk);
              //$oral_isida = explode('&',$oral_isida);
+
              $results = explode('OSF_RF_CDK', $oral_cdk[1]);
              //$resultss = explode('OSFs_CTV_RF_ISIDA', $oral_isida[2]);
+
 			 
 			 $oral_cdk = $results[1];
 			 $oral_cdk = (float)substr($oral_cdk, 41);
@@ -479,8 +595,10 @@ while ($active && $mrc == CURLM_OK) {
 			 else{
              $inhal_cdk = curl_multi_getcontent($IUR_CDK);
              //$inhal_isida = curl_multi_getcontent($IUR_ISIDA);
+
              $inhal_cdk = explode('&',$inhal_cdk);
              //$inhal_isida = explode('&',$inhal_isida);
+
              $results = explode('IUR_RF_CDK', $inhal_cdk[1]);
              //$resultss = explode('IURs_CTV_RF_ISIDA', $inhal_isida[2]);
 			 
@@ -515,8 +633,10 @@ while ($active && $mrc == CURLM_OK) {
 			 else{
              $canc_cdk = curl_multi_getcontent($CPV_CDK);
              //$canc_isida = curl_multi_getcontent($CPV_ISIDA);
+
              $canc_cdk = explode('&',$canc_cdk);
              //$canc_isida = explode('&',$canc_isida);
+
              $results = explode('CPV_RF_CDK', $canc_cdk[1]);
              //$resultss = explode('CPVs_CTV_RF_ISIDA', $canc_isida[2]);
              $canc_cdk = $results[1];
@@ -566,6 +686,7 @@ while ($active && $mrc == CURLM_OK) {
                 }
 		  
 		  }
+
 }
 }
 else
@@ -599,14 +720,18 @@ $file_location = $_POST['fileName'];
    
    ///login
    $useDev = false;
+
    $devSuffix = ($useDev === true ? '-dev' : '');
    $username = 'soidowu';
    $password = '5uns939r';
    //$cookieJar = '/tmp/cookie.txt';
    $cookieJar = __DIR__ . "/cookie.txt";
+
+
    $baseUrl = "https://chembench{$devSuffix}.mml.unc.edu/";
    $loginUrl = $baseUrl . "login?username={$username}&password={$password}";
    $predictionUrl = $baseUrl . "/makeSmilesPrediction?smiles=".$smilesValue."&cutoff=N/A&predictorIds=".$predictorids;
+
    $loginRequest = curl_init();
    curl_setopt($loginRequest, CURLOPT_SSL_VERIFYPEER, false);
    curl_setopt($loginRequest, CURLOPT_SSL_VERIFYHOST, false);
@@ -614,6 +739,7 @@ $file_location = $_POST['fileName'];
    curl_setopt($loginRequest, CURLOPT_RETURNTRANSFER, true);
    curl_setopt($loginRequest, CURLOPT_COOKIEJAR, $cookieJar);
    curl_setopt($loginRequest, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
+
    $loginResult = curl_exec($loginRequest);
    if ($loginResult === false) {
        die(curl_error($loginRequest));
@@ -629,10 +755,12 @@ $file_location = $_POST['fileName'];
    $j = 0;
    $cbreturn = array();
    $properties = array();
+
    
    for($i = 0; $i<10; $i++)
    {
     $url = "https://chembench.mml.unc.edu/makeSmilesPrediction?smiles=".$compound[$i]."&cutoff=N/A&predictorIds=";
+
 	
 	$REFD_CDK_predictorIDs = '47675';
 	$REFD_CDK_url = $url.$REFD_CDK_predictorIDs;
@@ -655,6 +783,7 @@ $file_location = $_POST['fileName'];
 	curl_setopt($RFC_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar);
 	curl_setopt($RFC_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$RFC_CDK[$i]);
+
 	$OSF_CDK_predictorIDs = '47693';
 	$OSF_CDK_url = $url.$OSF_CDK_predictorIDs;
     $OSF_CDK[$i] = curl_init();
@@ -665,6 +794,7 @@ $file_location = $_POST['fileName'];
 	curl_setopt($OSF_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar);
 	curl_setopt($OSF_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$OSF_CDK[$i]);
+
 	$IUR_CDK_predictorIDs = '47711';
 	$IUR_CDK_url = $url.$IUR_CDK_predictorIDs;
     $IUR_CDK[$i] = curl_init();
@@ -675,6 +805,7 @@ $file_location = $_POST['fileName'];
 	curl_setopt($IUR_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar);
 	curl_setopt($IUR_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$IUR_CDK[$i]);
+
 	$CPV_CDK_predictorIDs = '47717';
 	$CPV_CDK_url = $url.$CPV_CDK_predictorIDs;
     $CPV_CDK[$i] = curl_init();
@@ -691,6 +822,7 @@ $file_location = $_POST['fileName'];
 do {
     $mrc = curl_multi_exec($mh, $active);
 } while ($mrc == CURLM_CALL_MULTI_PERFORM);
+
 while ($active && $mrc == CURLM_OK) {
     if (curl_multi_select($mh) != -1) {
         do {
@@ -705,6 +837,7 @@ while ($active && $mrc == CURLM_OK) {
 		}
 	
 }
+
 $j = 0;
   if($_POST['refDose'] == "true")
   {
@@ -717,6 +850,7 @@ $j = 0;
 	$properties[$i][$j] = "Ref Dose (logmole)"; //put all table properties in an array
 	$j++;
    }
+
    if($_POST['refConc'] == "true")
    {
 	$results = curl_multi_getcontent($RFC_CDK[$i]);
@@ -767,7 +901,9 @@ $j = 0;
    $columns = $j;
   
    
+
 }	
+
 echo '<script type="text/javascript" src="js/customScript.js"></script>';
 echo'<table id="compResults" BORDER="1">';
 echo'<tr>';
@@ -796,6 +932,7 @@ for($p = 0; $p < 10; $p++)
   echo'</tr>';
 }
 echo'</table><br>';
+
 		  echo' <p align="left">';
 	      echo'<input type="button" onclick="$(';
 	      echo"'#compResults').table2CSV()";
@@ -804,5 +941,6 @@ echo'</table><br>';
  unlink($file_location);  
    
    //****************************************************//
+
 }
 ?>

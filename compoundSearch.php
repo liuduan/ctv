@@ -1,8 +1,9 @@
 <?php
- 
+header("Access-Control-Allow-Origin: *");
 /////////////////////////////////////
 /** define the SOAP client using the url for the service**/
  
+// echo "From compoundsearch.php.";
 
 $SoapiClient = new soapclient('http://www.chemspider.com/Search.asmx?WSDL', array('trace' => 1));
 
@@ -25,7 +26,9 @@ $thearray = array('query' => $query,
 $result = $SoapiClient->SimpleSearch($thearray);
  
 /** a quick test **/
- 
+
+// echo "From compoundsearch.php";
+
 if (is_soap_fault($result) || ($result->SimpleSearchResult->int == null)):
 echo "<h1>No Information was found on $query </h1><pre></pre>";
 

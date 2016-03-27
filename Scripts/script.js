@@ -1,15 +1,18 @@
 $(document).ready(
     function() {
         $('#compoundSearch').click(function() {
+			// alert("compoundSearch clicked, compoundName: "+ $('#compoundNames').val());
             $('#ctvInfo').hide();
             $('#step1').hide();
             $('#result').hide();
             $('#spinner').show();
 			$('#step2').show();
-            $.post("compoundSearch.php", {
+            $.post("http://toxvalue.org/compoundSearch.php", {
+			// $.post("http://toxvalue.org/cookie.txt", {
                     compoundName: $('#compoundNames').val()
                 },
                 function(data) {
+					// alert("got data");
                     $('#spinner').hide(),
                         $('#ctvInfo').replaceWith(data),
                         $('#select_check').css("display", "block");
