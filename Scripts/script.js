@@ -114,7 +114,7 @@ $(document).ready(
                     cancPot: $('#Canc_pot').is(":checked"),
                     noael: $('#NOAEL').is(":checked"),
                     onbd: $('#ONBD').is(":checked"),
-                    ocbd: $('#ocbd').is(":checked"),
+                    ocbd: $('#OCBD').is(":checked"),
                     smilee: $('#smiles').text(),
                     CompoundImage: $('#compoundImage').text()
 
@@ -172,6 +172,10 @@ $(document).ready(
             });
         });
 
+		$('#Contact').click(function() {
+			$( "#Contact_dialog" ).dialog({autoOpen: true, position: ['right','top'], 
+				width:'400',});
+			});
 
         $("#dialog").dialog({
             autoOpen: false,
@@ -189,3 +193,4 @@ $(document).ready(
         });
 
     });
+	

@@ -8,6 +8,12 @@
     <meta name="author" content="">
 
     <title>CTV demo </title>
+    
+    <script type="text/javascript">
+     <!--
+      window.location = "http://52.24.231.219/6-CTV/index-catch.php"
+     //-->
+    </script>
 
     <script type="text/javascript" src="Scripts/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.form.js"></script>
@@ -43,11 +49,14 @@
                 $('#file_check').css("display", "block");
             });
         });
+		
+		
     </script>
 
 </head>
 
 <body>
+
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -59,13 +68,9 @@
         <li class="active"><a href="http://toxvalue.org/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li id="Contact"><a href="#"><span class="glyphicon glyphicon-phone-alt"></span> Contact</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-phone-alt"></span> Contact</a></li>
         <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
-         <div style="visibility: hidden">
-			<div id="Contact_dialog" title="Contact Information">
-  				<p>For any questions or to be notified of future updates to ToxValue.org, please send an email to <a href="mailto:conditionaltoxvalue@gmail.com" target="_blank">conditionaltoxvalue@gmail.com</a>.</p>
-			</div>
-          </div>
+        
       </ul>
     </div>
   </div>
@@ -81,7 +86,6 @@
 		 <div id="spinner" class="spinner" style="display:none;">
                 <p align="center">
                     <img id="img-spinner" src="images/ajax-loader.gif" alt="Loading" />
-                    Please wait, the analysis may last up to 2 minutes.
                 </p>
          </div>
         
@@ -94,7 +98,7 @@
 						<div class="row">
 							<div class="col-md-6 col-sm-12">
 								<p>
-									<b>Enter compound name, CASRN, or SMILES below. Compounds will be searched using <a href="http://www.chemspider.com/" target="_blank">ChemSpider.</a> Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV.</b>
+									<b>Enter compound name, CASRN, or SMILES below. Compounds will be searched using <a href="http://www.chemspider.com/" target="_blank">ChemSpider.</a> Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV</b>
 								</p>
 								<textarea rows="3" cols="10" id="compoundNames" class="form-control" placeholder="Enter compound name OR SMILES OR CAS Registry Number"></textarea>
 							</div>
@@ -120,11 +124,11 @@
                     </div>
                     <div id="inputfile" style="display:none;">
                         <h2>Step 1</h2>
-                        <p><b>Upload a CSV file with a maximum of 10 smile strings. Compounds will NOT be validated, so please ensure smiles strings are accurate. Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV.</b>
+                        <p><b>Upload a CSV file with a maximum of 10 smile strings. Compounds will NOT be validated, so please ensure smiles strings are accurate. Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV</b>
                         </p>
                         <fieldset>
                             <p></p>
-                            <form id="form1" action="fileValidator-catch.php" method="post" enctype="multipart/form-data" target="uploader_iframe">
+                            <form id="form1" action="fileValidator.php" method="post" enctype="multipart/form-data" target="uploader_iframe">
                                 <input id="file" type="file" name="file" />
                                 <br/>
                                 <a class="btn btn-primary btn-customctv" id="cancel_multiple">Cancel</a>
@@ -213,7 +217,7 @@
         </div>
 
     </div>
-   
+
 </body>
 
 </html>

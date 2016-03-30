@@ -12,6 +12,7 @@ $search_var=$_POST['compoundName'];  //Retrieve compound name from user
  $mol_Weight =$_POST['MolWeight']; //Retrieve molecular weight
  $chemBench = true;  //By default chembench is set to true, it becomes false if compound is found in flat file.
 // Process flat file
+
 for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 	if(strcasecmp($data->val($i,2), $search_var) ==0) {
 	  $chemBench = false; //Compound is in flat file, don't make API call to chembench 
@@ -267,7 +268,7 @@ if($chemBench)
   echo'<table id="compResults" BORDER="1">';
   if($_POST['refDose'] == "true")
   {
-    $REFD_CDK_predictorIDs = '47675';
+    $REFD_CDK_predictorIDs = '60561';
 	$REFD_CDK_url = $url.$REFD_CDK_predictorIDs;
     $REFD_CDK = curl_init();
 	curl_setopt($REFD_CDK, CURLOPT_SSL_VERIFYPEER, false);
@@ -281,7 +282,7 @@ if($chemBench)
   }
   if($_POST['refConc'] == "true")
   {
-    $RFC_CDK_predictorIDs = '47685';
+    $RFC_CDK_predictorIDs = '60573';
 	$RFC_CDK_url = $url.$RFC_CDK_predictorIDs;
     $RFC_CDK = curl_init();
 	curl_setopt($RFC_CDK, CURLOPT_SSL_VERIFYPEER, false);
@@ -294,7 +295,7 @@ if($chemBench)
   }
   if($_POST['oralSlope'] == "true")
   {
-    $OSF_CDK_predictorIDs = '47693';
+    $OSF_CDK_predictorIDs = '60507';
 	$OSF_CDK_url = $url.$OSF_CDK_predictorIDs;
     $OSF_CDK = curl_init();
 	curl_setopt($OSF_CDK, CURLOPT_SSL_VERIFYPEER, false);
@@ -307,7 +308,7 @@ if($chemBench)
   }
   if($_POST['ihalUnit'] == "true")
   {
-    $IUR_CDK_predictorIDs = '47711';
+    $IUR_CDK_predictorIDs = '60549';
 	$IUR_CDK_url = $url.$IUR_CDK_predictorIDs;
     $IUR_CDK = curl_init();
 	curl_setopt($IUR_CDK, CURLOPT_SSL_VERIFYPEER, false);
@@ -320,7 +321,7 @@ if($chemBench)
   }
   if($_POST['cancPot'] == "true")
   {
-    $CPV_CDK_predictorIDs = '47717';
+    $CPV_CDK_predictorIDs = '60537';
 	$CPV_CDK_url = $url.$CPV_CDK_predictorIDs;
     $CPV_CDK = curl_init();
 	curl_setopt($CPV_CDK, CURLOPT_SSL_VERIFYPEER, false);
@@ -634,7 +635,7 @@ $file_location = $_POST['fileName'];
    {
     $url = "https://chembench.mml.unc.edu/makeSmilesPrediction?smiles=".$compound[$i]."&cutoff=N/A&predictorIds=";
 	
-	$REFD_CDK_predictorIDs = '47675';
+	$REFD_CDK_predictorIDs = '60561';
 	$REFD_CDK_url = $url.$REFD_CDK_predictorIDs;
     $REFD_CDK[$i] = curl_init();
 	curl_setopt($REFD_CDK[$i], CURLOPT_SSL_VERIFYPEER, false);
@@ -645,7 +646,7 @@ $file_location = $_POST['fileName'];
 	curl_setopt($REFD_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$REFD_CDK[$i]);
 	
-	$RFC_CDK_predictorIDs = '47685';
+	$RFC_CDK_predictorIDs = '60573';
 	$RFC_CDK_url = $url.$RFC_CDK_predictorIDs;
     $RFC_CDK[$i] = curl_init();
 	curl_setopt($RFC_CDK[$i], CURLOPT_SSL_VERIFYPEER, false);
@@ -655,7 +656,7 @@ $file_location = $_POST['fileName'];
 	curl_setopt($RFC_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar);
 	curl_setopt($RFC_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$RFC_CDK[$i]);
-	$OSF_CDK_predictorIDs = '47693';
+	$OSF_CDK_predictorIDs = '60507';
 	$OSF_CDK_url = $url.$OSF_CDK_predictorIDs;
     $OSF_CDK[$i] = curl_init();
 	curl_setopt($OSF_CDK[$i], CURLOPT_SSL_VERIFYPEER, false);
@@ -665,7 +666,7 @@ $file_location = $_POST['fileName'];
 	curl_setopt($OSF_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar);
 	curl_setopt($OSF_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$OSF_CDK[$i]);
-	$IUR_CDK_predictorIDs = '47711';
+	$IUR_CDK_predictorIDs = '60549';
 	$IUR_CDK_url = $url.$IUR_CDK_predictorIDs;
     $IUR_CDK[$i] = curl_init();
 	curl_setopt($IUR_CDK[$i], CURLOPT_SSL_VERIFYPEER, false);
@@ -675,7 +676,7 @@ $file_location = $_POST['fileName'];
 	curl_setopt($IUR_CDK[$i], CURLOPT_COOKIEFILE, $cookieJar);
 	curl_setopt($IUR_CDK[$i], CURLOPT_CONNECTTIMEOUT, $requesttimeout);
 	curl_multi_add_handle($mh,$IUR_CDK[$i]);
-	$CPV_CDK_predictorIDs = '47717';
+	$CPV_CDK_predictorIDs = '60537';
 	$CPV_CDK_url = $url.$CPV_CDK_predictorIDs;
     $CPV_CDK[$i] = curl_init();
 	curl_setopt($CPV_CDK[$i], CURLOPT_SSL_VERIFYPEER, false);
@@ -805,4 +806,5 @@ echo'</table><br>';
    
    //****************************************************//
 }
+//print_r($_POST);
 ?>
