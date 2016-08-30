@@ -1,7 +1,7 @@
 $(document).ready(
     function() {
         $('#compoundSearch').click(function() {
-			// alert("compoundSearch clicked, compoundName: "+ $('#compoundNames').val());
+			// alert("This site is currently being tested.\n compoundName: "+ $('#compoundNames').val());
             $('#ctvInfo').hide();
             $('#step1').hide();
             $('#result').hide();
@@ -101,8 +101,23 @@ $(document).ready(
         $('#Run').click(function() {
             $('#result').hide();
             $('#select_check').hide();
-            $('#spinner').show();
-
+            
+			/*alert("This site is currently being tested.\n compoundName: "+ 	
+				"compoundName: "+ $('#compoundNamer').text() +
+                ", \n submitValue: " + $('#submission').text() +
+                "\n MolWeight.:  "+ $('#Molecularweight').text() +
+                "\n refDose:  "+ $('#Ref_dose').is(":checked") +
+                "\n refConc:  "+ $('#Ref_conc').is(":checked") +
+                "\n oralSlope:  "+ $('#Oral_slope').is(":checked") +
+                "\n ihalUnit:  "+ $('#Ihal_unit').is(":checked") +
+                "\n cancPot:  "+ $('#Canc_pot').is(":checked") +
+                "\n noael:  "+ $('#NOAEL').is(":checked") +
+                "\n onbd:  "+ $('#ONBD').is(":checked") +
+                "\n ocbd:  "+ $('#OCBD').is(":checked") +
+                "\n smilee:  "+ $('#smiles').text() +
+                "\n CompoundImage:  "+ $('#compoundImage').text() + "");*/
+				$('#spinner').show();
+				seconds_elapse();
             $.post("results.php", {
                     compoundName: $('#compoundNamer').text(),
                     submitValue: $('#submission').text(),
@@ -194,3 +209,22 @@ $(document).ready(
 
     });
 	
+var i = 0;
+
+function seconds_elapse(){
+	$("#show_content").html(
+	"<br><center><Deep_maroon>This process takes about 500 seconds. <br><br>" + 
+	"Time: </Deep_maroon><font size='6' color='blue' face='verdana'><b> &nbsp&nbsp" + i + 
+	"&nbsp&nbsp	</font></b>   <Deep_maroon>Seconds.");
+		
+	i = i + 1;
+	if (i > 500){
+		$("#show_content").html("Error, please try to reload, or report the problem.");
+		excution_window.close();
+	}
+	seconds_100 = setTimeout("display_time()",1000);
+}
+
+function display_time() {
+	seconds_elapse()
+}

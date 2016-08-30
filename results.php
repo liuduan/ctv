@@ -1,11 +1,15 @@
 <?php
 /* Excel reader setup to read from CTV flat file */
 //require_once 'Excel/reader.php';
+//echo "Hello";
+// print_r($_POST);
+// exit;
 require_once 'Excel/excel_reader2.php';
 $data = new Spreadsheet_Excel_Reader("ctv_data.xls");
 error_reporting(E_ALL ^ E_NOTICE);
 $requesttimeout = 700;
 $submit_type = $_POST['submitValue'];
+
 if($submit_type == "single")
 {
 $search_var=$_POST['compoundName'];  //Retrieve compound name from user
@@ -19,7 +23,7 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 	  echo '<link href="css/bootstrap.css" rel="stylesheet">';
 	  echo '<script type="text/javascript" src="js/customScript.js"></script>';
 	  echo '<div style="float: left; width: 60%;">';
-	  echo'<table id="compResults" BORDER="1">';
+	  echo '<table id="compResults" BORDER="1">';
 	  
 	 if($_POST['refDose'] == "true")
 	 {
@@ -208,7 +212,7 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 	 echo '<img src="data:image/png;base64,' . $imageValue . '" />';
 	 echo "<p>Common Name: $search_var </p>";
 	 echo '<ul class="legend">';
-     echo '<li><span class="awesome"></span> <b>Predicted</B></li>';
+     echo '<li><span class="awesome"></span> <b>Predicted.</B></li>';
 	 echo '<li><span class="superawesome"></span> <B>Retrieved from publicly available sources</B></li><br>';
      echo '</ul>';
 	 echo' <p align="left">';
@@ -245,20 +249,22 @@ if($chemBench)
   curl_setopt($loginRequest, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($loginRequest, CURLOPT_COOKIEJAR, $cookieJar);
   curl_setopt($loginRequest, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-    // echo "Good so far.";
+  // echo "Good so far.";
+  // echo '__DIR__: '. __DIR__;
 	
 	
 	
 	
 	
   $loginResult = curl_exec($loginRequest);
-  // echo "Good so far.";
+  echo "This site in UNDER CONTRUCTION. ";
     if ($loginResult === false) {
 		echo "what?";
       die(curl_error($loginRequest));
      }
    curl_close($loginRequest);
   //end of login
+  echo "Website is being tested.";
   $http_response = 0;
   $time_out = 0;
   $output = null;
@@ -352,8 +358,8 @@ while ($active && $mrc == CURLM_OK) {
 		}
 	
 }
-//$results = curl_multi_getcontent($REFD_CDK);
-//print_r($results);
+$results = curl_multi_getcontent($REFD_CDK);
+print_r($results);
           if($_POST['refDose'] == "true")
           {
 		     if(curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE) == 500)  //|| (curl_getinfo($REFD_ISIDA, CURLINFO_HTTP_CODE) == 500))

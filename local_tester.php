@@ -72,7 +72,7 @@
 </nav>
 
     <div id="results" title="Results">
-        <div id="resultss" title="Results">resultss
+        <div id="resultss" title="Results">
             <p></p>
         </div>
     </div>

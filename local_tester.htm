@@ -72,7 +72,7 @@
 </nav>
 
     <div id="results" title="Results">
-        <div id="resultss" title="Results">resultss
+        <div id="resultss" title="Results">
             <p></p>
         </div>
     </div>
@@ -217,4 +217,73 @@
    
 </body>
 
+<script>
+        $('#Run').click(function() {
+            $('#result').hide();
+            $('#select_check').hide();
+            
+			alert("This site is currently being tested.\n compoundName: "+ 	
+				"compoundName: "+ $('#compoundNamer').text() +
+                ", \n submitValue: " + $('#submission').text() +
+                "\n MolWeight.:  "+ $('#Molecularweight').text() +
+                "\n refDose:  "+ $('#Ref_dose').is(":checked") +
+                "\n refConc:  "+ $('#Ref_conc').is(":checked") +
+                "\n oralSlope:  "+ $('#Oral_slope').is(":checked") +
+                "\n ihalUnit:  "+ $('#Ihal_unit').is(":checked") +
+                "\n cancPot:  "+ $('#Canc_pot').is(":checked") +
+                "\n noael:  "+ $('#NOAEL').is(":checked") +
+                "\n onbd:  "+ $('#ONBD').is(":checked") +
+                "\n ocbd:  "+ $('#OCBD').is(":checked") +
+                "\n smilee:  "+ $('#smiles').text() +
+                "\n CompoundImage:  "+ $('#compoundImage').text() + "");
+				$('#spinner').show();
+				seconds_elapse();
+            $.post("http://52.24.231.219/6-CTV/results.php", {
+                    compoundName: $('#compoundNamer').text(),
+                    submitValue: $('#submission').text(),
+                    MolWeight: $('#Molecularweight').text(),
+                    refDose: $('#Ref_dose').is(":checked"),
+                    refConc: $('#Ref_conc').is(":checked"),
+                    oralSlope: $('#Oral_slope').is(":checked"),
+                    ihalUnit: $('#Ihal_unit').is(":checked"),
+                    cancPot: $('#Canc_pot').is(":checked"),
+                    noael: $('#NOAEL').is(":checked"),
+                    onbd: $('#ONBD').is(":checked"),
+                    ocbd: $('#OCBD').is(":checked"),
+                    smilee: $('#smiles').text(),
+                    CompoundImage: $('#compoundImage').text()
+
+                },
+                function(newdata) {
+                    $('#spinner').hide(),
+                        $('#result').show();
+                    $('#reset_check').css("display", "block");
+                    $('#resultss').replaceWith(newdata);
+                    $('#results').dialog("open");
+                }
+            );
+
+        });
+		
+	
+var i = 0;
+
+function seconds_elapse(){
+	$("#show_content").html(
+	"<br><center><Deep_maroon>This process takes about 95 seconds. <br><br>" + 
+	"Time: </Deep_maroon><font size='6' color='blue' face='verdana'><b> &nbsp&nbsp" + i + 
+	"&nbsp&nbsp	</font></b>   <Deep_maroon>Seconds.");
+		
+	i = i + 1;
+	if (i > 200){
+		$("#show_content").html("Error, please try to reload, or report the problem.");
+		excution_window.close();
+	}
+	seconds_100 = setTimeout("display_time()",1000);
+}
+
+function display_time() {
+	seconds_elapse()
+}
+</script>
 </html>
