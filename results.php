@@ -358,8 +358,8 @@ while ($active && $mrc == CURLM_OK) {
 		}
 	
 }
-$results = curl_multi_getcontent($REFD_CDK);
-print_r($results);
+// $results = curl_multi_getcontent($REFD_CDK);
+// print_r($results);
           if($_POST['refDose'] == "true")
           {
 		     if(curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE) == 500)  //|| (curl_getinfo($REFD_ISIDA, CURLINFO_HTTP_CODE) == 500))
