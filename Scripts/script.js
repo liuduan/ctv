@@ -101,7 +101,7 @@ $(document).ready(
         $('#Run').click(function() {
             $('#result').hide();
             $('#select_check').hide();
-            
+            alert("Testing in Process.");
 			/*alert("This site is currently being tested.\n compoundName: "+ 	
 				"compoundName: "+ $('#compoundNamer').text() +
                 ", \n submitValue: " + $('#submission').text() +
@@ -135,11 +135,13 @@ $(document).ready(
 
                 },
                 function(newdata) {
+					alert("Post done: " + newdata);
                     $('#spinner').hide(),
                         $('#result').show();
                     $('#reset_check').css("display", "block");
                     $('#resultss').replaceWith(newdata);
                     $('#results').dialog("open");
+					$('#newdata-div').replaceWith(newdata);
                 }
             );
 

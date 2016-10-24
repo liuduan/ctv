@@ -257,7 +257,7 @@ if($chemBench)
 	
 	
   $loginResult = curl_exec($loginRequest);
-  echo "This site in UNDER CONTRUCTION. ";
+  echo "This site in UNDER CONSTRUCTION. ";
     if ($loginResult === false) {
 		echo "what?";
       die(curl_error($loginRequest));
@@ -276,6 +276,8 @@ if($chemBench)
   {
     $REFD_CDK_predictorIDs = '60561';
 	$REFD_CDK_url = $url.$REFD_CDK_predictorIDs;
+	echo '<script type="text/javascript"> alert("good."); </script>';
+	echo '<td> url: '. $REFD_CDK_url. '</td>';
     $REFD_CDK = curl_init();
 	curl_setopt($REFD_CDK, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($REFD_CDK, CURLOPT_SSL_VERIFYHOST, false);
@@ -358,8 +360,9 @@ while ($active && $mrc == CURLM_OK) {
 		}
 	
 }
-// $results = curl_multi_getcontent($REFD_CDK);
-// print_r($results);
+$results = curl_multi_getcontent($REFD_CDK);
+echo "Array size: ". count($results);
+echo ", Results: ". $results;
           if($_POST['refDose'] == "true")
           {
 		     if(curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE) == 500)  //|| (curl_getinfo($REFD_ISIDA, CURLINFO_HTTP_CODE) == 500))
@@ -643,6 +646,8 @@ $file_location = $_POST['fileName'];
 	
 	$REFD_CDK_predictorIDs = '60561';
 	$REFD_CDK_url = $url.$REFD_CDK_predictorIDs;
+	echo '$REFD_CDK_url = '. $REFD_CDK_url;
+	echo '<script>alert ("60561");</script>';
     $REFD_CDK[$i] = curl_init();
 	curl_setopt($REFD_CDK[$i], CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($REFD_CDK[$i], CURLOPT_URL, $REFD_CDK_url);
