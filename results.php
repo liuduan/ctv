@@ -361,11 +361,15 @@ while ($active && $mrc == CURLM_OK) {
 	
 }
 $results = curl_multi_getcontent($REFD_CDK);
-echo "Array size: ". count($results);
+// echo "Array size: ". count($results);
 echo ", Results: ". $results;
+// echo '$_POST[refDose]: '. $_POST['refDose'];
+// echo ', CURLINFO_HTTP_CODE: '. CURLINFO_HTTP_CODE;
+// echo ', curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE): '. curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE);
+
           if($_POST['refDose'] == "true")
           {
-		     if(curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE) == 500)  //|| (curl_getinfo($REFD_ISIDA, CURLINFO_HTTP_CODE) == 500))
+		     if(curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE) == 500)  //|| (curl_getinfo($REFD_ISIDA, CURLINFO_HTTP_CODE) == 500)) // 500 is error
 			 {
 			   $http_response = 500;
 			   $output = curl_multi_getcontent($REFD_CDK);
@@ -373,6 +377,7 @@ echo ", Results: ". $results;
 			 else{
 			  
              $rdfs_cdk = curl_multi_getcontent($REFD_CDK);
+			 echo '$rdfs_cdk: '; //. $rdfs_cdk;
              //$rdfs_isida = curl_multi_getcontent($REFD_ISIDA);
              $rdfs_cdk = explode('&',$rdfs_cdk);
              //$rdfs_isida = explode('&',$rdfs_isida);
