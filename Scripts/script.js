@@ -141,7 +141,7 @@ $(document).ready(
                     $('#reset_check').css("display", "block");
                     $('#resultss').replaceWith(newdata);
                     $('#results').dialog("open");
-					$('#newdata-div').replaceWith(newdata);
+					// $('#newdata-div').replaceWith(newdata);
                 }
             );
 

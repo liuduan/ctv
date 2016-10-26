@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- Scripts/script.js was used to sense the click of buttons -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,6 +75,7 @@
         <div id="resultss" title="Results">resultss
             <p></p>
         </div>
+        <div id="newdata-div">New Data</div>
     </div>
 
     <div class="container">
