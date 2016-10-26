@@ -545,7 +545,7 @@ $results = curl_multi_getcontent($REFD_CDK);
              // $results = explode('CPV_RF_CDK', $canc_cdk[1]);
 			 $results = explode('<td>', $canc_cdk[1]);
              //$resultss = explode('CPVs_CTV_RF_ISIDA', $canc_isida[2]);
-             $canc_cdk = $results[1];
+             // $canc_cdk = $results[1];
              //$canc_isida = $resultss[1];
 			 
 			 $canc_cdk = $results[1];
@@ -564,7 +564,7 @@ $results = curl_multi_getcontent($REFD_CDK);
 		     echo'<tr>';
 		     echo'<td bgcolor="#56A0D3">';
 			 $canc_final = $results[2];
-			 echo 'count($results[2]): '. count($results[2]);
+			 // echo 'count($results[2]): '. count($results[2]);
              echo"$canc_final  +/-  0.86</td>";
 		     echo'<td bgcolor="#56A0D3">';
 			 echo"$MolWe  +/-  $SD</td>";
