@@ -101,7 +101,7 @@ $(document).ready(
         $('#Run').click(function() {
             $('#result').hide();
             $('#select_check').hide();
-            alert("Testing in Process.");
+            alert("Start Search Now?");
 			/*alert("This site is currently being tested.\n compoundName: "+ 	
 				"compoundName: "+ $('#compoundNamer').text() +
                 ", \n submitValue: " + $('#submission').text() +
@@ -135,14 +135,13 @@ $(document).ready(
 
                 },
                 function(newdata) {
-					alert("Post done: " + newdata);
+					alert("Search Results Received. ");
                     $('#spinner').hide(),
-                        $('#result').show();
+                    $('#result').show();
                     $('#reset_check').css("display", "block");
                     $('#resultss').replaceWith(newdata);
                     $('#results').dialog("open");
-					// $('#newdata-div').replaceWith(newdata);
-                }
+				}
             );
 
         });

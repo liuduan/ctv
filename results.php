@@ -548,8 +548,8 @@ $results = curl_multi_getcontent($REFD_CDK);
              // $canc_cdk = $results[1];
              //$canc_isida = $resultss[1];
 			 
-			 $canc_cdk = $results[1];
-			 $canc_cdk = (float)substr($canc_cdk, 41);
+			 // $canc_cdk = $results[1];
+			 // $canc_cdk = (float)substr($canc_cdk, 41);
              //$canc_isida = $resultss[1];
 			 $canc_isida = 0;//(float)substr($canc_isida, 41);
 			 $canc_final = ($canc_cdk + $canc_cdk) / 2; //$canc_isida)/2;

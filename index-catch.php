@@ -75,7 +75,6 @@
         <div id="resultss" title="Results">resultss
             <p></p>
         </div>
-        <div id="newdata-div">New Data</div>
     </div>
 
     <div class="container">
