@@ -276,7 +276,7 @@ if($chemBench)
   {
     $REFD_CDK_predictorIDs = '60561';
 	$REFD_CDK_url = $url.$REFD_CDK_predictorIDs;
-	echo '<script type="text/javascript"> alert("good."); </script>';
+	
 	// echo '<td> url: '. $REFD_CDK_url. '</td>';
     $REFD_CDK = curl_init();
 	curl_setopt($REFD_CDK, CURLOPT_SSL_VERIFYPEER, false);
@@ -551,11 +551,11 @@ $results = curl_multi_getcontent($REFD_CDK);
 			 // $canc_cdk = $results[1];
 			 // $canc_cdk = (float)substr($canc_cdk, 41);
              //$canc_isida = $resultss[1];
-			 $canc_isida = 0;//(float)substr($canc_isida, 41);
-			 $canc_final = ($canc_cdk + $canc_cdk) / 2; //$canc_isida)/2;
-			 $MolWe = sprintf("%.2e",(pow(10, $canc_final) / 1000 / $mol_Weight)); 
-			 $SD = sprintf("%.2e",(pow(10, 0.86) / 1000 / $mol_Weight)); 
-			 $canc_final = round($canc_final, 2);
+			 // $canc_isida = 0;//(float)substr($canc_isida, 41);
+			 // $canc_final = ($canc_cdk + $canc_cdk) / 2; //$canc_isida)/2;
+			 // $MolWe = sprintf("%.2e",(pow(10, $canc_final) / 1000 / $mol_Weight)); 
+			 // $SD = sprintf("%.2e",(pow(10, 0.86) / 1000 / $mol_Weight)); 
+			 //  $canc_final = round($canc_final, 2);
 			 
              echo'<tr><td><B> CTV Cancer Potency </B>';
              echo'<tr><td>LogMole +/- SD';
