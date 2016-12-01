@@ -4,7 +4,7 @@ $(document).ready(
         $('#Search-Data-and-Model').click(function() {
             $('#result').hide();
             $('#select_check').hide();
-            alert("Start Search Now?");
+            alert("Start Search Now.");
 			/*alert("This site is currently being tested.\n compoundName: "+ 	
 				"compoundName: "+ $('#compoundNamer').text() +
                 ", \n submitValue: " + $('#submission').text() +
@@ -21,7 +21,7 @@ $(document).ready(
                 "\n CompoundImage:  "+ $('#compoundImage').text() + "");*/
 				$('#spinner').show();
 				seconds_elapse();
-            $.post("results.php", {
+            $.post("Search-php.php", {
                     compoundName: $('#compoundNamer').text(),
                     submitValue: $('#submission').text(),
                     MolWeight: $('#Molecularweight').text(),
