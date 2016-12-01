@@ -12,6 +12,7 @@
     <script type="text/javascript" src="Scripts/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.form.js"></script>
     <script type="text/javascript" src="Scripts/script.js"></script>
+    <script type="text/javascript" src="Scripts/Search-js.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script type="text/javascript" language="javascript" src="Scripts/jsme.nocache.js"></script>
@@ -175,18 +176,19 @@
                         <br>
                         <input type="checkbox" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration
                         <BR>
+                        
+                        <input type="checkbox" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer Benchmark Dose
+                        <BR>
+                        <input type="checkbox" id="OCBD" disabled="disabled" value="OCBD1">&nbsp;&nbsp; CTV Oral Cancer Benchmark Dose<BR>
+                        
                         <input type="checkbox" id="Oral_slope" disabled="disabled" value="Oral_slope1">&nbsp;&nbsp; CTV Oral Slope Factor
                         <br>
                         <input type="checkbox" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk
                         <BR>
                         <input type="checkbox" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value
                         <BR>
-                        <input type="checkbox" id="NOAEL" disabled="disabled" value="NOAEL1">&nbsp;&nbsp; CTV Oral No-Observed-Adverse-Effect-Level
-                        <br>
-                        <input type="checkbox" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer Benchmark Dose
-                        <BR>
-                        <input type="checkbox" id="OCBD" disabled="disabled" value="OCBD1">&nbsp;&nbsp; CTV Oral Cancer Benchmark Dose
-                        <BR>
+                      
+                        
                         <p></p>
 
                     </div>
@@ -194,7 +196,8 @@
                         <p>
 							<i>(Please allow up to 2 mins for the analysis to run)</i>
                             <a class="btn btn-default" id="returnStep2s">Cancel</a>
-							<button type="submit" id="Run" class="btn btn-default btn-primary">Run</button>
+							<button type="submit" id="Run" class="btn btn-default btn-primary">Run</button>&nbsp;&nbsp;
+                            <button type="submit" id="Search-Data-and-Model" class="btn btn-default btn-primary">Search Data & Run Model</button>
                         </p>
                     </div>
                     <div id="mcompoundSubmit" style="display:none;" align="right">

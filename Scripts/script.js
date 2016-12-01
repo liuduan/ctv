@@ -30,6 +30,10 @@ $(document).ready(
                 $('#scompoundSubmit').css("display", "block"),
                 $('#Ref_dose').removeAttr("disabled"),
                 $('#Ref_conc').removeAttr("disabled"),
+				
+				$('#ONBD').removeAttr("disabled"),
+                $('#OCBD').removeAttr("disabled"),
+				
                 $('#Oral_slope').removeAttr("disabled"),
                 $('#Ihal_unit').removeAttr("disabled"),
                 $('#Canc_pot').removeAttr("disabled");
@@ -41,6 +45,10 @@ $(document).ready(
                 $('#mcompoundSubmit').css("display", "block"),
                 $('#Ref_dose').removeAttr("disabled"),
                 $('#Ref_conc').removeAttr("disabled"),
+				
+				$('#ONBD').removeAttr("disabled"),
+                $('#OCBD').removeAttr("disabled"),
+				
                 $('#Oral_slope').removeAttr("disabled"),
                 $('#Ihal_unit').removeAttr("disabled"),
                 $('#Canc_pot').removeAttr("disabled");
