@@ -85,7 +85,7 @@ $InChI = $result->GetExtendedCompoundInfoResult->InChI;
 //echo "<h1>InChIKey = $InChIKey </h1><pre>";
            echo '<div id="result" class="container">';
 		   echo '<div style="float: left; width: 85%;">';
-		   echo "<p><i>Your query was $q_name</i></p> ";
+		   echo "<p><i>Your query was: $q_name</i></p> ";
            echo "<u>ChemSpider information on query:</u><br>"; 		   
 		   echo 'SMILES = ';
            echo '<label id="smiles" ';

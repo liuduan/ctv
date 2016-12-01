@@ -7,12 +7,13 @@ $(document).ready(
             $('#result').hide();
             $('#spinner').show();
 			$('#step2').show();
-            $.post("http://toxvalue.org/compoundSearch.php", {
-			// $.post("http://toxvalue.org/cookie.txt", {
+			// alert("here...7");
+            $.post("compoundSearch.php", {
+			// $.post("cookie.txt", {
                     compoundName: $('#compoundNames').val()
                 },
                 function(data) {
-					// alert("got data");
+					// alert("got data" + data);
                     $('#spinner').hide(),
                         $('#ctvInfo').replaceWith(data),
                         $('#select_check').css("display", "block");
@@ -134,7 +135,7 @@ $(document).ready(
                     CompoundImage: $('#compoundImage').text()
 
                 },
-                function(newdata) {
+                function(newdata) {						// When search results received.
 					alert("Search Results Received. ");
                     $('#spinner').hide(),
                     $('#result').show();
