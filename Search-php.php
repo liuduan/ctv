@@ -18,7 +18,7 @@ $search_var=$_POST['compoundName'];  //Retrieve compound name from user
 // Process flat file
 
 for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
-	if(strcasecmp($data->val($i,2), $search_var) ==0) {
+	if(strcasecmp($data->val($i,2), $search_var) ==0) {			// Search if the compound name matches
 	  $chemBench = false; //Compound is in flat file, don't make API call to chembench 
 	  echo '<link href="css/bootstrap.css" rel="stylesheet">';
 	  echo '<script type="text/javascript" src="js/customScript.js"></script>';
@@ -206,6 +206,7 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 	 }   
      
      echo'</table>';
+	 echo "";
 	 echo '</div>';
 	 echo '<div style="float: right; width: 40%;">';
 	 $imageValue = $_POST['CompoundImage'];
@@ -226,11 +227,12 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 }
 //*******************************************************************************************************************************************************//
 //Compound not found in flat file, process through chembench
-if($chemBench)
+if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 {
   $smilesValue = $_POST['smilee'];
   $cutoff = 'cutoff=999';
-  $url = "https://chembench.mml.unc.edu/makeSmilesPrediction?smiles=".$smilesValue."&cutoff=N/A&predictorIds=";
+  $url = "https://chembench.mml.unc.edu/makeSmilesPrediction?smiles=".$smilesValue;
+  $url .= "&cutoff=N/A&predictorIds=";
   //$url = "https://chembench-dev.mml.unc.edu/makeSmilesPrediction?smiles=".$smilesValue."&cutoff=N/A&predictorIds=";
   $mh = curl_multi_init();
   //login into chembench
@@ -251,11 +253,6 @@ if($chemBench)
   curl_setopt($loginRequest, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
   // echo "Good so far.";
   // echo '__DIR__: '. __DIR__;
-	
-	
-	
-	
-	
   $loginResult = curl_exec($loginRequest);
   echo "This site in UNDER CONSTRUCTION. ";
     if ($loginResult === false) {
@@ -264,7 +261,9 @@ if($chemBench)
      }
    curl_close($loginRequest);
   //end of login
-  echo "Website is being tested.";
+  
+  
+  echo "Website is being tested...";
   $http_response = 0;
   $time_out = 0;
   $output = null;
@@ -272,81 +271,25 @@ if($chemBench)
   echo '<script type="text/javascript" src="js/customScript.js"></script>';
   echo '<div style="float: left; width: 60%;">';
   echo'<table id="compResults" BORDER="1">';
-  if($_POST['refDose'] == "true")
-  {
-    $REFD_CDK_predictorIDs = '60561';
-	$REFD_CDK_url = $url.$REFD_CDK_predictorIDs;
-	
-	// echo '<td> url: '. $REFD_CDK_url. '</td>';
-    $REFD_CDK = curl_init();
-	curl_setopt($REFD_CDK, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($REFD_CDK, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($REFD_CDK, CURLOPT_URL, $REFD_CDK_url);
-    curl_setopt($REFD_CDK, CURLOPT_ENCODING, $REFD_CDK_url);
-	curl_setopt($REFD_CDK, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($REFD_CDK, CURLOPT_COOKIEFILE, $cookieJar);
-	curl_setopt($REFD_CDK, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-	curl_multi_add_handle($mh,$REFD_CDK);
-  }
-  if($_POST['refConc'] == "true")
-  {
-    $RFC_CDK_predictorIDs = '60573';
-	$RFC_CDK_url = $url.$RFC_CDK_predictorIDs;
-    $RFC_CDK = curl_init();
-	curl_setopt($RFC_CDK, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($RFC_CDK, CURLOPT_URL, $RFC_CDK_url);
-    curl_setopt($RFC_CDK, CURLOPT_ENCODING, $RFC_CDK_url);
-    curl_setopt($RFC_CDK, CURLOPT_RETURNTRANSFER, TRUE);
-	curl_setopt($RFC_CDK, CURLOPT_COOKIEFILE, $cookieJar); 
-	curl_setopt($RFC_CDK, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-	curl_multi_add_handle($mh,$RFC_CDK);
-  }
-  if($_POST['oralSlope'] == "true")
-  {
-    $OSF_CDK_predictorIDs = '60507';
-	$OSF_CDK_url = $url.$OSF_CDK_predictorIDs;
-    $OSF_CDK = curl_init();
-	curl_setopt($OSF_CDK, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($OSF_CDK, CURLOPT_URL, $OSF_CDK_url);
-    curl_setopt($OSF_CDK, CURLOPT_ENCODING, $OSF_CDK_url);
-	curl_setopt($OSF_CDK, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($OSF_CDK, CURLOPT_COOKIEFILE, $cookieJar);
-	curl_setopt($OSF_CDK, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-	curl_multi_add_handle($mh,$OSF_CDK);
-  }
-  if($_POST['ihalUnit'] == "true")
-  {
-    $IUR_CDK_predictorIDs = '60549';
-	$IUR_CDK_url = $url.$IUR_CDK_predictorIDs;
-    $IUR_CDK = curl_init();
-	curl_setopt($IUR_CDK, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($IUR_CDK, CURLOPT_URL, $IUR_CDK_url);
-    curl_setopt($IUR_CDK, CURLOPT_ENCODING, $IUR_CDK_url);
-	curl_setopt($IUR_CDK, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($IUR_CDK, CURLOPT_COOKIEFILE, $cookieJar);
-	curl_setopt($IUR_CDK, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-	curl_multi_add_handle($mh,$IUR_CDK);
-  }
-  if($_POST['cancPot'] == "true")
-  {
-    $CPV_CDK_predictorIDs = '60537';
-	$CPV_CDK_url = $url.$CPV_CDK_predictorIDs;
-    $CPV_CDK = curl_init();
-	curl_setopt($CPV_CDK, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($CPV_CDK, CURLOPT_URL, $CPV_CDK_url);
-    curl_setopt($CPV_CDK, CURLOPT_ENCODING, $CPV_CDK_url);
-	curl_setopt($CPV_CDK, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($CPV_CDK, CURLOPT_COOKIEFILE, $cookieJar);
-	curl_setopt($CPV_CDK, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-	curl_multi_add_handle($mh,$CPV_CDK);
-  }
+  
+  
+  if($_POST['refDose'] == "true" && $chemBench)		{$REFD_CDK = Add_curl_to_multi_handle('60561'); }
+  if($_POST['refConc'] == "true" && $chemBench)		{$RFC_CDK = Add_curl_to_multi_handle('60573');  }
+  if($_POST['oralSlope'] == "true" && $chemBench)	{$OSF_CDK = Add_curl_to_multi_handle('60507');  }
+  if($_POST['ihalUnit'] == "true" && $chemBench)  	{$IUR_CDK = Add_curl_to_multi_handle('60549');  }
+  if($_POST['cancPot'] == "true" && $chemBench)   	{$CPV_CDK = Add_curl_to_multi_handle('60537');  }  
+  if($_POST['onbd'] == "true")						{$ONBD_CDK = Add_curl_to_multi_handle('60471');	}
+  // setup multi handle above.
+  
+  //execute the handles
   
   $active = null;
-//execute the handles
-do {
-    $mrc = curl_multi_exec($mh, $active);
-} while ($mrc == CURLM_CALL_MULTI_PERFORM);
-while ($active && $mrc == CURLM_OK) {
+
+  do {
+	$mrc = curl_multi_exec($mh, $active);
+  } while ($mrc == CURLM_CALL_MULTI_PERFORM);
+
+  while ($active && $mrc == CURLM_OK) {
     if (curl_multi_select($mh) != -1) {
         do {
             $mrc = curl_multi_exec($mh, $active);
@@ -359,7 +302,8 @@ while ($active && $mrc == CURLM_OK) {
         } while ($mrc == CURLM_CALL_MULTI_PERFORM);
 		}
 	
-}
+  }	// end of while ($active && $mrc == CURLM_OK) {}, about 12 lines.
+  
 $results = curl_multi_getcontent($REFD_CDK);
 // echo "Array size: ". count($results);
 // echo ", Results: ". $results;
@@ -369,7 +313,8 @@ $results = curl_multi_getcontent($REFD_CDK);
 
           if($_POST['refDose'] == "true")
           {
-		     if(curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE) == 500)  //|| (curl_getinfo($REFD_ISIDA, CURLINFO_HTTP_CODE) == 500)) // 500 is error
+		     if(curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE) == 500)  
+			 	//|| (curl_getinfo($REFD_ISIDA, CURLINFO_HTTP_CODE) == 500)) // 500 is error
 			 {
 			   $http_response = 500;
 			   $output = curl_multi_getcontent($REFD_CDK);
@@ -377,19 +322,11 @@ $results = curl_multi_getcontent($REFD_CDK);
 			 else{
 			  
              $rdfs_cdk = curl_multi_getcontent($REFD_CDK);
-			 // echo '<tr><td>$rdfs_cdk: I am here. '; //. $rdfs_cdk;
-             //$rdfs_isida = curl_multi_getcontent($REFD_ISIDA);
              $rdfs_cdk = explode('&',$rdfs_cdk);
-			 // echo '$rdfs_cdk[1]: '.$rdfs_cdk[1].'</td><td>';
-             //$rdfs_isida = explode('&',$rdfs_isida);
 			 $results = explode('<td>', $rdfs_cdk[1]);
-			 // echo '$results[2]: '.$results[2].'</td></tr>';
-             // $results = explode('RfDs_RF_CDK', $rdfs_cdk[1]);
-             // $resultss = explode('RfDs_CTV_RF_ISIDA', $rdfs_isida[2]);
              $rdfs_cdk = $results[1];
 			 $rdfs_cdk = (float)substr($rdfs_cdk, 41);
-             //$rdfs_isida = $resultss[1];
-			 //$rdfs_isida = (float)substr($rdfs_isida, 41);
+			 
 			 $rdfs_final = ($rdfs_cdk + $rdfs_cdk)/2;//$rdfs_isida)/2;
 			 $nrdfs_final = $rdfs_final * -1;
 			 $MolWe = sprintf("%.2e",(pow(10, $nrdfs_final) * 1000 * $mol_Weight));
@@ -398,16 +335,16 @@ $results = curl_multi_getcontent($REFD_CDK);
 			 
              echo'<tr><td><B> CTV Reference Dose </B></td></tr>';
 		
-             echo'<tr><td>LogMole +/- SD';
+             echo'<tr><td>-LogMole/(kg x day) +/-SD';
 			 echo'</td><td class="ui-helper-center">';
 			 echo 'mg/kg-day</td>';
 		     echo'</tr>';
 		     echo'<tr>';
 		     echo'<td bgcolor="#56A0D3">';
 			 $rdfs_final = $results[2];
-             echo"$rdfs_final  +/-  0.7</td>";
-			 echo'<td bgcolor="#56A0D3">';
-			 echo"$MolWe +/- $SD</td>";
+             echo $rdfs_final. " +/-". $rdfs_final*0.05. "</td>";
+			 echo '<td bgcolor="#56A0D3">';
+			 echo $MolWe. " +/-". $MolWe*0.05. "</td>";
              echo'</tr>';		
             }
 			
@@ -544,18 +481,6 @@ $results = curl_multi_getcontent($REFD_CDK);
              //$canc_isida = explode('&',$canc_isida);
              // $results = explode('CPV_RF_CDK', $canc_cdk[1]);
 			 $results = explode('<td>', $canc_cdk[1]);
-             //$resultss = explode('CPVs_CTV_RF_ISIDA', $canc_isida[2]);
-             // $canc_cdk = $results[1];
-             //$canc_isida = $resultss[1];
-			 
-			 // $canc_cdk = $results[1];
-			 // $canc_cdk = (float)substr($canc_cdk, 41);
-             //$canc_isida = $resultss[1];
-			 // $canc_isida = 0;//(float)substr($canc_isida, 41);
-			 // $canc_final = ($canc_cdk + $canc_cdk) / 2; //$canc_isida)/2;
-			 // $MolWe = sprintf("%.2e",(pow(10, $canc_final) / 1000 / $mol_Weight)); 
-			 // $SD = sprintf("%.2e",(pow(10, 0.86) / 1000 / $mol_Weight)); 
-			 //  $canc_final = round($canc_final, 2);
 			 
              echo'<tr><td><B> CTV Cancer Potency </B>';
              echo'<tr><td>LogMole +/- SD';
@@ -570,8 +495,43 @@ $results = curl_multi_getcontent($REFD_CDK);
 			 echo"$MolWe  +/-  $SD</td>";
              echo'</tr>';		
 			}
-          
-          }
+          }		// end of if($_POST['cancPot'] == "true"){}
+		  
+		  		  
+		  if($_POST['onbd'] == "true")
+          {
+		     if(curl_getinfo($ONBD_CDK, CURLINFO_HTTP_CODE) == 500) 
+			 {
+			   $http_response = 500;
+			   $output = curl_multi_getcontent($ONBD_CDK);
+			 }
+			 else{
+             $canc_cdk = curl_multi_getcontent($ONBD_CDK);
+ 
+             $canc_cdk = explode('&',$canc_cdk);
+ 
+			 $results = explode('<td>', $canc_cdk[1]);
+
+             echo'<tr><td><B> Oral Noncancer Benchmark CDK </B>';
+             echo'<tr><td>LogMole +/- SD';
+		     echo'</td><td class="ui-helper-center">Per mg/kg-day</td>';
+		     echo'</tr>';
+		     echo'<tr>';
+		     echo'<td bgcolor="#56A0D3">';
+			 $canc_final = $results[2];
+			 // echo 'count($results[2]): '. count($results[2]);
+             echo"$canc_final  +/-  0.86</td>";
+		     echo'<td bgcolor="#56A0D3">';
+			 echo"$MolWe  +/-  $SD</td>";
+             echo'</tr>';		
+			}
+		  
+		  }
+		  
+		  
+		  
+		  
+		  
           echo'</table>';
 		  echo '</div>';
 	      echo '<div style="float: right; width: 40%;">';
@@ -593,7 +553,7 @@ $results = curl_multi_getcontent($REFD_CDK);
                   echo "<hi>Descriptors could not be calculated for this compound. Please submit organic, non-metallic substances only; please do not submit mixtures</h1>";
                 }
 		  
-		  }
+		  }		// end of if($http_response == 500){}
 }
 }
 else
@@ -623,6 +583,7 @@ $file_location = $_POST['fileName'];
    $OSF_CDK = array(10);
    $IUR_CDK = array(10);
    $CPV_CDK = array(10);
+   $ONBD_CDK = array(10);
    
    
    ///login
@@ -797,7 +758,13 @@ $j = 0;
    $columns = $j;
   
    
-}	
+}	// end of if($chemBench){}
+
+
+echo'Data from two models: Oral Noncancer Benchmark Dose, Oral Cancer Benchmark Dose';
+
+
+
 echo '<script type="text/javascript" src="js/customScript.js"></script>';
 echo'<table id="compResults" BORDER="1">';
 echo'<tr>';
@@ -835,5 +802,21 @@ echo'</table><br>';
    
    //****************************************************//
 }
+
+function Add_curl_to_multi_handle($Model_ID){
+	global $mh, $url, $cookieJar, $requesttimeout;
+	$model_url = $url.$Model_ID;
+    $model_curl = curl_init();
+	curl_setopt($model_curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($model_curl, CURLOPT_URL, $model_url);
+    curl_setopt($model_curl, CURLOPT_ENCODING, $model_url);
+	curl_setopt($model_curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($model_curl, CURLOPT_COOKIEFILE, $cookieJar);
+	curl_setopt($model_curl, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
+	curl_multi_add_handle($mh, $model_curl);
+	
+	return $model_curl;
+}
+
 //print_r($_POST);
 ?>

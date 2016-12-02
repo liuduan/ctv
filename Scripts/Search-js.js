@@ -4,7 +4,7 @@ $(document).ready(
         $('#Search-Data-and-Model').click(function() {
             $('#result').hide();
             $('#select_check').hide();
-            alert("Start Search Now.");
+            // alert("Start Search Now");
 			/*alert("This site is currently being tested.\n compoundName: "+ 	
 				"compoundName: "+ $('#compoundNamer').text() +
                 ", \n submitValue: " + $('#submission').text() +
