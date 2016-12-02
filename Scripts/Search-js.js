@@ -44,7 +44,7 @@ $(document).ready(
                 },		// end of submitting data.
 				
                 function(newdata) {						// When search results received.
-					alert("Search Results Received. ");
+					// alert("Search Results Received. ");
                     $('#spinner').hide(),
                     $('#result').show();
                     $('#reset_check').css("display", "block");

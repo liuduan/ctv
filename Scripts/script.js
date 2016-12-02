@@ -223,7 +223,7 @@ var i = 0;
 
 function seconds_elapse(){
 	$("#show_content").html(
-	"<br><center><Deep_maroon>This process takes about 500 seconds. <br><br>" + 
+	"<br><center><Deep_maroon><br>" + 
 	"Time: </Deep_maroon><font size='6' color='blue' face='verdana'><b> &nbsp&nbsp" + i + 
 	"&nbsp&nbsp	</font></b>   <Deep_maroon>Seconds.");
 		

@@ -324,12 +324,13 @@ $results = curl_multi_getcontent($REFD_CDK);
              $rdfs_cdk = curl_multi_getcontent($REFD_CDK);
              $rdfs_cdk = explode('&',$rdfs_cdk);
 			 $results = explode('<td>', $rdfs_cdk[1]);
-             $rdfs_cdk = $results[1];
-			 $rdfs_cdk = (float)substr($rdfs_cdk, 41);
+             $rdfs_cdk = $results[2];
+			 // $rdfs_cdk = (float)substr($rdfs_cdk, 41);
 			 
 			 $rdfs_final = ($rdfs_cdk + $rdfs_cdk)/2;//$rdfs_isida)/2;
-			 $nrdfs_final = $rdfs_final * -1;
+			 $nrdfs_final = $rdfs_final * (-1);
 			 $MolWe = sprintf("%.2e",(pow(10, $nrdfs_final) * 1000 * $mol_Weight));
+			 // $MolWe = sprintf("%.2e",(pow(10, -3.5)));
 			 $SD = sprintf("%.2e",(pow(10, 0.7) * 1000 * $mol_Weight));
 			 $rdfs_final = round($rdfs_final, 2);
 			 
@@ -337,14 +338,13 @@ $results = curl_multi_getcontent($REFD_CDK);
 		
              echo'<tr><td>-LogMole/(kg x day) +/-SD';
 			 echo'</td><td class="ui-helper-center">';
-			 echo 'mg/kg-day</td>';
+			 echo 'mg/(kg x day)</td>';
 		     echo'</tr>';
 		     echo'<tr>';
 		     echo'<td bgcolor="#56A0D3">';
-			 $rdfs_final = $results[2];
              echo $rdfs_final. " +/-". $rdfs_final*0.05. "</td>";
 			 echo '<td bgcolor="#56A0D3">';
-			 echo $MolWe. " +/-". $MolWe*0.05. "</td>";
+			 echo $MolWe. " .+/-". $MolWe*0.05. "</td>";
              echo'</tr>';		
             }
 			
