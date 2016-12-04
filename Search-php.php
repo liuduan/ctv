@@ -275,8 +275,8 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   
   if($_POST['refDose'] == "true" && $chemBench)	{
 	  $REFD_CDK = Add_curl_to_multi_handle('60561'); 
-	  $RfD_NOEL_CDK_66220 = Add_curl_to_multi_handle('66220');
-	  $RfD_NOEL_ISIDA_66226 = Add_curl_to_multi_handle('66226');
+	  // $RfD_NOEL_CDK_66220 = Add_curl_to_multi_handle('66220');
+	  // $RfD_NOEL_ISIDA_66226 = Add_curl_to_multi_handle('66226');
 	  }
   if($_POST['refConc'] == "true" && $chemBench)		{$RFC_CDK = Add_curl_to_multi_handle('60573');  }
   if($_POST['oralSlope'] == "true" && $chemBench)	{$OSF_CDK = Add_curl_to_multi_handle('60507');  }
@@ -284,12 +284,12 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   if($_POST['ihalUnit'] == "true" && $chemBench)  	{$IUR_CDK = Add_curl_to_multi_handle('60549');  }
   if($_POST['cancPot'] == "true" && $chemBench){
 	  $CPV_CDK = Add_curl_to_multi_handle('60537');  
-	  $CPV_ISIDA_60543 = Add_curl_to_multi_handle('60543');  
+	  // $CPV_ISIDA_60543 = Add_curl_to_multi_handle('60543');  
 	  }  
   if($_POST['onbd'] == "true"){
 	  $ONBD_CDK_60471 = Add_curl_to_multi_handle('60471');	
-	  $ONBDL_CDK_66208 = Add_curl_to_multi_handle('66208');
-	  $ONBDL_ISIDA_66214 = Add_curl_to_multi_handle('66214');
+	  // $ONBDL_CDK_66208 = Add_curl_to_multi_handle('66208');
+	  // $ONBDL_ISIDA_66214 = Add_curl_to_multi_handle('66214');
 	  }
   if($_POST['ocbd'] == "true"){$OCBD_CDK_60489 = Add_curl_to_multi_handle('60489');}
   // setup multi handle above.
@@ -326,8 +326,8 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 
   if($_POST['refDose'] == "true"){
 	$model_value_1 = Read_model_curl($REFD_CDK);		//$REFD_CDK
-	$model_value_2 = Read_model_curl($RfD_NOEL_CDK_66220);		//$REFD_CDK
-	$model_value_3 = Read_model_curl($RfD_NOEL_ISIDA_66226);		//$REFD_CDK
+	// $model_value_2 = Read_model_curl($RfD_NOEL_CDK_66220);		//$REFD_CDK
+	// $model_value_3 = Read_model_curl($RfD_NOEL_ISIDA_66226);		//$REFD_CDK
 	
 	$model_value = $model_value_1;
 	Display_model_value($model_value, $mol_Weight, 'Reference Dose', 'mg/(kg x day)');	
@@ -668,7 +668,7 @@ function Display_model_value($model_value, $mol_Weight, $model_name, $converted_
 	$converted_SD = sprintf("%.3e", $converted_value*0.05);
 			 
     echo'<tr><td><B>CTV '. $model_name. '</B></td></tr>';
-	echo'<tr><td>  &nbsp; - LogMole/(kg x day)  +/-SD';
+	echo'<tr><td>  &nbsp; - LogMole/(kg x day)  &#177;SD';
 	echo'</td><td class="ui-helper-center">';
 	echo $converted_unit. '</td></tr><tr><td bgcolor="#56A0D3">';
     echo '&nbsp;'. $model_value * (-1). " &#177;". $SD. "</td>";
