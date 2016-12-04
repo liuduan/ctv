@@ -254,7 +254,7 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   // echo "Good so far.";
   // echo '__DIR__: '. __DIR__;
   $loginResult = curl_exec($loginRequest);
-  echo "This site in UNDER CONSTRUCTION. ";
+  echo "This site is UNDER CONSTRUCTION. ";
     if ($loginResult === false) {
 		echo "what?";
       die(curl_error($loginRequest));
@@ -273,12 +273,25 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   echo'<table id="compResults" BORDER="1">';
   
   
-  if($_POST['refDose'] == "true" && $chemBench)		{$REFD_CDK = Add_curl_to_multi_handle('60561'); }
+  if($_POST['refDose'] == "true" && $chemBench)	{
+	  $REFD_CDK = Add_curl_to_multi_handle('60561'); 
+	  $RfD_NOEL_CDK_66220 = Add_curl_to_multi_handle('66220');
+	  $RfD_NOEL_ISIDA_66226 = Add_curl_to_multi_handle('66226');
+	  }
   if($_POST['refConc'] == "true" && $chemBench)		{$RFC_CDK = Add_curl_to_multi_handle('60573');  }
   if($_POST['oralSlope'] == "true" && $chemBench)	{$OSF_CDK = Add_curl_to_multi_handle('60507');  }
+  
   if($_POST['ihalUnit'] == "true" && $chemBench)  	{$IUR_CDK = Add_curl_to_multi_handle('60549');  }
-  if($_POST['cancPot'] == "true" && $chemBench)   	{$CPV_CDK = Add_curl_to_multi_handle('60537');  }  
-  if($_POST['onbd'] == "true")						{$ONBD_CDK = Add_curl_to_multi_handle('60471');	}
+  if($_POST['cancPot'] == "true" && $chemBench){
+	  $CPV_CDK = Add_curl_to_multi_handle('60537');  
+	  $CPV_ISIDA_60543 = Add_curl_to_multi_handle('60543');  
+	  }  
+  if($_POST['onbd'] == "true"){
+	  $ONBD_CDK_60471 = Add_curl_to_multi_handle('60471');	
+	  $ONBDL_CDK_66208 = Add_curl_to_multi_handle('66208');
+	  $ONBDL_ISIDA_66214 = Add_curl_to_multi_handle('66214');
+	  }
+  if($_POST['ocbd'] == "true"){$OCBD_CDK_60489 = Add_curl_to_multi_handle('60489');}
   // setup multi handle above.
   
   //execute the handles
@@ -304,233 +317,46 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 	
   }	// end of while ($active && $mrc == CURLM_OK) {}, about 12 lines.
   
-$results = curl_multi_getcontent($REFD_CDK);
-// echo "Array size: ". count($results);
-// echo ", Results: ". $results;
-// echo '$_POST[refDose]: '. $_POST['refDose'];
-// echo ', CURLINFO_HTTP_CODE: '. CURLINFO_HTTP_CODE;
-// echo ', curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE): '. curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE);
+  $results = curl_multi_getcontent($REFD_CDK);
+	// echo "Array size: ". count($results);
+	// echo ", Results: ". $results;
+	// echo '$_POST[refDose]: '. $_POST['refDose'];
+	// echo ', CURLINFO_HTTP_CODE: '. CURLINFO_HTTP_CODE;
+	// echo ', curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE): '. curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE);
 
-          if($_POST['refDose'] == "true")
-          {
-		     if(curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE) == 500)  
-			 	//|| (curl_getinfo($REFD_ISIDA, CURLINFO_HTTP_CODE) == 500)) // 500 is error
-			 {
-			   $http_response = 500;
-			   $output = curl_multi_getcontent($REFD_CDK);
-			 }
-			 else{
-			  
-             $rdfs_cdk = curl_multi_getcontent($REFD_CDK);
-             $rdfs_cdk = explode('&',$rdfs_cdk);
-			 $results = explode('<td>', $rdfs_cdk[1]);
-             $rdfs_cdk = $results[2];
-			 // $rdfs_cdk = (float)substr($rdfs_cdk, 41);
-			 
-			 $rdfs_final = ($rdfs_cdk + $rdfs_cdk)/2;//$rdfs_isida)/2;
-			 $nrdfs_final = $rdfs_final * (-1);
-			 $MolWe = sprintf("%.2e",(pow(10, $nrdfs_final) * 1000 * $mol_Weight));
-			 // $MolWe = sprintf("%.2e",(pow(10, -3.5)));
-			 $SD = sprintf("%.2e",(pow(10, 0.7) * 1000 * $mol_Weight));
-			 $rdfs_final = round($rdfs_final, 2);
-			 
-             echo'<tr><td><B> CTV Reference Dose </B></td></tr>';
-		
-             echo'<tr><td>-LogMole/(kg x day) +/-SD';
-			 echo'</td><td class="ui-helper-center">';
-			 echo 'mg/(kg x day)</td>';
-		     echo'</tr>';
-		     echo'<tr>';
-		     echo'<td bgcolor="#56A0D3">';
-             echo $rdfs_final. " +/-". $rdfs_final*0.05. "</td>";
-			 echo '<td bgcolor="#56A0D3">';
-			 echo $MolWe. " .+/-". $MolWe*0.05. "</td>";
-             echo'</tr>';		
-            }
-			
-          }
+  if($_POST['refDose'] == "true"){
+	$model_value_1 = Read_model_curl($REFD_CDK);		//$REFD_CDK
+	$model_value_2 = Read_model_curl($RfD_NOEL_CDK_66220);		//$REFD_CDK
+	$model_value_3 = Read_model_curl($RfD_NOEL_ISIDA_66226);		//$REFD_CDK
+	
+	$model_value = $model_value_1;
+	Display_model_value($model_value, $mol_Weight, 'Reference Dose', 'mg/(kg x day)');	
+	}
+	  
+  if($_POST['refConc'] == "true"){
+	$model_value = Read_model_curl($RFC_CDK);		// $RFC_CDK
+	Display_model_value($model_value, $mol_Weight, 'Reference Concentration', 'mg/m<sup>3</sup>');	
+    }
 		  
-		  if($_POST['refConc'] == "true")
-          {
-		     if(curl_getinfo($RFC_CDK, CURLINFO_HTTP_CODE) == 500)
-			 {
-			   $http_response = 500;
-			   $output = curl_multi_getcontent($RFC_CDK);
-			 }
-			 else{
-             $rconc_cdk = curl_multi_getcontent($RFC_CDK);
-             //$rconc_isida = curl_multi_getcontent($RFC_ISIDA);
-             $rconc_cdk = explode('&',$rconc_cdk);
-			 // echo '<tr><td>$rconc_cdk[1]: '.$rconc_cdk[1].'</td></tr>';
-			 //$rconc_isida = explode('&',$rconc_isida);
-			 $results = explode('<td>', $rconc_cdk[1]);
-			 // $results = explode('RfCs_RF_CDK', $rconc_cdk[1]);
-			 // $resultss = explode('RfCs_CTV_RF_ISIDA', $rconc_isida[2]);
-			 
-			 $rconc_cdk = $results[1];
-			 $rconc_cdk = (float)substr($rconc_cdk, 41);
-             //$rconc_isida = $resultss[1];
-			 $rconc_isida = 0;//(float)substr($rconc_isida, 41);
-			 $rconc_final = ($rconc_cdk + $rconc_cdk) / 2; //$rconc_isida)/2;
-			 $nrconc_final = $rconc_final * -1;
-			 $MolWe = sprintf("%.2e",(pow(10, $nrconc_final) * 1000 * $mol_Weight));
-			 $SD = sprintf("%.2e",(pow(10, 1.08) * 1000 * $mol_Weight));
-			 $rconc_final = round($rconc_final, 2);
-		     echo'<tr><td><B> CTV Reference Concentration </B></td></tr>';
-             echo'<tr><td>LogMole +/- SD';
-		     echo'</td><td class="ui-helper-center">mg/m<sup>3</sup></td>';
-		     echo'</tr>';
-		     echo'<tr>';
-		     echo'<td bgcolor="#56A0D3">';
-			 $rconc_final = $results[2];
-             echo"$rconc_final  +/-  1.08</td>";
-		     echo'<td bgcolor="#56A0D3">';
-			 echo"$MolWe  +/-  $SD</td>";
-             echo'</tr>';		
-            }			 
-          }
+  if($_POST['oralSlope'] == "true"){ 
+    $model_value = Read_model_curl($OSF_CDK);		// $OSF_CDK
+	Display_model_value($model_value, $mol_Weight, 'Oral Slope', 'mg/(kg x day)');	
+    }
 		  
-		  if($_POST['oralSlope'] == "true")
-          { 
-		     if(curl_getinfo($OSF_CDK, CURLINFO_HTTP_CODE) == 500)
-			 {
-			   $http_response = 500;
-			   $output = curl_multi_getcontent($OSF_CDK);
-			 }
-			 else{
-		     $oral_cdk = curl_multi_getcontent($OSF_CDK);
-             //$oral_isida = curl_multi_getcontent($OSF_ISIDA);
-             $oral_cdk = explode('&',$oral_cdk);
-             // $oral_isida = explode('&',$oral_isida);
-             // $results = explode('OSF_RF_CDK', $oral_cdk[1]);
-			 $results = explode('<td>', $oral_cdk[1]);
-             //$resultss = explode('OSFs_CTV_RF_ISIDA', $oral_isida[2]);
-			 
-			 $oral_cdk = $results[1];
-			 $oral_cdk = (float)substr($oral_cdk, 41);
-             //$oral_isida = $resultss[1];
-			 $oral_isida =0; //(float)substr($oral_isida, 41);
-			 $oral_final = ($oral_cdk + $oral_cdk) /2; //$oral_isida)/2;
-			 $MolWe = sprintf("%.2e",(pow(10, $oral_final) / 1000 / $mol_Weight));
-			 $SD = sprintf("%.2e",(pow(10, 0.85) / 1000 / $mol_Weight));
-			 $oral_final = round($oral_final, 2);
-			 
-             echo'<tr><td><B> CTV Oral Slope </B>';
-             echo'<tr><td>LogMole +/- SD';
-		     echo'</td><td class="ui-helper-center">Per mg/kg-day</td>';
-		     echo'</tr>';
-		     echo'<tr>';
-		     echo'<td bgcolor="#56A0D3">';
-			 $oral_final = $results[2];
-             echo"$oral_final  +/-  0.85</td>";
-		     echo'<td bgcolor="#56A0D3">';
-			 echo"$MolWe  +/-  $SD</td>";
-             echo'</tr>';		
-            }
-          }
-		  
-		  if($_POST['ihalUnit'] == "true")
-          {  
-		     if(curl_getinfo($IUR_CDK, CURLINFO_HTTP_CODE) == 500) 
-			 {
-			   $http_response = 500;
-			   $output = curl_multi_getcontent($IUR_CDK);
-			 }
-			 else{
-             $inhal_cdk = curl_multi_getcontent($IUR_CDK);
-             //$inhal_isida = curl_multi_getcontent($IUR_ISIDA);
-             $inhal_cdk = explode('&',$inhal_cdk);
-             //$inhal_isida = explode('&',$inhal_isida);
-             // $results = explode('IUR_RF_CDK', $inhal_cdk[1]);
-			 $results = explode('<td>', $inhal_cdk[1]);
-             //$resultss = explode('IURs_CTV_RF_ISIDA', $inhal_isida[2]);
-			 
-			 $inhal_cdk = $results[1];
-			 $inhal_cdk = (float)substr($inhal_cdk, 41);
-             //$inhal_isida = $resultss[1];
-			 $inhal_isida = 0;//(float)substr($inhal_isida, 41);
-			 $inhal_final = ($inhal_cdk + $inhal_cdk) / 2; //$inhal_isida)/2;
-			 $MolWe = sprintf("%.2e",(pow(10, $inhal_final) / 1000000 / $mol_Weight));
-			 $SD = sprintf("%.2e",(pow(10, 0.95) / 1000000 / $mol_Weight));
-			 $inhal_final = round($inhal_final, 2);
-		     echo'<tr><td><B> CTV Inhalation Unit Risk </B></td></tr>';
-		     echo'<tr><td>LogMole +/- SD';
-		     echo'</td><td class="ui-helper-center">Per ug/m<sup>3</sup></td>';
-		     echo'</tr>';
-		     echo'<tr>';
-		     echo'<td bgcolor="#56A0D3">';
-			 $inhal_final = $results[2];
-             echo"$inhal_final  +/-  0.95</td>";
-		     echo'<td bgcolor="#56A0D3">';
-			 echo"$MolWe  +/-  $SD</td>";		  
-             echo'</tr>';		
-			}
-          }
-		  
-		  if($_POST['cancPot'] == "true")
-          {
-		     if(curl_getinfo($CPV_CDK, CURLINFO_HTTP_CODE) == 500) 
-			 {
-			   $http_response = 500;
-			   $output = curl_multi_getcontent($CPV_CDK);
-			 }
-			 else{
-             $canc_cdk = curl_multi_getcontent($CPV_CDK);
-             //$canc_isida = curl_multi_getcontent($CPV_ISIDA);
-             $canc_cdk = explode('&',$canc_cdk);
-             //$canc_isida = explode('&',$canc_isida);
-             // $results = explode('CPV_RF_CDK', $canc_cdk[1]);
-			 $results = explode('<td>', $canc_cdk[1]);
-			 
-             echo'<tr><td><B> CTV Cancer Potency </B>';
-             echo'<tr><td>LogMole +/- SD';
-		     echo'</td><td class="ui-helper-center">Per mg/kg-day</td>';
-		     echo'</tr>';
-		     echo'<tr>';
-		     echo'<td bgcolor="#56A0D3">';
-			 $canc_final = $results[2];
-			 // echo 'count($results[2]): '. count($results[2]);
-             echo"$canc_final  +/-  0.86</td>";
-		     echo'<td bgcolor="#56A0D3">';
-			 echo"$MolWe  +/-  $SD</td>";
-             echo'</tr>';		
-			}
-          }		// end of if($_POST['cancPot'] == "true"){}
-		  
-		  		  
-		  if($_POST['onbd'] == "true")
-          {
-		     if(curl_getinfo($ONBD_CDK, CURLINFO_HTTP_CODE) == 500) 
-			 {
-			   $http_response = 500;
-			   $output = curl_multi_getcontent($ONBD_CDK);
-			 }
-			 else{
-             $canc_cdk = curl_multi_getcontent($ONBD_CDK);
- 
-             $canc_cdk = explode('&',$canc_cdk);
- 
-			 $results = explode('<td>', $canc_cdk[1]);
-
-             echo'<tr><td><B> Oral Noncancer Benchmark CDK </B>';
-             echo'<tr><td>LogMole +/- SD';
-		     echo'</td><td class="ui-helper-center">Per mg/kg-day</td>';
-		     echo'</tr>';
-		     echo'<tr>';
-		     echo'<td bgcolor="#56A0D3">';
-			 $canc_final = $results[2];
-			 // echo 'count($results[2]): '. count($results[2]);
-             echo"$canc_final  +/-  0.86</td>";
-		     echo'<td bgcolor="#56A0D3">';
-			 echo"$MolWe  +/-  $SD</td>";
-             echo'</tr>';		
-			}
-		  
-		  }
-		  
-		  
-		  
-		  
+  if($_POST['ihalUnit'] == "true"){  			
+    $model_value = Read_model_curl($IUR_CDK);		// $IUR_CDK
+	Display_model_value($model_value, $mol_Weight, 'Inhalation Unit Risk', '&#181;g/m<sup>3</sup>');	
+    }
+		    
+  if($_POST['cancPot'] == "true"){  			
+    $model_value = Read_model_curl($CPV_CDK);		// $CPV_CDK
+	Display_model_value($model_value, $mol_Weight, 'Cancer Potency', 'mg/(kg x day)');	
+    }
+        
+  if($_POST['onbd'] == "true"){  			
+    $model_value = Read_model_curl($ONBD_CDK);		// $ONBD_CDK
+	Display_model_value($model_value, $mol_Weight, 'Oral Noncancer Benchmark CDK', 'mg/(kg x day)');	
+    }		  
 		  
           echo'</table>';
 		  echo '</div>';
@@ -817,6 +643,45 @@ function Add_curl_to_multi_handle($Model_ID){
 	
 	return $model_curl;
 }
+
+
+function Read_model_curl($model_curl){
+	if(curl_getinfo($model_curl, CURLINFO_HTTP_CODE) == 500)   // 500 is error
+		{
+		$http_response = 500;
+		$output = curl_multi_getcontent($model_curl);
+		}
+	else{
+		$model_value = curl_multi_getcontent($model_curl);
+        $model_value = explode('&',$model_value);
+		$results = explode('<td>', $model_value[1]);
+        $model_value = $results[2];
+		}
+	return $model_value;
+	}
+			
+function Display_model_value($model_value, $mol_Weight, $model_name, $converted_unit){			 
+	$model_value = $model_value * (-1);
+	$converted_value = sprintf("%.3e",(pow(10, $model_value) * 1000 * $mol_Weight));
+	
+	$SD = round($model_value * (-0.05), 3);
+	$converted_SD = sprintf("%.3e", $converted_value*0.05);
+			 
+    echo'<tr><td><B>CTV '. $model_name. '</B></td></tr>';
+	echo'<tr><td>  &nbsp; - LogMole/(kg x day)  +/-SD';
+	echo'</td><td class="ui-helper-center">';
+	echo $converted_unit. '</td></tr><tr><td bgcolor="#56A0D3">';
+    echo '&nbsp;'. $model_value * (-1). " &#177;". $SD. "</td>";
+	echo '<td bgcolor="#56A0D3">';
+	echo $converted_value. " &#177;". $converted_SD. "</td></tr>";		
+    }
+			
+         
+
+
+
+
+
 
 //print_r($_POST);
 ?>
