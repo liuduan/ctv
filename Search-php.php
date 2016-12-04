@@ -275,7 +275,7 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   
   if($_POST['refDose'] == "true" && $chemBench)	{
 	  $REFD_CDK = Add_curl_to_multi_handle('60561'); 
-	  // $RfD_NOEL_CDK_66220 = Add_curl_to_multi_handle('66220');
+	  $RfD_NOEL_CDK_66220 = Add_curl_to_multi_handle('66220');
 	  // $RfD_NOEL_ISIDA_66226 = Add_curl_to_multi_handle('66226');
 	  }
   if($_POST['refConc'] == "true" && $chemBench)		{$RFC_CDK = Add_curl_to_multi_handle('60573');  }
@@ -284,12 +284,12 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   if($_POST['ihalUnit'] == "true" && $chemBench)  	{$IUR_CDK = Add_curl_to_multi_handle('60549');  }
   if($_POST['cancPot'] == "true" && $chemBench){
 	  $CPV_CDK = Add_curl_to_multi_handle('60537');  
-	  // $CPV_ISIDA_60543 = Add_curl_to_multi_handle('60543');  
+	  $CPV_ISIDA_60543 = Add_curl_to_multi_handle('60543');  
 	  }  
   if($_POST['onbd'] == "true"){
 	  $ONBD_CDK_60471 = Add_curl_to_multi_handle('60471');	
-	  // $ONBDL_CDK_66208 = Add_curl_to_multi_handle('66208');
-	  // $ONBDL_ISIDA_66214 = Add_curl_to_multi_handle('66214');
+	  $ONBDL_CDK_66208 = Add_curl_to_multi_handle('66208');
+	  $ONBDL_ISIDA_66214 = Add_curl_to_multi_handle('66214');
 	  }
   if($_POST['ocbd'] == "true"){$OCBD_CDK_60489 = Add_curl_to_multi_handle('60489');}
   // setup multi handle above.
