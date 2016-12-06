@@ -17,6 +17,7 @@ $search_var=$_POST['compoundName'];  //Retrieve compound name from user
  $chemBench = true;  //By default chembench is set to true, it becomes false if compound is found in flat file.
 // Process flat file
 
+
 for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 	if(strcasecmp($data->val($i,2), $search_var) ==0) {			// Search if the compound name matches
 	  $chemBench = false; //Compound is in flat file, don't make API call to chembench 
@@ -244,6 +245,7 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   $cookieJar = __DIR__ . "/cookie.txt";
   $baseUrl = "https://chembench{$devSuffix}.mml.unc.edu/";
   $loginUrl = $baseUrl . "login?username={$username}&password={$password}";
+  
   $loginRequest = curl_init();
   curl_setopt($loginRequest, CURLOPT_SSL_VERIFYPEER, false);
   curl_setopt($loginRequest, CURLOPT_SSL_VERIFYHOST, false);
@@ -251,9 +253,9 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   curl_setopt($loginRequest, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($loginRequest, CURLOPT_COOKIEJAR, $cookieJar);
   curl_setopt($loginRequest, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-  // echo "Good so far.";
-  // echo '__DIR__: '. __DIR__;
+
   $loginResult = curl_exec($loginRequest);
+  
   echo "This site is UNDER CONSTRUCTION. ";
     if ($loginResult === false) {
 		echo "what?";
@@ -268,7 +270,13 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   echo '<link href="css/bootstrap.css" rel="stylesheet">';
   echo '<script type="text/javascript" src="js/customScript.js"></script>';
   echo '<div style="float: left; width: 60%;">';
-  echo'<table id="compResults" style="text-align: center;">';
+  
+  
+  echo '<br>....... curl: '. Get_model_value('60561').'</br>.........';
+  exit("will it show?");															////////////////////
+  
+  
+  echo'<table id="compResults" BORDER="1" style="border-top-style: 15px;">';
   
   
   if($_POST['refDose'] == "true" && $chemBench)	{
@@ -324,6 +332,9 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 
 	// Read data and display.
   if($_POST['refDose'] == "true"){
+	  
+	// Get_model_value('60561');
+	// echo '<br>curl: '. Get_model_value('60561').'</br>';
 	$model_value_1 = Read_model_curl($REFD_CDK);		//$REFD_CDK
 	$model_value_2 = Read_model_curl($RfD_NOEL_CDK_66220);		//$REFD_CDK
 	// $model_value_3 = Read_model_curl($RfD_NOEL_ISIDA_66226);		//$REFD_CDK
@@ -339,8 +350,7 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
     }
 	
   if($_POST['onbd'] == "true"){  			
-    $model_value_1 = Read_model_curl($ONBD_CDK_60471);		
-	echo '$model_value_1: '. $model_value_1;
+    $model_value_1 = Read_model_curl($ONBD_CDK_60471);		// $ONBD_CDK
 	$model_value_2 = Read_model_curl($ONBDL_CDK_66208);		
 	$model_value_3 = Read_model_curl($ONBDL_ISIDA_66214);		
 	$model_value = 
@@ -645,6 +655,124 @@ echo'</table><br>';
    //****************************************************//
 }
 
+
+
+
+
+function Get_model_value($Model_ID){
+		global $url, $cookieJar, $requesttimeout, $loginUrl, $active;
+	$model_curl = curl_multi_init();
+	
+	$useDev = false;
+  	$devSuffix = ($useDev === true ? '-dev' : '');
+	$username = 'soidowu';
+  	$password = '5uns939r';
+  	//$cookieJar = '/tmp/cookie.txt';
+  	$cookieJar = __DIR__ . "/cookie.txt";
+  	$baseUrl = "https://chembench{$devSuffix}.mml.unc.edu/";
+  	$loginUrl = $baseUrl . "login?username={$username}&password={$password}";
+	  
+  $loginRequest = curl_init();
+  curl_setopt($loginRequest, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($loginRequest, CURLOPT_SSL_VERIFYHOST, false);
+  curl_setopt($loginRequest, CURLOPT_URL, $loginUrl);
+  curl_setopt($loginRequest, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($loginRequest, CURLOPT_COOKIEJAR, $cookieJar);
+  curl_setopt($loginRequest, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
+
+  $loginResult = curl_exec($loginRequest);
+
+  	if ($loginResult === false) {
+	  	echo "Unable to login.";
+       	die(curl_error($loginRequest));
+   	}
+   	echo "Login passed.";
+   	curl_close($loginRequest);
+  
+
+	$url = "https://chembench.mml.unc.edu/makeSmilesPrediction.action?predictorIds=60561&smiles=C1%3DCC%3DC(C%3DC1)CC(C(%3DO)O)N&cutoff=N%2FA";
+
+	// $model_url = $url.$Model_ID;
+
+  	curl_setopt($model_curl2, CURLOPT_SSL_VERIFYPEER, false);
+  	curl_setopt($model_curl2, CURLOPT_SSL_VERIFYHOST, false);
+  	curl_setopt($model_curl2, CURLOPT_URL, $url);
+  	curl_setopt($model_curl2, CURLOPT_RETURNTRANSFER, true);
+  	curl_setopt($model_curl2, CURLOPT_COOKIEJAR, $cookieJar);
+  	curl_setopt($model_curl2, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
+  	// curl_setopt($model_curl2, CURLOPT_TIMEOUT, 100); 			//timeout in seconds
+
+	curl_multi_add_handle($model_curl, $model_curl2);
+
+	// $mrc_results = curl_multi_exec($model_curl, $active);
+
+	echo "Login passed.2, ". '$active: '. $active;
+	
+
+	 $running = null;
+  do {
+    curl_multi_exec($model_curl, $running);
+  } while ($running);
+	
+/*
+	
+	do {
+    	$mrc = curl_multi_exec($model_curl, $active);
+		echo "Login passed. 2.5";
+	} while ($mrc == CURLM_CALL_MULTI_PERFORM);
+
+	echo "Login passed.4";
+
+
+	while ($active && $mrc == CURLM_OK) {
+    	if (curl_multi_select($model_curl) != -1) {
+			echo "Login passed.4.5";
+        	do {
+            	$mrc = curl_multi_exec($model_curl, $active);
+        	} while ($mrc == CURLM_CALL_MULTI_PERFORM);
+    	}	//end of if
+		else{
+		usleep(10);
+		echo "Login passed.5";
+			do {
+            	$mrc = curl_multi_exec($model_curl, $active);
+        	} while ($mrc == CURLM_CALL_MULTI_PERFORM);
+		}	//end of else
+	}	//end of while
+	
+	*/
+	
+	
+	
+	
+	echo "Login passed.5.5";
+	$model_value = curl_multi_getcontent($model_curl2);
+	
+	echo "Login passed.6";
+	curl_multi_remove_handle($model_curl, $model_curl2);
+	curl_close($model_curl);
+	echo "Login passed.3". '$model_value: '. $model_value;
+	return $model_value;
+	
+	
+
+
+	
+  	curl_close($model_curl);
+	
+	$model_value = curl_multi_getcontent($model_curl2);
+	
+	
+	
+	
+	
+	
+	
+	return $model_value;
+}
+
+
+
 function Add_curl_to_multi_handle($Model_ID){
 	global $mh, $url, $cookieJar, $requesttimeout;
 	$model_url = $url.$Model_ID;
@@ -655,7 +783,7 @@ function Add_curl_to_multi_handle($Model_ID){
 	curl_setopt($model_curl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($model_curl, CURLOPT_COOKIEFILE, $cookieJar);
 	curl_setopt($model_curl, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-	curl_setopt($model_curl, CURLOPT_TIMEOUT, 120); 			//timeout in seconds
+	curl_setopt($model_curl, CURLOPT_TIMEOUT, 20); 			//timeout in seconds
 	curl_multi_add_handle($mh, $model_curl);
 	
 	return $model_curl;
@@ -684,11 +812,11 @@ function Display_model_value($model_value, $mol_Weight, $model_name, $converted_
 	$SD = round($model_value * (-0.05), 3);
 	$converted_SD = sprintf("%.3e", $converted_value*0.05);
 			 
-    echo'<tr id="title" style = "all: none; border: 5px; border-top: 8px solid black; border-bottom: 2px solid black; ">'. 
-		'<td colspan="2"><B>CTV '. $model_name. '..</B></td></tr>';
-	echo'<tr style = "border: 2px; border-collapse: separate;"><td>&nbsp;- LogMole/(kg x day)  &#177;SD';
-	echo'</td><td>';
-	echo $converted_unit. '</td></tr><tr style = "border-collapse: separate;"><td bgcolor="#56A0D3">';
+    echo'<tr class="ui-helper-center" style="border-top-style: 15px;">'. 
+		'<td colspan="2"><B>CTV '. $model_name. '.</B></td></tr>';
+	echo'<tr class="ui-helper-center"><td>  - LogMole/(kg x day)  &#177;SD';
+	echo'</td><td class="ui-helper-center">';
+	echo $converted_unit. '</td></tr><tr class="ui-helper-center"><td bgcolor="#56A0D3">';
     echo '&nbsp;'. $model_value * (-1). " &#177;". $SD. "</td>";
 	echo '<td bgcolor="#56A0D3">';
 	echo $converted_value. " &#177;". $converted_SD. "</td></tr>";		

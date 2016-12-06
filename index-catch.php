@@ -45,7 +45,12 @@
             });
         });
     </script>
-
+	<style>
+		td {
+    		border: 1px solid black;
+		}
+		#title{border-top: 10px;}
+	</style>
 </head>
 
 <body>
@@ -82,7 +87,7 @@
 		 <div id="spinner" class="spinner" style="display:none;">
                 <p align="center">
                     <img id="img-spinner" src="images/ajax-loader.gif" alt="Loading ..." />
-                    Please wait, the analysis may last up to 2 minutes.
+                    Please wait, the analysis may last more than 2 minutes.
                     <div id="show_content">...</div>
                 </p>
          </div>
@@ -126,7 +131,9 @@
                         </p>
                         <fieldset>
                             <p></p>
-                            <form id="form1" action="fileValidator-catch.php" method="post" enctype="multipart/form-data" target="uploader_iframe">
+                            <form id="form1" 
+                            action="http://35.163.227.246/6-CTV/fileValidator-catch.php" 
+                            method="post" enctype="multipart/form-data" target="uploader_iframe">
                                 <input id="file" type="file" name="file" />
                                 <br/>
                                 <a class="btn btn-primary btn-customctv" id="cancel_multiple">Cancel</a>
@@ -165,19 +172,19 @@
             </div>
 
             <div class="row" id="step3" style="display:none;">
-                <div id="stepper" class="col-lg-4">
+                <div id="stepper" class="col-lg-6">
                     <h2>Step 3</h2>
                     <label id="steptwoinstructions"><b> Select compound above before continuing </b>
                     </label>
                     <div id="steptwo" style="display:none;">
                         <p>Select toxicity value. You can select multiple toxicity values </p>
                         <p>Each toxicity value is predicted using QSAR modeling (specifically, Random Forest with CDK and ISIDA descriptors)</p>
-                        <input type="checkbox" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose
+                        <input type="checkbox" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose (Avarage of Two Models)
                         <br>
                         <input type="checkbox" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration
                         <BR>
                         
-                        <input type="checkbox" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer Benchmark Dose
+                        <input type="checkbox" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer Benchmark Dose (Avarage of Three Models)
                         <BR>
                         <input type="checkbox" id="OCBD" disabled="disabled" value="OCBD1">&nbsp;&nbsp; CTV Oral Cancer Benchmark Dose<BR>
                         
@@ -185,7 +192,7 @@
                         <br>
                         <input type="checkbox" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk
                         <BR>
-                        <input type="checkbox" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value
+                        <input type="checkbox" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value (Avarage of Two Models)
                         <BR>
                       
                         
@@ -194,7 +201,7 @@
                     </div>
                     <div id="scompoundSubmit" style="display:none;" align="right">
                         <p>
-							<i>(Please allow up to 2 mins for the analysis to run)</i>
+							<i>(Please allow 2 minutes or more for the analysis to run)</i>
                             <a class="btn btn-default" id="returnStep2s">Cancel</a>
 							<button type="submit" id="Run" class="btn btn-default btn-primary">Run</button>&nbsp;&nbsp;
                             <button type="submit" id="Search-Data-and-Model" class="btn btn-default btn-primary">Search Data & Run Model</button>

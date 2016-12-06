@@ -21,7 +21,8 @@ $(document).ready(
                 "\n CompoundImage:  "+ $('#compoundImage').text() + "");*/
 				$('#spinner').show();
 				seconds_elapse();
-            $.post("Search-php.php", {
+            // $.post("Search-php-v2.php", {
+			$.post("Search-php.php", {
                     compoundName: $('#compoundNamer').text(),
                     submitValue: $('#submission').text(),
                     MolWeight: $('#Molecularweight').text(),
@@ -44,12 +45,20 @@ $(document).ready(
                 },		// end of submitting data.
 				
                 function(newdata) {						// When search results received.
-					// alert("Search Results Received. ");
+					alert("Search Results Received. " + newdata);
+					// var w = window.open();
+					// $(w.document.body).replaceWith(newdata);
+					
                     $('#spinner').hide(),
                     $('#result').show();
                     $('#reset_check').css("display", "block");
                     $('#resultss').replaceWith(newdata);
+					
                     $('#results').dialog("open");
+					
+					
+  
+    				// $(w.document.body).replaceWith(newdata);
 				}
             );
 
