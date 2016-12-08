@@ -141,6 +141,20 @@
                                 </p>
                             </form>
                         </fieldset>
+                        <br>new
+                            <form id="form1" 
+                            action="http://35.163.227.246/6-CTV/fileValidator-catch.php" 
+                            method="post" enctype="multipart/form-data" target="_blank">
+                            <input id="file" type="file" name="file" />
+                                
+                                <br/>
+                                
+                                <input type="submit" value="Open New..." />
+                                </p>
+                            </form>
+                        
+                        
+                        
                     </div>
                 </div>
             </div>

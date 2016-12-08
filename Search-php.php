@@ -17,212 +17,47 @@ $search_var=$_POST['compoundName'];  //Retrieve compound name from user
  $chemBench = true;  //By default chembench is set to true, it becomes false if compound is found in flat file.
 // Process flat file
 
+echo '<link href="css/bootstrap.css" rel="stylesheet">';
+echo '<script type="text/javascript" src="js/customScript.js"></script>';
+echo '<div style="float: left; width: 60%;">';
+echo '<table id="compResults" BORDER="2" style="text-align: center;">';
+echo '<tr><td colspan="2" style = "text-align: left;">&nbsp;'. $_POST['compoundName']. '<td></tr>';
+
 for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 	if(strcasecmp($data->val($i,2), $search_var) ==0) {			// Search if the compound name matches
 	  $chemBench = false; //Compound is in flat file, don't make API call to chembench 
-	  echo '<link href="css/bootstrap.css" rel="stylesheet">';
-	  echo '<script type="text/javascript" src="js/customScript.js"></script>';
-	  echo '<div style="float: left; width: 60%;">';
-	  echo '<table id="compResults" BORDER="1">';
+
 	  
-	 if($_POST['refDose'] == "true")
-	 {
-	      $col = 10;
-		  echo'<tr><td><B>Reference Dose </B></td></tr>';
-          echo"<tr><td>LogMole +/- SD";
-		  echo'</td><td>RfD (mg/kg-day)</td>';
-		  $color = $data->bgColor($i,$col,$sheet=0);
-		  if($color == "13")
-		  {
-		    echo '</tr><tr><td BGCOLOR="#56A0D3">';  //predicted
-			$value = $data->val($i,11);
-		    echo sprintf("%.2e",($value));
-		    echo'  +/-  0.7</td>';
-			echo '<td BGCOLOR="#56A0D3">';
-			$value = $data->val($i,$col);
-			$SD = sprintf("%.2e",(pow(10, 0.7) * 1000 * $mol_Weight));
-		    echo sprintf("%.2e",($value));
-			echo"  +/-  $SD</td>";
-		    echo '</tr>';
-		  }
-          else
-		  {
-		   echo '</tr><tr><td>';
-		   $value = $data->val($i,11);
-		   echo sprintf("%.2e",($value));
-		   echo'</td>';
-		   echo '<td>';
-		   $value = $data->val($i,$col);
-		   echo sprintf("%.2e",($value));
-		   echo'</td>';
-		   echo '</tr>';
-		  }
-          echo'</td>';
-          echo'</tr>';		  
-	  }
-	  
-	 
-	 if($_POST['refConc'] == "true")
-	 {
-	      $col = 18;
-		  echo'<p></P>';
-		  echo'<tr><td><B>Reference Concentration </B></td></tr>';
-          echo"<tr><td>LogMole +/- SD";
-		  echo'</td><td>RfC (mg/m3)</td>';
-		  $color = $data->bgColor($i,$col,$sheet=0);
-		  if($color == "13")
-		  {
-		    echo '</tr><tr><td BGCOLOR="#56A0D3">';  //predicted
-			$value = $data->val($i,19);
-		    echo sprintf("%.2e",($value));
-		    echo'  +/-  1.08</td>';
-			echo '<td BGCOLOR="#56A0D3">';  //predicted
-			$value = $data->val($i,$col);
-			$SD = sprintf("%.2e",(pow(10, 1.08) * 1000 * $mol_Weight));
-		    echo sprintf("%.2e",($value));
-		    echo"  +/-  $SD</td>";
-		    echo '</tr>';
-		  }
-          else
-		  {
-		   echo '</tr><tr><td>';
-		   $value = $data->val($i,19);
-		   echo sprintf("%.2e",($value));
-		   echo'</td>';
-		   echo '<td>';
-		   $value = $data->val($i,$col);
-		   echo sprintf("%.2e",($value));
-		   echo'</td>';
-		   echo '</tr>';
-		  }
-		   echo '</td>';
-		   echo '</tr>';	  
-	 }   
-	  
-	 if($_POST['oralSlope'] == "true")
-	 {
-		  $col = 26;
-		  echo'<tr><td><B>Oral Slope Factor </B></td></tr>';
-          echo"<tr><td>LogMole +/- SD";
-		  echo'</td><td>OSF (per mg/kg-day)</td>';
-		  $color = $data->bgColor($i,$col,$sheet=0);
-		  if($color == "13")
-		  {
-		    echo '</tr><tr><td BGCOLOR="#56A0D3">';  //predicted
-			$value = $data->val($i,27);
-		    echo sprintf("%.2e",($value));
-		    echo'  +/-  0.85</td>';
-			echo '<td BGCOLOR="#56A0D3">';  //predicted
-			$value = $data->val($i,$col);
-			$SD = sprintf("%.2e",(pow(10, 0.85) / 1000 / $mol_Weight));
-		    echo sprintf("%.2e",($value));
-		    echo"  +/-  $SD</td>";
-		    echo '</tr>';
-		  }
-          else
-		  {
-		   echo '</tr><tr><td>';
-		   $value = $data->val($i,27);
-		   echo sprintf("%.2e",($value));
-		   echo'</td>';
-		   echo '<td>';
-		   $value = $data->val($i,$col);
-		   echo sprintf("%.2e",($value));
-		   echo'</td>';
-		   echo '</tr>';
-		  }
-	      echo'</td>';
-          echo'</tr>';		  
-		}  
-	 if($_POST['ihalUnit'] == "true")
-	 {    
-	      $col = 34;
-		  echo'<tr><td><B>Inhalation Unit Risk </B></td></tr>';
-          echo"<tr><td>LogMole +/- SD";
-		  echo'</td><td>IUR (per ug/m3)</td>';
-		  $color = $data->bgColor($i,$col,$sheet=0);
-		  if($color == "13")
-		  {
-		    echo '</tr><tr><td BGCOLOR="#56A0D3">';  //predicted
-			$value = $data->val($i,35);
-		    echo sprintf("%.2e",($value));
-		    echo'  +/-  0.95</td>';
-			echo '<td BGCOLOR="#56A0D3">';  //predicted
-			$value = $data->val($i,$col);
-			$SD = sprintf("%.2e",(pow(10, 0.95) / 1000000 / $mol_Weight));
-		    echo sprintf("%.2e",($value));
-		    echo"  +/-  $SD</td>";
-		    echo '</tr>';
-		  }
-          else
-		  {
-		   echo '</tr><tr><td>';
-		   $value = $data->val($i,35);
-		   echo sprintf("%.2e",($value));
-		   echo'</td>';
-		   echo '<td>';
-		   $value = $data->val($i,$col);
-		   echo'</td>';
-		   echo '</tr>';
-		  }
-	      echo'</td>';
-          echo'</tr>';		  
-	 }   
-	 
-	 if($_POST['cancPot'] == "true")
-	 {
-          $col = 42;
-		  echo'<tr><td><B>Cancer Potency Value </B></td></tr>';
-          echo"<tr><td>LogMole +/- SD";
-		  echo'</td><td>CPV (per mg/kg-day)</td>';
-		  $color = $data->bgColor($i,$col,$sheet=0);
-		  if($color == "13")
-		  {
-		    echo '</tr><tr><td BGCOLOR="#56A0D3">';  //predicted
-			$value = $data->val($i,43);
-		    echo sprintf("%.2e",($value));
-		    echo'  +/-  0.86</td>';
-			echo '<td BGCOLOR="#56A0D3">';  //predicted
-			$value = $data->val($i,$col);
-			$SD = sprintf("%.2e",(pow(10, 0.86) / 1000 / $mol_Weight));
-		    echo sprintf("%.2e",($value));
-		    echo"  +/- $SD</td>";
-		    echo '</tr>';
-		  }
-          else
-		  {
-		   echo '</tr><tr><td>';
-		   $value = $data->val($i,43);
-		   echo sprintf("%.2e",($value));
-		   echo'</td>';
-		   echo '<td>';
-		   $value = $data->val($i,$col);
-		   echo sprintf("%.2e",($value));
-		   echo'</td>';
-		   echo '</tr>';
-		  }
-	      echo'</td>';
-		  echo'</tr>';
-	 }   
+	 if($_POST['refDose'] == "true"){
+		 Read_Display_exist_value("Reference Dose", 10, $mol_Weight, 'mg/(kg x day)', $i); }
+	 if($_POST['refConc'] == "true"){
+		 Read_Display_exist_value("Reference Concentration", 18, $mol_Weight, 'mg/m<sup>3</sup>', $i); }
+	 if($_POST['oralSlope'] == "true"){
+		 Read_Display_exist_value("Oral Slope Factor", 26, $mol_Weight, 'mg/(kg x day)', $i); }
+	 if($_POST['ihalUnit'] == "true"){   
+	 	Read_Display_exist_value("Inhalation Unit Risk", 34, $mol_Weight, '&#181;g/m<sup>3</sup>', $i); }
+	 if($_POST['cancPot'] == "true"){   
+	 	Read_Display_exist_value("Cancer Potency Value", 42, $mol_Weight, 'mg/(kg x day)', $i); }
      
-     echo'</table>';
-	 echo "";
-	 echo '</div>';
-	 echo '<div style="float: right; width: 40%;">';
-	 $imageValue = $_POST['CompoundImage'];
-	 echo '<img src="data:image/png;base64,' . $imageValue . '" />';
-	 echo "<p>Common Name: $search_var </p>";
-	 echo '<ul class="legend">';
-     echo '<li><span class="awesome"></span> <b>Predicted.</B></li>';
-	 echo '<li><span class="superawesome"></span> <B>Retrieved from publicly available sources</B></li><br>';
-     echo '</ul>';
-	 echo' <p align="left">';
-	 echo'<input type="button" onclick="$(';
-	 echo"'#compResults').table2CSV()";
-	 echo'" value="Export as CSV">';
-	 echo'</p>';
-	 echo '</div>';
-     	 
+	 if ($_POST['onbd'] != "true" && $_POST['ocbd'] != "true" ){
+     	echo'</table>';
+	 	echo "";
+	 	echo '</div>';
+	 	echo '<div style="float: right; width: 40%;">';
+	 	$imageValue = $_POST['CompoundImage'];
+	 	echo '<img src="data:image/png;base64,' . $imageValue . '" />';
+	 	echo "<p>Common Name: $search_var </p>";
+	 	echo '<ul class="legend">';
+     	echo '<li><span class="awesome"></span> <b>Predicted.</B></li>';
+	 	echo '<li><span class="superawesome"></span> <B>Retrieved from publicly available sources</B></li><br>';
+     	echo '</ul>';
+	 	echo' <p align="left">';
+	 	echo'<input type="button" onclick="$(';
+	 	echo"'#compResults').table2CSV()";
+	 	echo'" value="Export as CSV">';
+	 	echo'</p>';
+	 	echo '</div>';
+     	}		// end of  if ($_POST['onbd'] != "true" && $_POST['ocbd'] != "true" ){}
     }
 }
 //*******************************************************************************************************************************************************//
@@ -254,22 +89,16 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   // echo "Good so far.";
   // echo '__DIR__: '. __DIR__;
   $loginResult = curl_exec($loginRequest);
-  echo "This site is UNDER CONSTRUCTION. ";
-    if ($loginResult === false) {
-		echo "what?";
-      die(curl_error($loginRequest));
-     }
-   curl_close($loginRequest);
+  if ($loginResult === false) {
+	echo "what?";
+    die(curl_error($loginRequest));
+  	}
+  curl_close($loginRequest);
   //end of login
   
   $http_response = 0;
   $time_out = 0;
   $output = null;
-  echo '<link href="css/bootstrap.css" rel="stylesheet">';
-  echo '<script type="text/javascript" src="js/customScript.js"></script>';
-  echo '<div style="float: left; width: 60%;">';
-  echo'<table id="compResults" style="text-align: center;">';
-  
   
   if($_POST['refDose'] == "true" && $chemBench)	{
 	  $REFD_CDK = Add_curl_to_multi_handle('60561'); 
@@ -323,7 +152,7 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 	// echo ', curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE): '. curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE);
 
 	// Read data and display.
-  if($_POST['refDose'] == "true"){
+  if($_POST['refDose'] == "true" && $chemBench){
 	$model_value_1 = Read_model_curl($REFD_CDK);		//$REFD_CDK
 	$model_value_2 = Read_model_curl($RfD_NOEL_CDK_66220);		//$REFD_CDK
 	// $model_value_3 = Read_model_curl($RfD_NOEL_ISIDA_66226);		//$REFD_CDK
@@ -333,14 +162,13 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 	Display_model_value(round($model_value, 3), $mol_Weight, 'Reference Dose', 'mg/(kg x day)');	
 	}
 	  
-  if($_POST['refConc'] == "true"){
+  if($_POST['refConc'] == "true" && $chemBench){
 	$model_value = Read_model_curl($RFC_CDK);		// $RFC_CDK
 	Display_model_value($model_value, $mol_Weight, 'Reference Concentration', 'mg/m<sup>3</sup>');	
     }
 	
   if($_POST['onbd'] == "true"){  			
     $model_value_1 = Read_model_curl($ONBD_CDK_60471);		
-	echo '$model_value_1: '. $model_value_1;
 	$model_value_2 = Read_model_curl($ONBDL_CDK_66208);		
 	$model_value_3 = Read_model_curl($ONBDL_ISIDA_66214);		
 	$model_value = 
@@ -355,17 +183,17 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
     }	
 	  
 		  
-  if($_POST['oralSlope'] == "true"){ 
+  if($_POST['oralSlope'] == "true" && $chemBench){ 
     $model_value = Read_model_curl($OSF_CDK);		// $OSF_CDK
 	Display_model_value($model_value, $mol_Weight, 'Oral Slope', 'mg/(kg x day)');	
     }
 		  
-  if($_POST['ihalUnit'] == "true"){  			
+  if($_POST['ihalUnit'] == "true" && $chemBench){  			
     $model_value = Read_model_curl($IUR_CDK);		// $IUR_CDK
 	Display_model_value($model_value, $mol_Weight, 'Inhalation Unit Risk', '&#181;g/m<sup>3</sup>');	
     }
 		    
-  if($_POST['cancPot'] == "true"){  			
+  if($_POST['cancPot'] == "true" && $chemBench){  			
     $model_value_1 = Read_model_curl($CPV_CDK);		
 	$model_value_2 = Read_model_curl($CPV_ISIDA_60543);		
 	$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
@@ -685,7 +513,7 @@ function Display_model_value($model_value, $mol_Weight, $model_name, $converted_
 	$converted_SD = sprintf("%.3e", $converted_value*0.05);
 			 
     echo'<tr id="title" style = "all: none; border: 5px; border-top: 8px solid black; border-bottom: 2px solid black; ">'. 
-		'<td colspan="2"><B>CTV '. $model_name. '..</B></td></tr>';
+		'<td colspan="2"><B>CTV '. $model_name. '</B></td></tr>';
 	echo'<tr style = "border: 2px; border-collapse: separate;"><td>&nbsp;- LogMole/(kg x day)  &#177;SD';
 	echo'</td><td>';
 	echo $converted_unit. '</td></tr><tr style = "border-collapse: separate;"><td bgcolor="#56A0D3">';
@@ -694,7 +522,30 @@ function Display_model_value($model_value, $mol_Weight, $model_name, $converted_
 	echo $converted_value. " &#177;". $converted_SD. "</td></tr>";		
     }
 			
-         
+function Read_Display_exist_value($model_name, $column_number, $mol_Weight, $converted_unit, $i){
+    global $data;
+
+	echo'<tr style = "all: none; border: 5px; border-top: 8px solid black; border-bottom: 2px solid black; "><td colspan="2"><B> CTV '. $model_name. '</B></td></tr>';
+    echo"<tr><td> - LogMole &#177;SD";
+	echo'</td><td>'. $converted_unit. '</td>';
+	$color = $data->bgColor($i,$column_number,$sheet=0);
+	$value_1 = $data->val($i, $column_number + 1);
+	$value_2 = $data->val($i, $column_number);
+	if($color == "13"){
+		$bgcolor_field = 'BGCOLOR="#56A0D3"';
+		$field_1 = sprintf("%.2e",($value_1)). "&#177;". sprintf("%.2e",($value_1*0.05));
+		$field_2 = sprintf("%.2e",(pow(10, $value_2)*1000*$mol_Weight));
+		$field_2 .=  "+/-". sprintf("%.2e",((pow(10, $value_2)*1000*$mol_Weight)*0.05));
+		}
+		else{
+		$bgcolor_field = "";
+		$field_1 = sprintf("%.2e",($value_1));
+		$field_2 = sprintf("%.2e",($value_2));
+		}
+    echo '</tr><tr'. $bgcolor_field. '>';  //predicted
+	echo '<td>'. $field_1. '</td>';
+	echo '<td>'. $field_2 ."</td></tr>";
+}	  
 
 	// border-top-style: none;
     // border-left-style: none;

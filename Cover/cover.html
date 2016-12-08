@@ -58,12 +58,37 @@ a:active {
 </style>
 
 <body>
-	
 <div id="container">
-<br><br><br><br><br><br><br><br><br>
-<h1 style="text-align:center; font-size: 48px;"><b>CTV ToxValue</b></h1>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="http://toxvalue.org/">CTV Demo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="http://toxvalue.org/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li id="Contact"><a href="#"><span class="glyphicon glyphicon-phone-alt"></span> Contact</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
+         <div style="visibility: hidden">
+			<div id="Contact_dialog" title="Contact Information">
+  				<p>For any questions or to be notified of future updates to ToxValue.org, please send an email to <a href="mailto:conditionaltoxvalue@gmail.com" target="_blank">conditionaltoxvalue@gmail.com</a>.</p>
+			</div>
+          </div>
+      </ul>
+    </div>
+  </div>
+</nav>
 
+<br><br><br>
+<h1 style="text-align:center; font-size: 36px;"><b>CTV <br> Conditional Toxicity Value</b></h1>
+<h2 style="text-align:center; font-size: 24px;">An <i>In Silico</i> Approach for Generating Toxicity Values for Chemicals</h2>
+<br><br><br><br><br><br><br><br><br>
+Why are we doing it?
+Toxicity models are installed in Chembench.org.
+Chemicals are to be searched in Chemspider.org for SMILES string, then the , This website is maintained by Dr. Ivan Rusyn lab at Texas A&M University.<br><br><br><br><br><br><br>
+<div id="gradient">gradient</div>
 </div>
 
 
@@ -73,8 +98,6 @@ $(document).ready(function(){
 	
 $("#container").css({
     background: "-webkit-gradient(linear, left top, left bottom, from(#97d1c5), to(#19a688))" })
-
-
 
 
 });		//end of $(document).ready(function(){

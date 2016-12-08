@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-
-</head>
-
-<body>
-Hello.
+test.
 <?php 
-echo "hello";
+echo "<script>alert('Hello');</script>hello: ". $_FILES["file"]["name"].'<br>';
 $lastrow = false;
-
-
 header('Content-Type: text/plain; charset=utf-8');
 $dir = "tmp/";
 move_uploaded_file($_FILES["file"]["tmp_name"], $dir. $_FILES["file"]["name"]);
@@ -53,5 +44,3 @@ $file_name = $dir. $_FILES["file"]["name"];
 	 echo '<label id="filename" style="display:none;">';
 		   echo "$file_name</label>";
 ?>
-
-</body></html>
