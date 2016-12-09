@@ -215,9 +215,10 @@
                     </div>
                     <div id="scompoundSubmit" style="display:none;" align="right">
                         <p>
-							<i>(Please allow 2 minutes or more for the analysis to run)</i>
+							<i></i>
                             <a class="btn btn-default" id="returnStep2s">Cancel</a>
-							<button type="submit" id="Run" class="btn btn-default btn-primary">Run</button>&nbsp;&nbsp;
+							<!--
+                            <button type="submit" id="Run" class="btn btn-default btn-primary">Run</button>&nbsp;&nbsp; -->
                             <button type="submit" id="Search-Data-and-Model" class="btn btn-default btn-primary">Search Data & Run Model</button>
                         </p>
                     </div>

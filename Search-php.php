@@ -525,7 +525,7 @@ function Display_model_value($model_value, $mol_Weight, $model_name, $converted_
 function Read_Display_exist_value($model_name, $column_number, $mol_Weight, $converted_unit, $i){
     global $data;
 
-	echo'<tr style = "all: none; border: 5px; border-top: 8px solid black; border-bottom: 2px solid black; "><td colspan="2"><B> CTV '. $model_name. '</B></td></tr>';
+	echo'<tr style = "all: none; border: 5px; border-top: 8px solid black; border-right: 2px;  border-bottom: 2px solid black; "><td colspan="2"><B> CTV '. $model_name. '</B></td></tr>';
     echo"<tr><td> - LogMole &#177;SD";
 	echo'</td><td>'. $converted_unit. '</td>';
 	$color = $data->bgColor($i,$column_number,$sheet=0);

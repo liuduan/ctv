@@ -55,9 +55,10 @@ $(document).ready(
         });
 
         $('#multi_compounds').click(function() {
-            $('#draw_structure').hide();
-            $('#single_compound').replaceWith('');
-            $('#inputfile').show();
+			alert("Multiple compounds search is currently unavailable. It may be available by March 2017.");
+            // $('#draw_structure').hide();
+            // $('#single_compound').replaceWith('');
+            // $('#inputfile').show();
 
         });
 
@@ -223,7 +224,7 @@ var i = 0;
 
 function seconds_elapse(){
 	$("#show_content").html(
-	"<br><center><Deep_maroon><br>" + 
+	"<br><center><Deep_maroon>" + 
 	"Time: </Deep_maroon><font size='6' color='blue' face='verdana'><b> &nbsp&nbsp" + i + 
 	"&nbsp&nbsp	</font></b>   <Deep_maroon>Seconds.");
 		

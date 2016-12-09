@@ -45,7 +45,7 @@ $(document).ready(
                 },		// end of submitting data.
 				
                 function(newdata) {						// When search results received.
-					alert("Search Results Received. " + newdata);
+					// alert("Search Results Received. " + newdata);
 					// var w = window.open();
 					// $(w.document.body).replaceWith(newdata);
 					
