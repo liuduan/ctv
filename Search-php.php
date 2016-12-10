@@ -505,21 +505,28 @@ function Read_model_curl($model_curl){
 	return $model_value;
 	}
 			
-function Display_model_value($model_value, $mol_Weight, $model_name, $converted_unit){			 
-	$model_value = $model_value * (-1);
-	$converted_value = sprintf("%.3e",(pow(10, $model_value) * 1000 * $mol_Weight));
-	
-	$SD = round($model_value * (-0.05), 3);
-	$converted_SD = sprintf("%.3e", $converted_value*0.05);
-			 
-    echo'<tr id="title" style = "all: none; border: 5px; border-top: 8px solid black; border-bottom: 2px solid black; ">'. 
+function Display_model_value($model_value, $mol_Weight, $model_name, $converted_unit){	
+	echo'<tr id="title" style = "all: none; border: 5px; border-top: 8px solid black; border-bottom: 2px solid black; ">'. 
 		'<td colspan="2"><B>CTV '. $model_name. '</B></td></tr>';
-	echo'<tr style = "border: 2px; border-collapse: separate;"><td>&nbsp;- LogMole/(kg x day)  &#177;SD';
-	echo'</td><td>';
-	echo $converted_unit. '</td></tr><tr style = "border-collapse: separate;"><td bgcolor="#56A0D3">';
-    echo '&nbsp;'. $model_value * (-1). " &#177;". $SD. "</td>";
-	echo '<td bgcolor="#56A0D3">';
-	echo $converted_value. " &#177;". $converted_SD. "</td></tr>";		
+	if ($model_value != 0){		 
+		$model_value = $model_value * (-1);
+		$converted_value = sprintf("%.3e",(pow(10, $model_value) * 1000 * $mol_Weight));
+	
+		$SD = round($model_value * (-0.05), 3);
+		$converted_SD = sprintf("%.3e", $converted_value*0.05);
+			 
+
+		echo'<tr style = "border: 2px; border-collapse: separate;"><td>&nbsp;- LogMole/(kg x day)  &#177;SD';
+		echo'</td><td>';
+		echo $converted_unit. '</td></tr><tr style = "border-collapse: separate;"><td bgcolor="#56A0D3">';
+    	echo '&nbsp;'. $model_value * (-1). " &#177;". $SD. "</td>";
+		echo '<td bgcolor="#56A0D3">';
+		echo $converted_value. " &#177;". $converted_SD. "</td></tr>";	
+	}	// end of 	if ($model_value != 0){	)
+	else{
+		echo'<tr style = "border: 2px;">';
+		echo '<td colspan="2"> Prediction not available</td>';
+		}
     }
 			
 function Read_Display_exist_value($model_name, $column_number, $mol_Weight, $converted_unit, $i){
