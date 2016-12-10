@@ -3,9 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<link rel="stylesheet" type="text/css" href=
-	"/database_project/scripts/external/font-awesome/css/font-awesome.min.css" />
-	
+<link rel="stylesheet" type="text/css" href="/css/custom.css" />
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
@@ -60,33 +59,22 @@ a:active {
 <body>
 
 <div id="container">
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="http://toxvalue.org/">CTV Demo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="http://toxvalue.org/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li id="Contact"><a href="#"><span class="glyphicon glyphicon-phone-alt"></span> Contact</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
-         <div style="visibility: hidden">
-			<div id="Contact_dialog" title="Contact Information">
-  				<p>For any questions or to be notified of future updates to ToxValue.org, please send an email to <a href="mailto:conditionaltoxvalue@gmail.com" target="_blank">conditionaltoxvalue@gmail.com</a>.</p>
-			</div>
-          </div>
-      </ul>
-    </div>
-  </div>
-</nav>
+<?php
+include("Header.html");
+?>
 
-<br><br><br>
+<br><br>
 <h1 style="text-align:center; font-size: 36px;"><b>CTV <br> Conditional Toxicity Value</b></h1>
 <h2 style="text-align:center; font-size: 24px;">An <i>In Silico</i> Approach for Generating Toxicity Values for Chemicals</h2>
-<br><br><br><br><br>
-<div style = "margin:100px; font-size: 18px; text-indent: 50px; text-align: justify;">
+<br><br><br>
+
+<div style="text-align:center;">
+<a href = "index-catch.php">
+<img src = "images/Continue-button.png" style="height: 70px;" align="middle"/></a>
+
+</div>
+
+<div style = "padding:100px; font-size: 18px; text-indent: 50px; text-align: justify;">
      Human health assessments produce qualitative toxicity values or standards by relying on epidemiological data or animal studies. Such assessments are data-, time-, and resource-intensive, and cannot be realistically expected for most environmental chemicals. The National Research Council's "Science and Decisions" report called for development of default approaches to support risk estimation for toxcicants lacking chemical-specific information. 
      
 	<p style = "text-indent: 50px; ">
@@ -102,8 +90,8 @@ a:active {
 	An in silico tool that can predict a toxicity value with an error of less than a factor of 10 fills a critical gap in the current risk management paradigm. It can be used to quickly assess relative hazards of environmental exposures when toxicity data or risk assessments are unavailable.
 Toxicity models are installed in Chembench.org.
 Chemicals are to be searched in Chemspider.org for SMILES string, then the , This website is maintained by Dr. Ivan Rusyn lab at Texas A&M University.</p>
-</div><br><br><br><br><br><br>
-<div id="gradient">gradient</div>
+</div><br><br><br>
+
 </div>
 
 
@@ -112,7 +100,7 @@ Chemicals are to be searched in Chemspider.org for SMILES string, then the , Thi
 $(document).ready(function(){
 	
 $("#container").css({
-    background: "-webkit-gradient(linear, left top, left bottom, from(#97d1c5), to(#19a688))" })
+    background: "-webkit-gradient(linear, left top, left bottom, from(#00dede), to(#6495ed))" })
 
 
 });		//end of $(document).ready(function(){

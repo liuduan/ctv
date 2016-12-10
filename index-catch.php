@@ -54,28 +54,10 @@
 </head>
 
 <body>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="http://toxvalue.org/">CTV Demo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="http://toxvalue.org/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li id="Contact"><a href="#"><span class="glyphicon glyphicon-phone-alt"></span> Contact</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
-         <div style="visibility: hidden">
-			<div id="Contact_dialog" title="Contact Information">
-  				<p>For any questions or to be notified of future updates to ToxValue.org, please send an email to <a href="mailto:conditionaltoxvalue@gmail.com" target="_blank">conditionaltoxvalue@gmail.com</a>.</p>
-			</div>
-          </div>
-      </ul>
-    </div>
-  </div>
-</nav>
+<div id = "container-outside" style="height: 1200px">
+<?php
+include("Header.html");
+?>
 
     <div id="results" title="Results">
         <div id="resultss" title="Results">resultss
@@ -239,6 +221,16 @@
         </div>
 
     </div>
+</div> 		<!== end of div id = container-outside ==>
+<script>
+$(document).ready(function(){
+	
+$("#container-outside").css({
+    background: "-webkit-gradient(linear, left top, left bottom, from(#00dede), to(#6495ed))" })
+
+
+});		//end of $(document).ready(function(){
+</script>
    
 </body>
 

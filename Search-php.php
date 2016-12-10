@@ -436,7 +436,7 @@ echo'Data from two models: Oral Noncancer Benchmark Dose, Oral Cancer Benchmark 
 
 
 echo '<script type="text/javascript" src="js/customScript.js"></script>';
-echo'<table id="compResults" BORDER="1">';
+echo'<table id="compResults" BORDER="2">';
 echo'<tr>';
 echo"<td>Compound</td>";
 for($x = 0; $x < $columns; $x++)
@@ -546,12 +546,6 @@ function Read_Display_exist_value($model_name, $column_number, $mol_Weight, $con
 	echo '<td>'. $field_1. '</td>';
 	echo '<td>'. $field_2 ."</td></tr>";
 }	  
-
-	// border-top-style: none;
-    // border-left-style: none;
-    // border-right-style: none;
-    // border-bottom-style: none;
-
 
 
 
