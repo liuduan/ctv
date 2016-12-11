@@ -53,8 +53,8 @@
 	</style>
 </head>
 
-<body>
-<div id = "container-outside" style="height: 1200px">
+<body background="images/multiple-patterns.gif">
+<div id = "container-outside">
 <?php
 include("Header.html");
 ?>
@@ -225,8 +225,8 @@ include("Header.html");
 <script>
 $(document).ready(function(){
 	
-$("#container-outside").css({
-    background: "-webkit-gradient(linear, left top, left bottom, from(#00dede), to(#6495ed))" })
+// $("#container-outside").css({
+//     background: "-webkit-gradient(linear, left top, left bottom, from(#00dede), to(#6495ed))" })
 
 
 });		//end of $(document).ready(function(){

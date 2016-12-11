@@ -4,6 +4,8 @@
 //echo "Hello";
 // print_r($_POST);
 // exit;
+$time_start = time();
+  $time_lapse = 0;
 require_once 'Excel/excel_reader2.php';
 $data = new Spreadsheet_Excel_Reader("ctv_data.xls");
 error_reporting(E_ALL ^ E_NOTICE);
@@ -129,16 +131,23 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 	$mrc = curl_multi_exec($mh, $active);
   } while ($mrc == CURLM_CALL_MULTI_PERFORM);
 
+
   while ($active && $mrc == CURLM_OK) {
     if (curl_multi_select($mh) != -1) {
+		$time_lapse = time() - $time_start;
+		if ($time_lapse > 50){exit(">300 seconds 1");}
         do {
             $mrc = curl_multi_exec($mh, $active);
+			$time_lapse = time() - $time_start;
+			if ($time_lapse > 50){exit(">300 seconds 2");}
         } while ($mrc == CURLM_CALL_MULTI_PERFORM);
     }
 	else{
 	usleep(10);
 	do {
             $mrc = curl_multi_exec($mh, $active);
+			$time_lapse = time() - $time_start;
+			if ($time_lapse > 50){exit(">300 seconds 3");}
         } while ($mrc == CURLM_CALL_MULTI_PERFORM);
 		}
 	
@@ -152,6 +161,7 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 	// echo ', curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE): '. curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE);
 
 	// Read data and display.
+  echo "Time Lapse: ". $time_lapse;	
   if($_POST['refDose'] == "true" && $chemBench){
 	$model_value_1 = Read_model_curl($REFD_CDK);		//$REFD_CDK
 	$model_value_2 = Read_model_curl($RfD_NOEL_CDK_66220);		//$REFD_CDK

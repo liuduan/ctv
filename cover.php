@@ -56,7 +56,7 @@ a:active {
 
 </style>
 
-<body>
+<body background="images/multiple-patterns.gif">
 
 <div id="container">
 <?php
@@ -78,18 +78,25 @@ include("Header.html");
      Human health assessments produce qualitative toxicity values or standards by relying on epidemiological data or animal studies. Such assessments are data-, time-, and resource-intensive, and cannot be realistically expected for most environmental chemicals. The National Research Council's "Science and Decisions" report called for development of default approaches to support risk estimation for toxcicants lacking chemical-specific information. 
      
 	<p style = "text-indent: 50px; ">
-    To address the challenge of risk management for data-poor chemicals, we developed quantitative structure-activity relationship (QSAR) models that use chemical properties to predict toxicity values.</p>
+    To address the challenge of risk management for data-poor chemicals, we developed quantitative structure-activity relationship (QSAR) models that use chemical properties to predict toxicity values. 
     
-    <p style = "text-indent: 50px; ">
-	We used a comprehensive database of existing guidance values from US Federal and State agencies and developed continuous QSAR models. We created a publicly-accessible web-based tool that allows end-users to retrieve existing or calculate predicted toxicity values for the chemicals of interest.</p>
+    The development and operation of continuous QSAR models are based on a comprehensive database of existing guidance values from US Federal and State agencies. </p>
+    
+ 
 
 	<p style = "text-indent: 50px; "> 
-	We developed reliable QSAR models for non-cancer threshold-based values and cancer slope factors with external validation-based Q2 ranging from 0.30 to 0.53. Mean model errors ranged from 0.66 to 1.0 log10 units of concentration/dose; most models can be used to calculate values from > 90% of environmental chemicals. We analyzed physico-chemical properties and structural features that were most informative to model predictions.</p>
+	The QSAR models are reliable. For non-cancer threshold-based values and cancer slope factors with external validation-based Q2 ranging from 0.30 to 0.53. Mean model errors ranged from 0.66 to 1.0 log10 units of concentration/dose; most models can be used to calculate values from > 90% of environmental chemicals. The physico-chemical properties and structural features are informative to model predictions.</p>
 
+
+    
 	<p style = "text-indent: 50px; "> 
-	An in silico tool that can predict a toxicity value with an error of less than a factor of 10 fills a critical gap in the current risk management paradigm. It can be used to quickly assess relative hazards of environmental exposures when toxicity data or risk assessments are unavailable.
+	An <i>in silico</i> tool that can predict a toxicity value with an error of less than a factor of 10 fills a critical gap in the current risk management paradigm. It can be used to quickly assess relative hazards of environmental exposures when toxicity data or risk assessments are unavailable.</p>
+    
+    
+       <p style = "text-indent: 50px; ">
+    This website serves as a publicly-accessible web-based tool that allows end-users to retrieve existing or calculate predicted toxicity values for the chemicals of interest. 
 Toxicity models are installed in Chembench.org.
-Chemicals are to be searched in Chemspider.org for SMILES string, then the , This website is maintained by Dr. Ivan Rusyn lab at Texas A&M University.</p>
+Chemspider.org is linked for chemical names and SMILES strings. This website is maintained by Dr. Ivan Rusyn and Dr. Weihsueh Chiu working groups at Texas A&M University.</p>
 </div><br><br><br>
 
 </div>
@@ -99,8 +106,8 @@ Chemicals are to be searched in Chemspider.org for SMILES string, then the , Thi
 <script>
 $(document).ready(function(){
 	
-$("#container").css({
-    background: "-webkit-gradient(linear, left top, left bottom, from(#00dede), to(#6495ed))" })
+// $("#container").css({
+    // background: "-webkit-gradient(linear, left top, left bottom, from(#00dede), to(#6495ed))" })
 
 
 });		//end of $(document).ready(function(){
