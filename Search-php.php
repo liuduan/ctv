@@ -126,30 +126,23 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
   //execute the handles
   
   $active = null;
-
+  
   do {
 	$mrc = curl_multi_exec($mh, $active);
   } while ($mrc == CURLM_CALL_MULTI_PERFORM);
 
-
   while ($active && $mrc == CURLM_OK) {
     if (curl_multi_select($mh) != -1) {
-		$time_lapse = time() - $time_start;
-		if ($time_lapse > 50){exit(">300 seconds 1");}
         do {
             $mrc = curl_multi_exec($mh, $active);
-			$time_lapse = time() - $time_start;
-			if ($time_lapse > 50){exit(">300 seconds 2");}
         } while ($mrc == CURLM_CALL_MULTI_PERFORM);
     }
 	else{
 	usleep(10);
 	do {
-            $mrc = curl_multi_exec($mh, $active);
-			$time_lapse = time() - $time_start;
-			if ($time_lapse > 50){exit(">300 seconds 3");}
+        $mrc = curl_multi_exec($mh, $active);
         } while ($mrc == CURLM_CALL_MULTI_PERFORM);
-		}
+	}	// end of else{}
 	
   }	// end of while ($active && $mrc == CURLM_OK) {}, about 12 lines.
   
@@ -161,7 +154,7 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 	// echo ', curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE): '. curl_getinfo($REFD_CDK, CURLINFO_HTTP_CODE);
 
 	// Read data and display.
-  echo "Time Lapse: ". $time_lapse;	
+
   if($_POST['refDose'] == "true" && $chemBench){
 	$model_value_1 = Read_model_curl($REFD_CDK);		//$REFD_CDK
 	$model_value_2 = Read_model_curl($RfD_NOEL_CDK_66220);		//$REFD_CDK
@@ -214,10 +207,12 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 
           echo'</table>';
 		  echo '</div>';
+		    
 	      echo '<div style="float: right; width: 40%;">';
 	      $imageValue = $_POST['CompoundImage'];
 	      echo '<img src="data:image/png;base64,' . $imageValue . '" />';
 	      echo "<p>Common Name: $search_var </p>";
+
 	      echo '<ul class="legend">';
           echo '<li><span class="awesome"></span> <b>Predicted</B></li>';
 	      echo '<li><span class="superawesome"></span> <B>Retrieved from publicly available sources</B></li><br>';
@@ -225,7 +220,8 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 		  echo' <p align="left">';
 	      echo'<input type="button" onclick="$(';
 	      echo"'#compResults').table2CSV()";
-	      echo'" value="Export as CSV">';
+	      echo'" value="Export as CSV"><br><br><br><br><br>';
+		  $time_lapse = time() - $time_start; echo "Search Time lapse: ". $time_lapse. " Seconds. ";
 	      echo '</div>';
 		  if($http_response == 500)
 		  {
@@ -493,7 +489,7 @@ function Add_curl_to_multi_handle($Model_ID){
 	curl_setopt($model_curl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($model_curl, CURLOPT_COOKIEFILE, $cookieJar);
 	curl_setopt($model_curl, CURLOPT_CONNECTTIMEOUT, $requesttimeout);
-	curl_setopt($model_curl, CURLOPT_TIMEOUT, 120); 			//timeout in seconds
+	// curl_setopt($model_curl, CURLOPT_TIMEOUT, 120); 			//timeout in seconds
 	curl_multi_add_handle($mh, $model_curl);
 	
 	return $model_curl;
