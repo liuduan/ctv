@@ -220,8 +220,8 @@ if($chemBench or $_POST['onbd'] == "true" or $_POST['ocbd'] == "true" )
 		  echo' <p align="left">';
 	      echo'<input type="button" onclick="$(';
 	      echo"'#compResults').table2CSV()";
-	      echo'" value="Export as CSV"><br><br><br><br><br>';
-		  $time_lapse = time() - $time_start; echo "Search Time lapse: ". $time_lapse. " Seconds. ";
+	      echo'" value="Export as CSV"><br><br><br><br><br><br>';
+		  $time_lapse = time() - $time_start; echo "Modeling time lapse: ". $time_lapse. " Seconds. ";
 	      echo '</div>';
 		  if($http_response == 500)
 		  {

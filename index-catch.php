@@ -53,7 +53,7 @@
 	</style>
 </head>
 
-<body background="images/cloudy-pattern-2.jpg">
+<body background="images/Carpet.jpg">
 <div id = "container-outside">
 <?php
 include("Header.html");

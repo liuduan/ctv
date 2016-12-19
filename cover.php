@@ -55,9 +55,7 @@ a:active {
 }
 
 </style>
-
-<body background="images/cloudy-pattern-2.jpg">
-
+<body background="images/Carpet.jpg">
 <div id="container">
 <?php
 include("Header.html");
