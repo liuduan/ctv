@@ -31,7 +31,7 @@ $(document).ready(
                     refConc: $('#Ref_conc').is(":checked"),
 					
 					onbd: $('#ONBD').is(":checked"),
-                    ocbd: $('#OCBD').is(":checked"),
+                    ocbdl: $('#ONBDL').is(":checked"),
                     oralSlope: $('#Oral_slope').is(":checked"),
 					
                     ihalUnit: $('#Ihal_unit').is(":checked"),

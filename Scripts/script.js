@@ -13,10 +13,10 @@ $(document).ready(
                     compoundName: $('#compoundNames').val()
                 },
                 function(data) {
-					// alert("got data" + data);
+					alert("got data: " + data);
                     $('#spinner').hide(),
-                        $('#ctvInfo').replaceWith(data),
-                        $('#select_check').css("display", "block");
+                    $('#ctvInfo').replaceWith(data),
+                    $('#select_check').css("display", "block");
                 }
             );
 
@@ -32,7 +32,8 @@ $(document).ready(
                 $('#Ref_conc').removeAttr("disabled"),
 				
 				$('#ONBD').removeAttr("disabled"),
-                $('#OCBD').removeAttr("disabled"),
+				$('#ONBDL').removeAttr("disabled"),
+                // $('#OCBD').removeAttr("disabled"),
 				
                 $('#Oral_slope').removeAttr("disabled"),
                 $('#Ihal_unit').removeAttr("disabled"),

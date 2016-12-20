@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>CTV demo </title>
+    <title>CTV</title>
 
     <script type="text/javascript" src="Scripts/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.form.js"></script>
@@ -180,9 +180,13 @@ include("Header.html");
                         <input type="checkbox" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration
                         <BR>
                         
-                        <input type="checkbox" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer Benchmark Dose (Avarage of Three Models)
+                        <input type="checkbox" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMD
                         <BR>
+                        <input type="checkbox" id="ONBDL" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMDL
+                        <BR>
+                        <!--
                         <input type="checkbox" id="OCBD" disabled="disabled" value="OCBD1">&nbsp;&nbsp; CTV Oral Cancer Benchmark Dose<BR>
+                        -->
                         
                         <input type="checkbox" id="Oral_slope" disabled="disabled" value="Oral_slope1">&nbsp;&nbsp; CTV Oral Slope Factor
                         <br>
