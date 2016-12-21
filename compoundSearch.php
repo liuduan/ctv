@@ -17,9 +17,7 @@ $query=$_POST['compoundName'];
 
 $token="25798fdf-c956-4e7b-8294-4c92597cd614"; // the provided password
 
-$thearray = array('query' => $query,
-
-'token' => $token);
+$thearray = array('query' => $query, 'token' => $token);
 
 /** call the service, passing the parameters and the name of the operation **/
 

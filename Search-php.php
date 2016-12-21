@@ -9,6 +9,62 @@ $time_start = time();
 require_once 'Excel/excel_reader2.php';
 $data = new Spreadsheet_Excel_Reader("ctv_data.xls");
 error_reporting(E_ALL ^ E_NOTICE);
+
+
+$search_var=$_POST['compoundName'];  //Retrieve compound name from user
+$mol_Weight =$_POST['MolWeight']; //Retrieve molecular weight
+
+echo '<link href="css/bootstrap.css" rel="stylesheet">';
+echo '<script type="text/javascript" src="js/customScript.js"></script>';
+echo '<div style="float: left; width: 60%;">';
+echo '<table id="compResults" BORDER="2" style="text-align: center;">';
+echo '<tr><td colspan="2" style = "text-align: left;">&nbsp;'. $_POST['compoundName']. '<td></tr>';
+
+
+for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
+	if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {		// if the compound name matches
+		if($_POST['refDose'] == "true"){
+			Read_exist_value();
+		 Read_Display_exist_value("Reference Dose", 10, $mol_Weight, 'mg/(kg x day)', $i); }
+		} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
+	}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
+
+
+
+function Read_exist_value(){
+	global $data;
+	$value_1 = $data->val($i, $column_number + 1);
+	
+	}
+
+function Read_Display_exist_value($model_name, $column_number, $mol_Weight, $converted_unit, $i){
+    global $data;
+
+	echo'<tr style = "all: none; border: 5px; border-top: 8px solid black; border-right: 2px;  border-bottom: 2px solid black; "><td colspan="2"><B> CTV '. $model_name. '</B></td></tr>';
+    echo"<tr><td> - LogMole &#177;SD";
+	echo'</td><td>'. $converted_unit. '</td>';
+	$color = $data->bgColor($i,$column_number,$sheet=0);
+	$value_1 = $data->val($i, $column_number + 1);
+	$value_2 = $data->val($i, $column_number);
+	if($color == "13"){
+		$bgcolor_field = 'BGCOLOR="#56A0D3"';
+		$field_1 = sprintf("%.2e",($value_1)). "&#177;". sprintf("%.2e",($value_1*0.05));
+		$field_2 = sprintf("%.2e",(pow(10, $value_2)*1000*$mol_Weight));
+		$field_2 .=  "+/-". sprintf("%.2e",((pow(10, $value_2)*1000*$mol_Weight)*0.05));
+		}
+		else{
+		$bgcolor_field = "";
+		$field_1 = sprintf("%.2e",($value_1));
+		$field_2 = sprintf("%.2e",($value_2));
+		}
+    echo '</tr><tr'. $bgcolor_field. '>';  //predicted
+	echo '<td>'. $field_1. '</td>';
+	echo '<td>'. $field_2 ."</td></tr>";
+}	  
+
+
+
+
 $requesttimeout = 700;
 $submit_type = $_POST['submitValue'];
 
