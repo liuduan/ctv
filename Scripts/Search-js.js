@@ -27,17 +27,18 @@ $(document).ready(
                     submitValue: $('#submission').text(),
                     MolWeight: $('#Molecularweight').text(),
 					
+					
                     refDose: $('#Ref_dose').is(":checked"),
+					noel: $('#NOEL').is(":checked"),
                     refConc: $('#Ref_conc').is(":checked"),
 					
 					onbd: $('#ONBD').is(":checked"),
-                    ocbdl: $('#ONBDL').is(":checked"),
-                    oralSlope: $('#Oral_slope').is(":checked"),
+                    onbdl: $('#ONBDL').is(":checked"),
 					
+                    oralSlope: $('#Oral_slope').is(":checked"),
                     ihalUnit: $('#Ihal_unit').is(":checked"),
                     cancPot: $('#Canc_pot').is(":checked"),
-                    noael: $('#NOAEL').is(":checked"),
-
+                    
 					
                     smilee: $('#smiles').text(),
                     CompoundImage: $('#compoundImage').text()

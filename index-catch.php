@@ -83,9 +83,14 @@ include("Header.html");
 						<div class="row">
 							<div class="col-md-6 col-sm-12">
 								<p>
-									<b>Enter compound name, CASRN, or SMILES below. Compounds will be searched using <a href="http://www.chemspider.com/" target="_blank">ChemSpider.</a> Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV.</b>
+									<b>Enter compound name, CASRN, or SMILES below. Compounds will be searched using <a href="http://www.chemspider.com/" target="_blank">ChemSpider.</a> Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV..</b>
 								</p>
 								<textarea rows="3" cols="10" id="compoundNames" class="form-control" placeholder="Enter compound name OR SMILES OR CAS Registry Number"></textarea>
+                                <br><br> 
+                                
+                                <div style = "text-align:center;">
+                                <button type="submit" id="compoundSearch" class="btn btn-default btn-primary">Search</button>
+                                </div>
 							</div>
 
 							<div class="col-md-6 col-sm-12">
@@ -103,18 +108,20 @@ include("Header.html");
 
 						</div>
 						<div class="row" align="right">
+                        <!--
 							<a class="btn btn-default" id="multi_compounds">Multiple compounds</a>
-							<button type="submit" id="compoundSearch" class="btn btn-default btn-primary">Search</button>
+                        -->
+							
 						</div>
                     </div>
                     <div id="inputfile" style="display:none;">
                         <h2>Step 1</h2>
-                        <p><b>Upload a CSV file with a maximum of 10 smile strings. Compounds will NOT be validated, so please ensure smiles strings are accurate. Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV.</b>
+                        <p><b>Upload a CSV file with a maximum of 10 smile strings. Compounds will NOT be validated, so please ensure smiles strings are accurate. Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV..</b>
                         </p>
                         <fieldset>
                             <p></p>
                             <form id="form1" 
-                            action="http://35.163.227.246/6-CTV/fileValidator-catch.php" 
+                            action="fileValidator-catch.php" 
                             method="post" enctype="multipart/form-data" target="uploader_iframe">
                                 <input id="file" type="file" name="file" />
                                 <br/>
@@ -125,7 +132,7 @@ include("Header.html");
                         </fieldset>
                         <br>new
                             <form id="form1" 
-                            action="http://35.163.227.246/6-CTV/fileValidator-catch.php" 
+                            action="fileValidator-catch.php" 
                             method="post" enctype="multipart/form-data" target="_blank">
                             <input id="file" type="file" name="file" />
                                 
@@ -175,7 +182,9 @@ include("Header.html");
                     <div id="steptwo" style="display:none;">
                         <p>Select toxicity value. You can select multiple toxicity values </p>
                         <p>Each toxicity value is predicted using QSAR modeling (specifically, Random Forest with CDK and ISIDA descriptors)</p>
-                        <input type="checkbox" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose (Avarage of Two Models)
+                        <input type="checkbox" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose
+                        <br>
+                        <input type="checkbox" id="NOEL" disabled="disabled" value="Ref_dose_NOEL1">&nbsp;&nbsp; CTV Reference Dose NOEL
                         <br>
                         <input type="checkbox" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration
                         <BR>
@@ -192,7 +201,7 @@ include("Header.html");
                         <br>
                         <input type="checkbox" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk
                         <BR>
-                        <input type="checkbox" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value (Avarage of Two Models)
+                        <input type="checkbox" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value
                         <BR>
                       
                         

@@ -11,41 +11,43 @@ $SoapiClient = new soapclient('http://www.chemspider.com/Search.asmx?WSDL', arra
 
 /**create an array of parameters for login **/
 
-$q_name = $_POST['compoundName']; 
+// $q_name = $_POST['compoundName']; 
 
-$query=$_POST['compoundName']; 
+// $query=$_POST['compoundName']; 
+
+$q_name = "endrin"; 
+
+$query= "endrin"; 
 
 $token="25798fdf-c956-4e7b-8294-4c92597cd614"; // the provided password
 
 $thearray = array('query' => $query, 'token' => $token);
 
 /** call the service, passing the parameters and the name of the operation **/
-
+	// one member of $SoapiClient is SimpleSearch(), with $thearray as parameters.
 $result = $SoapiClient->SimpleSearch($thearray);
- 
+
+print_r($result);
+
 /** a quick test **/
 
 // echo "From compoundsearch.php";
 
 if (is_soap_fault($result) || ($result->SimpleSearchResult->int == null)):
-echo "<h4>No Information was found on $query </h4><pre></pre>";
+	echo "<h1>No Information was found on $query </h1><pre></pre>";
+	else:
 
+	$somevar = $result->SimpleSearchResult->int;
+	echo '<br>$somevar: '. $somevar;
+	echo '<br>$somevar[0]: '. $somevar[0];
+	
 
-
-
-else:
-
-
-$somevar = $result->SimpleSearchResult->int;
-
-if($somevar[0] == "")
-{
- $query=$somevar;
- }
- else
- {
- $query=$somevar[0];
-  }
+	if($somevar[0] == ""){			// what is this section doing?
+ 		$query=$somevar;
+ 		}
+ 		else{
+ 			$query=$somevar[0];
+  		}
 
 //$query=$somevar; //the provided username
 
@@ -58,6 +60,9 @@ $thearray = array('CSID' => $query, 'token' => $token);
 //$result = $SoapiClient->GetCompoundInfo($thearray);
 
 $result = $SoapiClients->GetExtendedCompoundInfo($thearray);
+
+echo '<br>New results: ';
+print_r($result);
 
 if (is_soap_fault($result)):
 echo "<h1>No Information was found on </h1>";
@@ -101,7 +106,10 @@ $InChI = $result->GetExtendedCompoundInfoResult->InChI;
 		   echo "<p>InChI = $InChI </p>";
 		   //*******Get image*********
 		  		   //*******Get image*********
-		   $url = "http://chemspider.com/Search.asmx/GetCompoundThumbnail?id=".$query."&token=".$token; //25798fdf-c956-4e7b-8294-4c92597cd614";
+		   $url = "http://chemspider.com/Search.asmx/GetCompoundThumbnail?id=".$query."&token=".$token; 
+		   //25798fdf-c956-4e7b-8294-4c92597cd614";
+		   echo '<br>$query:'. $query;
+		   // $url = "http://chemspider.com/Search.asmx/GetCompoundRn?id=".$query."&token=".$token; 
               $ch = curl_init();
    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
    curl_setopt($ch, CURLOPT_URL, $url);
@@ -109,6 +117,8 @@ $InChI = $result->GetExtendedCompoundInfoResult->InChI;
    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
    $result = curl_exec($ch);
+
+	echo '<br>$result: '. $result;
 
    if (!$result) {
      exit('cURL Error: '.curl_error($ch));

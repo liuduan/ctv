@@ -13,7 +13,7 @@ $(document).ready(
                     compoundName: $('#compoundNames').val()
                 },
                 function(data) {
-					alert("got data: " + data);
+					// alert("got data: " + data);
                     $('#spinner').hide(),
                     $('#ctvInfo').replaceWith(data),
                     $('#select_check').css("display", "block");
@@ -27,17 +27,19 @@ $(document).ready(
             $('#step3').show();
             $('#steptwo').css("display", "block");
             $('#steptwoinstructions').css("display", "none"),
-                $('#scompoundSubmit').css("display", "block"),
-                $('#Ref_dose').removeAttr("disabled"),
-                $('#Ref_conc').removeAttr("disabled"),
+            $('#scompoundSubmit').css("display", "block"),
+            
+			$('#Ref_dose').removeAttr("disabled"),
+			$('#NOEL').removeAttr("disabled"),
+            $('#Ref_conc').removeAttr("disabled"),
 				
-				$('#ONBD').removeAttr("disabled"),
-				$('#ONBDL').removeAttr("disabled"),
-                // $('#OCBD').removeAttr("disabled"),
+			$('#ONBD').removeAttr("disabled"),
+			$('#ONBDL').removeAttr("disabled"),
+            // $('#OCBD').removeAttr("disabled"),
 				
-                $('#Oral_slope').removeAttr("disabled"),
-                $('#Ihal_unit').removeAttr("disabled"),
-                $('#Canc_pot').removeAttr("disabled");
+            $('#Oral_slope').removeAttr("disabled"),
+            $('#Ihal_unit').removeAttr("disabled"),
+            $('#Canc_pot').removeAttr("disabled");
         });
 
         $('#enable_model').click(function() {
