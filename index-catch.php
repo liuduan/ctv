@@ -83,7 +83,7 @@ include("Header.html");
 						<div class="row">
 							<div class="col-md-6 col-sm-12">
 								<p>
-									<b>Enter compound name, CASRN, or SMILES below. Compounds will be searched using <a href="http://www.chemspider.com/" target="_blank">ChemSpider.</a> Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV..</b>
+									<b>Enter compound name, CASRN, or SMILES below. Compounds will be searched using <a href="http://www.chemspider.com/" target="_blank">ChemSpider.</a> Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV.</b>
 								</p>
 								<textarea rows="3" cols="10" id="compoundNames" class="form-control" placeholder="Enter compound name OR SMILES OR CAS Registry Number"></textarea>
                                 <br><br> 
@@ -181,7 +181,7 @@ include("Header.html");
                     </label>
                     <div id="steptwo" style="display:none;">
                         <p>Select toxicity value. You can select multiple toxicity values </p>
-                        <p>Each toxicity value is predicted using QSAR modeling (specifically, Random Forest with CDK and ISIDA descriptors)</p>
+                        <p>Each toxicity value is an average of two predicted values using QSAR modeling, specifically, Random Forest with CDK and ISIDA descriptors. </p>
                         <input type="checkbox" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose
                         <br>
                         <input type="checkbox" id="NOEL" disabled="disabled" value="Ref_dose_NOEL1">&nbsp;&nbsp; CTV Reference Dose NOEL

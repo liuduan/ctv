@@ -10,7 +10,7 @@ $(document).ready(
 			// alert("here...7");
             $.post("compoundSearch.php", {
 			// $.post("cookie.txt", {
-                    compoundName: $('#compoundNames').val()
+                compoundName: $('#compoundNames').val()
                 },
                 function(data) {
 					// alert("got data: " + data);
