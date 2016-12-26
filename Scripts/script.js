@@ -202,6 +202,7 @@ $(document).ready(
         });
 
 		$('#Contact').click(function() {
+			// alert(".");
 			$( "#Contact_dialog" ).dialog({autoOpen: true, position: ['right','top'], 
 				width:'400',});
 			});

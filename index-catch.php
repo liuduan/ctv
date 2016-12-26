@@ -52,9 +52,9 @@
 		#title{border-top: 10px;}
 	</style>
 </head>
-
-<body background="images/Carpet.jpg">
-<div id = "container-outside">
+<body >
+<!-- <body background="images/Carpet.jpg"> -->
+<div id = "container-outside" style = "padding-bottom: 50px;  ">
 <?php
 include("Header.html");
 ?>
@@ -65,20 +65,24 @@ include("Header.html");
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" style = "min-height: 650px; width: 95%; 
+    padding: 100px; padding-top: 25px;  
+-webkit-box-shadow: 0 0 6px 4px black;
+   -moz-box-shadow: 0 0 6px 4px black;
+        box-shadow: 0 0 16px 4px black;">
 		 <div id="spinner" class="spinner" style="display:none;">
                 <p align="center">
                     <img id="img-spinner" src="images/ajax-loader.gif" alt="Loading ..." />
-                    Please wait, the analysis may last more than 2 minutes.
-                    <div id="show_content">...</div>
+                    Please wait, the analysis may last for 3 minutes.
+                    <div id="show_content">.</div>
                 </p>
          </div>
         
-        <div class="body-content">
+        <div class="body-content" style = "width: 1200px; margin: auto;">
 
-            <div class="row" id="step1">
+            <div class="row" id="step1" >
                 <div>
-                    <div id="single_compound">
+                    <div id="single_compound" >
                         <h2>Step 1</h2>
 						<div class="row">
 							<div class="col-md-6 col-sm-12">
@@ -98,8 +102,9 @@ include("Header.html");
 									<div id="draw_structure" class="col-md-8">
 										<div id="jsme_container"></div>
 									</div>
-									<div class="col-md-8">
-										<button type="button" class="btn btn-customctv" onclick='getSmiles();'>Get smiles</button>
+									<div class="col-md-8" style="line-height: 50%;">
+                                    	.<br>
+										<button type="button" class="btn btn-customctv" onclick='getSmiles();'>Get SMILES</button>
 									</div>
 								</div>
 							</div>
@@ -148,8 +153,8 @@ include("Header.html");
                 </div>
             </div>
 
-            <div class="row" id="step2" style="display:none;">
-                <div class="col-lg-4">
+            <div class="row" id="step2" style="display:none; width: 900px;">
+                <div class="col-lg-6">
                     <h2>Step 2</h2> 
                     <div id="ctvInfo">
                     </div>
@@ -159,7 +164,7 @@ include("Header.html");
                         </p>
                     </div>
 
-                    <div id="select_check" style="display:none; width: 100%;">
+                    <div id="select_check" style="display:none; width: 100%; ">
                         <p align="right">
                             <a class="btn btn-default" id="cancel_search">Cancel</a>
                             <a class="btn btn-primary btn-customctv" id="enable_check">Select</a>
@@ -229,7 +234,7 @@ include("Header.html");
             </div>
             <hr>
             <footer>
-                <p>&copy; Company 2015</p>
+                <!-- <p>&copy; Company 2015</p> -->
             </footer>
         </div>
 

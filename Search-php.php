@@ -19,7 +19,7 @@ echo '<link href="css/bootstrap.css" rel="stylesheet">';
 echo '<script type="text/javascript" src="js/customScript.js"></script>';
 echo '<div style="float: left; width: 60%;">';
 echo '<table id="compResults" BORDER="2" style="text-align: center;">';
-echo '<tr><td colspan="2" style = "text-align: left;">&nbsp;'. $_POST['compoundName']. '<td></tr>';
+echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px; ">'. $_POST['compoundName']. '<td></tr>';
 
 
 for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
@@ -277,21 +277,37 @@ function Read_model_curl($model_curl){
 function Display_model_value($model_value, $mol_Weight, $model_name, $converted_unit){	
 	echo'<tr id="title" style = "all: none; border: 5px; border-top: 8px solid black; border-bottom: 2px solid black; ">'. 
 		'<td colspan="2"><B>CTV '. $model_name. '</B></td></tr>';
+		
+	// echo '<br>$model_value: '. $model_value.'<br>';
 	if ($model_value != 0){		 
+		if ($model_value >= 100 || $model_value < 0.1){
+			$model_value_f = sprintf("%.3e", $model_value);}
+			else{$model_value_f = round($model_value, 3);}
+			
+		$SD = round(($model_value * 0.05), 3);
+		if ($SD >= 100 || $SD < 0.1){
+			$SD_f = sprintf("%.3e", $SD);}
+			else{$SD_f = round($SD, 3);}
+			
 		$model_value = $model_value * (-1);
-		$converted_value = sprintf("%.3e",(pow(10, $model_value) * 1000 * $mol_Weight));
-	
-		$SD = round($model_value * (-0.05), 3);
+		$converted_value = pow(10, $model_value) * 1000 * $mol_Weight;
+		if ($converted_value >= 100 || $converted_value < 0.1){
+			$converted_value_f = sprintf("%.3e", $converted_value);}
+			else{$converted_value_f = sprintf("%.3f", $converted_value);}
+		
 		$converted_SD = sprintf("%.3e", $converted_value*0.05);
-			 
-
+		if ($converted_SD >= 100 || $converted_SD < 0.1){
+			$converted_SD_f = sprintf("%.3e", $converted_SD);}
+			else{$converted_SD_f = round($converted_SD, 3);}
+	
 		echo'<tr style = "border: 2px; border-collapse: separate;"><td>&nbsp;- LogMole/(kg x day)  &#177;SD';
 		echo'</td><td>';
 		echo $converted_unit. ' &#177;SD</td></tr>';
-		echo '<tr style = "border-collapse: separate;"><td bgcolor="#56A0D3">';
-    	echo '&nbsp;'. $model_value * (-1). " &#177;". $SD. "</td>";
-		echo '<td bgcolor="#56A0D3">';
-		echo $converted_value. " &#177;". $converted_SD. "</td></tr>";	
+		echo '<tr style = "border-collapse: separate;"><td bgcolor="#56A0D3" style = "text-indent: 12px; ">';
+    	echo $model_value_f. " &#177;". $SD_f. "</td>";
+		echo '<td bgcolor="#56A0D3" >';
+	
+		echo $converted_value_f. " &#177;". $converted_SD_f. "</td></tr>";	
 	}	// end of 	if ($model_value != 0){	)
 	else{
 		echo'<tr style = "border: 2px;">';
@@ -317,28 +333,22 @@ function Add_curl_to_multi_handle($Model_ID){
 //Display_exist_value("Reference Dose", $value_RfD, $mol_Weight, 'mg/(kg x day)');
 
 function Display_exist_value($model_name, $value, $mol_Weight, $converted_unit){
-    echo'<tr style = "all: none; border: 5px; border-top: 8px solid black; border-right: 2px;  border-bottom: 2px solid black; "><td colspan="2"><B> CTV '. $model_name. '</B></td></tr>';
+    echo'<tr style = "all: none; border: 5px; border-top: 8px solid black; border-right: 2px;  border-bottom: 2px solid black; ">';
+	echo '<td colspan="2"><B> CTV '. $model_name. '</B></td></tr>';
     echo"<tr><td> - LogMole";
 	echo'</td><td>'. $converted_unit. '</td>';
-	$field_1 = sprintf("%.2e",($value));
-	$field_2 = sprintf("%.2e",(pow(10, $value*(-1))*1000*$mol_Weight));
+	if ($value >= 100 || $value < 0.1){
+		$field_1 = sprintf("%.3e",($value));}
+		else{$field_1 = round($value, 3);}
+	$converted_value = pow(10, $value*(-1)) * 1000 * $mol_Weight;
+	if ($converted_value >= 100 || $converted_value < 0.1){
+		$field_2 = sprintf("%.3e",($converted_value));}
+		else{$field_2 = round($converted_value, 3);}
 		
     echo '</tr><tr>';  //predicted
 	echo '<td>'. $field_1. '</td>';
 	echo '<td>'. $field_2 ."</td></tr>";
 }	  
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ?>

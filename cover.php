@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<link rel="stylesheet" type="text/css" href="/css/custom.css" />
+    <title>CTV</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
+    <script type="text/javascript" src="Scripts/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.form.js"></script>
+    <script type="text/javascript" src="Scripts/script.js"></script>
+    <script type="text/javascript" src="Scripts/Search-js.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script type="text/javascript" language="javascript" src="Scripts/jsme.nocache.js"></script>
+	
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+    <!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
+    <!-- Custom styles for this template -->
+    <link href="css/jumbotron.css" rel="stylesheet">
 
 <style>
 /* unvisited link */
@@ -53,12 +64,18 @@ a:active {
 }
 
 </style>
-<body background="images/Carpet.jpg">
-<div id="container">
+</head>
+<body>
+<!-- <body background="images/Carpet.jpg"> -->
+<div id="container" style = "padding-bottom: 50px;  ">
 <?php
 include("Header.html");
 ?>
-
+<div class="container-2" style = "min-height: 300px; width: 95%; 
+    margin: auto; padding: 40px; padding-top: 25px;  
+-webkit-box-shadow: 0 0 6px 4px black;
+   -moz-box-shadow: 0 0 6px 4px black;
+        box-shadow: 0 0 16px 4px black;">
 <br><br>
 <h1 style="text-align:center; font-size: 36px;"><b>CTV <br> Conditional Toxicity Value</b></h1>
 <h2 style="text-align:center; font-size: 24px;">An <i>In Silico</i> Approach for Generating Toxicity Values for Chemicals</h2>
@@ -66,7 +83,7 @@ include("Header.html");
 
 <div style="text-align:center;">
 <a href = "index-catch.php">
-<img src = "images/Continue-button.png" style="height: 70px;" align="middle"/></a>
+<img src = "images/Continue-button.png" style="height: 60px;" align="middle"/></a>
 
 </div>
 
@@ -93,10 +110,10 @@ include("Header.html");
     This website serves as a publicly-accessible web-based tool that allows end-users to retrieve existing or calculate predicted toxicity values for the chemicals of interest. 
 Toxicity models are installed in Chembench.org.
 Chemspider.org is linked for chemical names and SMILES strings. This website is maintained by Dr. Ivan Rusyn and Dr. Weihsueh Chiu working groups at Texas A&M University.</p>
-</div><br><br><br>
-
 </div>
 
+</div>
+</div> <!-- end of the class container div -->
 
 
 <script>
