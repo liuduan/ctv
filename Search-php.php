@@ -23,13 +23,13 @@ echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px; ">'. $_P
 
 
 for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
-	if(strcasecmp(strtolower($data->val($i,2)), strtolower($_POST['compoundName'])) ==0) {	
+	if(strcasecmp(strtolower($data->val($i,3)), strtolower($_POST['compoundName'])) ==0) {	
 		// if the compound name matches
-		$value_RfD = $data->val($i, 15);
-		$value_RfC = $data->val($i, 23);
-		$value_OSF = $data->val($i, 31);
-		$value_IUR = $data->val($i, 39);
-		$value_CPV = $data->val($i, 47);	 
+		$value_RfD = $data->val($i, 16);
+		$value_RfC = $data->val($i, 24);
+		$value_OSF = $data->val($i, 32);
+		$value_IUR = $data->val($i, 40);
+		$value_CPV = $data->val($i, 48);	 
 		break;
 		} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
 	}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
