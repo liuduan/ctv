@@ -15,13 +15,24 @@ error_reporting(E_ALL ^ E_NOTICE);
 $search_var=$_POST['compoundName'];  //Retrieve compound name from user
 $mol_Weight =$_POST['MolWeight']; //Retrieve molecular weight
 
-echo '<link href="css/bootstrap.css" rel="stylesheet">';
-echo '<br><div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:;">
-		<h4 style = "text-align: left;  text-indent: 15px;"><b>Results</b></h4>';
 
-echo '	<table id="compResults" BORDER="2" style="text-align: center;">';
-echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px; ">'. $_POST['compoundName']. '<td></tr>';
+echo '<link href="css/bootstrap.css" rel="stylesheet">';
+echo '<br><br><br><div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:;">';
+
+
+
+
+
+echo '<div style = "width-max: 500px; float: right; background-color:; ">';
+	// this div holds the table.
+echo '<h4 style="text-align: left; background-color: ;"><b>Results:</b></h4>';	
+
+echo '	<table id="compResults" border="2" style="text-align: center; margin: auto; ">';
+
+echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px; border-style: solid;">'. $_POST['compoundName']. '<td></tr>';
+
+
 
 
 for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
@@ -40,7 +51,7 @@ if($_POST['refDose'] == "true" && $value_RfD != 0 ){
 	Display_exist_value("Reference Dose", $value_RfD, $mol_Weight, 'mg/(kg x day)');
 	$_POST['refDose'] = False;
 	}
-	
+
 if($_POST['refConc'] == "true" && $value_RfC != 0 ){
 	Display_exist_value("Reference Concentration", $value_RfC, $mol_Weight, 'mg/m<sup>3</sup>');
 	$_POST['refConc'] = False;
@@ -62,13 +73,14 @@ if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
 	$_POST['cancPot'] = False;
 	}
 
-
+	
 // if any model is needed
 $any_model_needed = $_POST['refDose'] == "true" || $_POST['refConc'] == "true";
 $any_model_needed = $any_model_needed || $_POST['NOEL'] == "true";
 $any_model_needed = $any_model_needed || $_POST['oralSlope'] == "true" || $_POST['ihalUnit'] == "true";
-$any_model_needed = $any_model_needed || $_POST['cancPot'] == "true" || $_POST['onbd'] != "true";
-$any_model_needed = $any_model_needed || $_POST['ocbd'] != "true";
+$any_model_needed = $any_model_needed || $_POST['cancPot'] == "true" || $_POST['onbd'] == "true";
+$any_model_needed = $any_model_needed || $_POST['ocbd'] == "true";
+// exit("589, Model needed?: ". $any_model_needed);
 
 if ($any_model_needed){
 	
@@ -105,7 +117,7 @@ if ($any_model_needed){
   	$url = "https://chembench.mml.unc.edu/makeSmilesPrediction?smiles=".$smilesValue;
   	$url .= "&cutoff=N/A&predictorIds=";
   	$mh = curl_multi_init();
-	
+
 	// Add each model to curl_multi
 	if($_POST['refDose'] == "true")	{
 	  	$REFD_CDK_60561 = Add_curl_to_multi_handle('60561'); 
@@ -241,11 +253,12 @@ if ($any_model_needed){
 
 
 
-echo'</table></div>';
-echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:;">';
+echo'</table></div></div>';
+echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:;"><br><br>';
 $imageValue = $_POST['CompoundImage'];
+echo '<div style="text-align: left;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;';
 echo '<img src="data:image/png;base64,' . $imageValue . '" />';
-echo "<p>Common Name: $search_var </p>";
+echo "<p>Common Name: $search_var </p></div>";
 echo '<ul class="legend">';
 echo '<li><span class="awesome"></span> <b>Predicted.</B></li>';
 echo '<li><span class="superawesome"></span> <B>Retrieved from publicly available sources</B></li><br>';
@@ -302,8 +315,8 @@ function Display_model_value($model_value, $mol_Weight, $model_name, $converted_
 			$converted_SD_f = sprintf("%.3e", $converted_SD);}
 			else{$converted_SD_f = round($converted_SD, 3);}
 	
-		echo'<tr style = "border: 2px; border-collapse: separate;"><td>&nbsp;- LogMole/(kg x day)  &#177;SD';
-		echo'</td><td>';
+		echo'<tr style = "border: 2px; border-collapse: separate; "><td style = "text-align: center; text-indent: 3px; padding-right: 3px;">- LogMole/(kg x day)  &#177;SD</td>';
+		echo'<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
 		echo $converted_unit. ' &#177;SD</td></tr>';
 		echo '<tr style = "border-collapse: separate;"><td bgcolor="#56A0D3" style = "text-indent: 12px; ">';
     	echo $model_value_f. " &#177;". $SD_f. "</td>";

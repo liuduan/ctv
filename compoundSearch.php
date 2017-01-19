@@ -84,6 +84,8 @@ $InChI = $result->GetExtendedCompoundInfoResult->InChI;
 
 		   echo '  <div class="row">';
 		   echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">';
+		   echo '<div style = "width-max: 500px; float: right; background-color:; ">';
+				// this div holds the table.
 		   echo "<p><i>Your query was:. $q_name</i></p> ";
            echo "<u>ChemSpider information on query:</u><br>"; 		   
 		   echo 'SMILES = ';
@@ -122,7 +124,7 @@ $InChI = $result->GetExtendedCompoundInfoResult->InChI;
 		 $compoundImage = $result;
          //file_put_contents("images/$SMILES.png", base64_decode($result));
 		 }		 
-           echo '</div>';
+           echo '</div></div>';
 		   echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">';
 		   echo '<div style="margin:auto; width:200px;">';
            echo '<img src="data:image/png;base64,' . $result . '" /><br><br><br>';
