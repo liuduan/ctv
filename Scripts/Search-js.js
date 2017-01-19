@@ -53,9 +53,23 @@ $(document).ready(
                     $('#spinner').hide(),
                     $('#result').show();
                     $('#reset_check').css("display", "block");
-                    $('#resultss').replaceWith(newdata);
+                    // $('#resultss').replaceWith(newdata);
+					// $('#just_a_test').replaceWith(newdata);
+					$('#step3').replaceWith(newdata);
 					
-                    $('#results').dialog("open");
+					
+					// alert("hello 2345");
+					// $('#just_a_test').dialog();
+					// $('#just_a_test').dialog("open");
+					// alert("hello");
+					// alert($(window).width()*0.8);
+                    // $('#results').dialog("open");
+					// $('#results').dialog({height: auto});
+
+					// $('#results').dialog({width: 400});
+					// $('#results').dialog( "option", "width", 300 );
+					// alert("hello");
+					// alert($(window).width()*0.8);
 					
 					
   

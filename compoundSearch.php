@@ -79,8 +79,11 @@ $InChI = $result->GetExtendedCompoundInfoResult->InChI;
 //echo "<h1>Smiles = $SMILES </h1><pre>";
 //echo "<h1>InChI = $InChI </h1><pre>";
 //echo "<h1>InChIKey = $InChIKey </h1><pre>";
-           echo '<div id="result" class="container" style="width: 600px; ">';
-		   echo '<div style="float: left; width: 85%; width: 400px; ">';
+
+           echo '<div id="result" style="width: 100%;">';
+
+		   echo '  <div class="row">';
+		   echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">';
 		   echo "<p><i>Your query was:. $q_name</i></p> ";
            echo "<u>ChemSpider information on query:</u><br>"; 		   
 		   echo 'SMILES = ';
@@ -120,9 +123,11 @@ $InChI = $result->GetExtendedCompoundInfoResult->InChI;
          //file_put_contents("images/$SMILES.png", base64_decode($result));
 		 }		 
            echo '</div>';
-		   echo '<div style="float: right; width: 15%; ">';
+		   echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">';
+		   echo '<div style="margin:auto; width:200px;">';
            echo '<img src="data:image/png;base64,' . $result . '" /><br><br><br>';
-		   echo '</div>';
+		   echo '</div></div></div>';			
+		   // end of <div style="margin:auto;", div row, and class="col-lg-6 
 		   //NEW CODE
 		   echo '<label id="compoundImage" style="display:none;"';
 		   echo "val=$compoundImage";

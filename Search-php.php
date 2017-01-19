@@ -16,9 +16,11 @@ $search_var=$_POST['compoundName'];  //Retrieve compound name from user
 $mol_Weight =$_POST['MolWeight']; //Retrieve molecular weight
 
 echo '<link href="css/bootstrap.css" rel="stylesheet">';
-echo '<script type="text/javascript" src="js/customScript.js"></script>';
-echo '<div style="float: left; width: 60%;">';
-echo '<table id="compResults" BORDER="2" style="text-align: center;">';
+echo '<br><div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:;">
+		<h4 style = "text-align: left;  text-indent: 15px;"><b>Results</b></h4>';
+
+echo '	<table id="compResults" BORDER="2" style="text-align: center;">';
 echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px; ">'. $_POST['compoundName']. '<td></tr>';
 
 
@@ -240,7 +242,7 @@ if ($any_model_needed){
 
 
 echo'</table></div>';
-echo '<div style="float: right; width: 40%;">';
+echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:;">';
 $imageValue = $_POST['CompoundImage'];
 echo '<img src="data:image/png;base64,' . $imageValue . '" />';
 echo "<p>Common Name: $search_var </p>";
@@ -253,7 +255,7 @@ echo'<input type="button" onclick="$(';
 echo"'#compResults').table2CSV()";
 echo'" value="Export as CSV">';
 echo'</p>';
-echo '</div>';
+echo '</div></div>';
 
 
 

@@ -52,15 +52,15 @@
 	</style>
 </head>
 <body >
-<!-- <body background="images/Carpet.jpg"> -->
-<div class = "container-fluid" style = "padding-bottom: 50px;  ">
-<?php
-include("Header.html");
-?>
+<?php include("Header.html"); ?>
 
+<div class = "container-fluid" style = "padding-bottom: 50px;  ">  
+	<div id="just_a_test" ></div>  
     <div id="results" title="Results">
-        <div id="resultss" title="Results">resultss
-            <p></p>
+    	<br>resultss<br>resultss<br>
+        <div id="resultss" title="Results-3" style="background-color:yellow;">
+        	<br>resultss<br>resultss<br>res
+            <p></p><br>resultss
         </div>
     </div>
 
@@ -69,6 +69,7 @@ include("Header.html");
 -webkit-box-shadow: 0 0 6px 4px black;
    -moz-box-shadow: 0 0 6px 4px black;
         box-shadow: 0 0 16px 4px black;">
+
 		 <div id="spinner" class="spinner" style="display:none;">
                 <p align="center">
                     <img id="img-spinner" src="images/ajax-loader.gif" alt="Loading ..." />
@@ -76,41 +77,46 @@ include("Header.html");
                     <div id="show_content">.</div>
                 </p>
          </div>
-        
-        <div class="body-content" style = "width: 1200px; margin: auto;">
 
-            <div class="row" id="step1" >
+        <div style = "margin: auto;">
+            <div id="step1" >
+
+                
                 <div>
                     <div id="single_compound" >
                         <h2>Step 1</h2>
+                        
 						<div class="row">
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xsm-6" style="background-color:yellow;">
-								<div style="width:100%;">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xsm-6" style="background-color:;">
+								<div style="width:auto; background-color:;">
 									<b>Enter compound name, CASRN, or SMILES below. Compounds will be searched using <a href="http://www.chemspider.com/" target="_blank">ChemSpider.</a> Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV.</b>
 								</div><br>
-								<textarea rows="3" id="compoundNames" class="form-control" placeholder="Enter compound name OR SMILES OR CAS Registry Number" style="width:100%;"></textarea>
+								<textarea rows="3" id="compoundNames" placeholder="Enter compound name OR SMILES OR CAS Registry Number..ljo" style="width: 100%; "></textarea>
                                 <br><br> 
                                 
                                 <div style = "text-align:center;">
                                 <button type="submit" id="compoundSearch" class="btn btn-default btn-primary">Search</button><br><br>
                                 </div>
-							</div>
+							</div>		<!-- end of class="col-lg-6... -->
 
-							<div class="col-md-6 col-sm-12"class="col-md-6 col-sm-12">
-								<div id="jsme_applet" class="row">
-									<div id="draw_structure" class="col-md-8">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xsm-6">
+								<div id="jsme_applet">
+									<div id="draw_structure">
 										<div id="jsme_container"></div>
+                                        
 									</div>
-									<div class="col-md-8" style="line-height: 50%;">
-                                    	.<br>
+                                    <br>
+									<div style="line-height: 50%;">
 										<button type="button" class="btn btn-customctv" onclick='getSmiles();'>Get SMILES</button>
 									</div>
 								</div>
-							</div>
+							</div>		<!-- end of class="col-lg-6... -->
 
 							<p></p>
 
-						</div>
+						</div>		<!-- end of class="row" -->
+                        
+                        
 						<div class="row" align="right">
                         <!--
 							<a class="btn btn-default" id="multi_compounds">Multiple compounds</a>
@@ -152,31 +158,39 @@ include("Header.html");
                 </div>
             </div>
 
-            <div class="row" id="step2" style="display:none; width: 900px; background-color:blue;">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:red;">
-                    <h2>Step 2</h2> 
-                    <div id="ctvInfo">
-                    </div>
-                    <div id="reset_check" style="display:none;">
-                        <p align="right">
-                            <a class="btn btn-default" id="reset_results">Reset</a>
-                        </p>
-                    </div>
 
-                    <div id="select_check" style="display:none; width: 100%; ">
-                        <p align="right">
-                            <a class="btn btn-default" id="cancel_search">Cancel</a>
-                            <a class="btn btn-primary btn-customctv" id="enable_check">Select</a>
-                        </p>
-                    </div>
-                    <div id="file_check" style="display:none; width: 100%;">
-                        <p align="right">
-                            <a class="btn btn-default" id="cancel_file">Cancel</a>
-                            <a class="btn btn-primary btn-customctv" id="enable_model">Continue</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+			<div id="step2" style="display:none;">
+				<h2>Step 2</h2> 
+                <div id="ctvInfo"> </div>
+            	<div class="row">
+                	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    	
+                    	<div id="reset_check" style="display:none;">
+                        	<p align="right">
+                            	<a class="btn btn-default" id="reset_results">Reset</a>
+                        	</p>
+                    	</div>
+
+                    	<div id="select_check" style="display:none; width: 100%; ">
+                        	<p align="right">
+                            	<a class="btn btn-default" id="cancel_search">Cancel</a>
+                            	<a class="btn btn-primary btn-customctv" id="enable_check">Select</a>
+                        	</p>
+                    	</div>
+                    	<div id="file_check" style="display:none; width: 100%;">
+                        	<p align="right">
+                            	<a class="btn btn-default" id="cancel_file">Cancel</a>
+                            	<a class="btn btn-primary btn-customctv" id="enable_model">Continue</a>
+                        	</p>
+                    	</div>		
+                	</div>		<!-- end of class="col-lg-6 -->
+                	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                		
+                	</div>
+                
+                
+                </div>		<!-- end of <div class="row"  -->
+            </div>		<!-- end of <div id="step2"  -->
 
             <div class="row" id="step3" style="display:none;">
                 <div id="stepper" class="col-lg-6">
@@ -186,26 +200,36 @@ include("Header.html");
                     <div id="steptwo" style="display:none;">
                         <p>Select toxicity value. You can select multiple toxicity values </p>
                         <p>Each toxicity value is an average of two predicted values using QSAR modeling, specifically, Random Forest with CDK and ISIDA descriptors. </p>
-                        <input type="checkbox" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose
+                        <script language="JavaScript">
+							function Select_All(source) {
+  								checkboxes = document.getElementsByName('model_selection');
+  								for(var i=0, n=checkboxes.length;i<n;i++) {
+    								checkboxes[i].checked = source.checked;
+  									}
+								}
+						</script>
+                        <input type="checkbox" onClick="Select_All(this)" >&nbsp;&nbsp; <b>Select All</b>
                         <br>
-                        <input type="checkbox" id="NOEL" disabled="disabled" value="Ref_dose_NOEL1">&nbsp;&nbsp; CTV Reference Dose NOEL
+                        <input type="checkbox" name="model_selection" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose
                         <br>
-                        <input type="checkbox" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration
+                        <input type="checkbox" name="model_selection" id="NOEL" disabled="disabled" value="Ref_dose_NOEL1">&nbsp;&nbsp; CTV Reference Dose NOEL
+                        <br>
+                        <input type="checkbox" name="model_selection" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration
                         <BR>
                         
-                        <input type="checkbox" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMD
+                        <input type="checkbox" name="model_selection" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMD
                         <BR>
-                        <input type="checkbox" id="ONBDL" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMDL
+                        <input type="checkbox" name="model_selection" id="ONBDL" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMDL
                         <BR>
                         <!--
                         <input type="checkbox" id="OCBD" disabled="disabled" value="OCBD1">&nbsp;&nbsp; CTV Oral Cancer Benchmark Dose<BR>
                         -->
                         
-                        <input type="checkbox" id="Oral_slope" disabled="disabled" value="Oral_slope1">&nbsp;&nbsp; CTV Oral Slope Factor
+                        <input type="checkbox" name="model_selection" id="Oral_slope" disabled="disabled" value="Oral_slope1">&nbsp;&nbsp; CTV Oral Slope Factor
                         <br>
-                        <input type="checkbox" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk
+                        <input type="checkbox" name="model_selection" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk
                         <BR>
-                        <input type="checkbox" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value
+                        <input type="checkbox" name="model_selection" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value
                         <BR>
                       
                         
@@ -238,7 +262,8 @@ include("Header.html");
         </div>
 
     </div>
-</div> 		<!== end of div id = container-fluid ==>
+</div> 		<!-- end of div id = container-fluid -->
+
 <script>
 $(document).ready(function(){
 	
