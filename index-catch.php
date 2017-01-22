@@ -169,14 +169,27 @@
                         	<p align="right">
                             	<a class="btn btn-default" id="reset_results">Reset</a>
                         	</p>
+                            
+                            
+                            
+                        
+                        
                     	</div>
 
-                    	<div id="select_check" style="display:none; width: 100%; ">
-                        	<p align="right">
-                            	<a class="btn btn-default" id="cancel_search">Cancel</a>
+                    	
+                        <div id="select_check" style="display:none; width: 100%; ">
+                        	<p align="left">
                             	<a class="btn btn-primary btn-customctv" id="enable_check">Select</a>
+                            	<a class="btn btn-default" id="cancel_search">Cancel</a>
+                            	
                         	</p>
                     	</div>
+                        
+                      
+                        <br>
+                        <a href="https://chembench.mml.unc.edu/" target="_blank">
+                        	A link to Chembench</a>, where the prediction models are executed.
+                        
                     	<div id="file_check" style="display:none; width: 100%;">
                         	<p align="right">
                             	<a class="btn btn-default" id="cancel_file">Cancel</a>
@@ -236,15 +249,18 @@
                         <p></p>
 
                     </div>
-                    <div id="scompoundSubmit" style="display:none;" align="right">
+                    <div id="scompoundSubmit" style="display:none;" align="left">
                         <p>
 							<i></i>
-                            <a class="btn btn-default" id="returnStep2s">Cancel</a>
+                            
 							<!--
                             <button type="submit" id="Run" class="btn btn-default btn-primary">Run</button>&nbsp;&nbsp; -->
+                            <br>
                             <button type="submit" id="Search-Data-and-Model" class="btn btn-default btn-primary">Search Data & Run Model</button>
+                            <a class="btn btn-default" id="returnStep2s">Cancel</a>
                         </p>
                     </div>
+                    
                     <div id="mcompoundSubmit" style="display:none;" align="right">
                         <p>
 							<i>(Please allow up to 5 mins for the analysis to run)</i>

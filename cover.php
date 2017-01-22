@@ -83,7 +83,7 @@ include("Header.html");
 
 <div style="text-align:center;">
 <a href = "index-catch.php">
-<img src = "images/Continue-button.png" style="height: 60px;" align="middle"/></a>
+<img src = "images/Continue-button.png" style="height: 50px;" align="middle"/></a>
 
 </div>
 

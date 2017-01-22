@@ -30,7 +30,7 @@ echo '<h4 style="text-align: left; background-color: ;"><b>Results:</b></h4>';
 
 echo '	<table id="compResults" border="2" style="text-align: center; margin: auto; ">';
 
-echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px; border-style: solid;">'. $_POST['compoundName']. '<td></tr>';
+echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px;">'. $_POST['compoundName']. '<td></tr>';
 
 
 
@@ -38,38 +38,51 @@ echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px; border-s
 for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 	if(strcasecmp(strtolower($data->val($i,3)), strtolower($_POST['compoundName'])) ==0) {	
 		// if the compound name matches
-		$value_RfD = $data->val($i, 16);
-		$value_RfC = $data->val($i, 24);
-		$value_OSF = $data->val($i, 32);
-		$value_IUR = $data->val($i, 40);
-		$value_CPV = $data->val($i, 48);	 
+		$value_RfD = $data->val($i, 15);
+		$source_RfD = $data->val($i, 20);
+		
+		$value_RfC = $data->val($i, 23);
+		$source_RfC = $data->val($i, 28);
+		
+		$value_OSF = $data->val($i, 31);
+		$source_OSF = $data->val($i, 36);
+		
+		$value_IUR = $data->val($i, 39);
+		$source_IUR = $data->val($i, 44);
+		
+		$value_CPV = $data->val($i, 47);
+		$source_CPV = $data->val($i, 52);	 
+		
+		$CAS = $data->val($i, 4);
+		echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px;">';
+		echo 'CAS Number: '. $CAS. '<td></tr>';
 		break;
 		} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
 	}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
 
 if($_POST['refDose'] == "true" && $value_RfD != 0 ){
-	Display_exist_value("Reference Dose", $value_RfD, $mol_Weight, 'mg/(kg x day)');
+	Display_exist_value("Reference Dose", $value_RfD, $source_RfD, 'mg/(kg x day)');
 	$_POST['refDose'] = False;
 	}
 
 if($_POST['refConc'] == "true" && $value_RfC != 0 ){
-	Display_exist_value("Reference Concentration", $value_RfC, $mol_Weight, 'mg/m<sup>3</sup>');
+	Display_exist_value("Reference Concentration", $value_RfC, $source_RfC, 'mg/m<sup>3</sup>');
 	$_POST['refConc'] = False;
 	}
 
 if($_POST['oralSlope'] == "true" && $value_OSF != 0 ){
-	Display_exist_value("Oral Slope Factor", $value_OSF, $mol_Weight, 'mg/(kg x day)');
+	Display_exist_value("Oral Slope Factor", $value_OSF, $source_OSF, 'mg/(kg x day)');
 	$_POST['oralSlope'] = False;
 	}
 	
 if($_POST['ihalUnit'] == "true" && $value_IUR != 0 ){
-	Display_exist_value("Inhalation Unit Risk", $value_IUR, $mol_Weight, '&#181;g/m<sup>3</sup>');
+	Display_exist_value("Inhalation Unit Risk", $value_IUR, $source_IUR, '&#181;g/m<sup>3</sup>');
 	$_POST['ihalUnit'] = False;
 	}
 
 	
 if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
-	Display_exist_value("Cancer Potency Value", $value_CPV, $mol_Weight, 'mg/(kg x day)');
+	Display_exist_value("Cancer Potency Value", $value_CPV, $source_CPV, 'mg/(kg x day)');
 	$_POST['cancPot'] = False;
 	}
 
@@ -347,22 +360,14 @@ function Add_curl_to_multi_handle($Model_ID){
 }
 //Display_exist_value("Reference Dose", $value_RfD, $mol_Weight, 'mg/(kg x day)');
 
-function Display_exist_value($model_name, $value, $mol_Weight, $converted_unit){
+function Display_exist_value($model_name, $value, $source, $converted_unit){
     echo'<tr style = "all: none; border: 5px; border-top: 8px solid black; border-right: 2px;  border-bottom: 2px solid black; ">';
-	echo '<td colspan="2"><B> CTV '. $model_name. '</B></td></tr>';
-    echo"<tr><td> - LogMole";
-	echo'</td><td>'. $converted_unit. '</td>';
+	echo '<td colspan="2"><B>'. $model_name. '</B></td></tr>';
+    echo"<tr><td> $converted_unit</td><td>Source</td></tr>";
 	if ($value >= 100 || $value < 0.1){
 		$field_1 = sprintf("%.3e",($value));}
 		else{$field_1 = round($value, 3);}
-	$converted_value = pow(10, $value*(-1)) * 1000 * $mol_Weight;
-	if ($converted_value >= 100 || $converted_value < 0.1){
-		$field_2 = sprintf("%.3e",($converted_value));}
-		else{$field_2 = round($converted_value, 3);}
-		
-    echo '</tr><tr>';  //predicted
-	echo '<td>'. $field_1. '</td>';
-	echo '<td>'. $field_2 ."</td></tr>";
+    echo '<tr><td>'. $field_1. '</td><td>'. $source ."</td></tr>";
 }	  
 
 

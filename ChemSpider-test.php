@@ -129,9 +129,10 @@ $InChI = $result->GetExtendedCompoundInfoResult->InChI;
 		 $compoundImage = $result;
          //file_put_contents("images/$SMILES.png", base64_decode($result));
 		 }		 
-           echo '</div>';
-		   echo '<div style="float: right; width: 15%;">';
-           echo '<img src="data:image/png;base64,' . $result . '" />';
+   
+   echo '</div>';
+   echo '<div style="float: right; width: 15%;">';
+   echo '<img src="data:image/png;base64,' . $result . '" />';
 		   echo '</div>';
 		   //NEW CODE
 		   echo '<label id="compoundImage" style="display:none;"';
