@@ -234,7 +234,7 @@ if ($any_model_needed){
   	if($_POST['oralSlope'] == "true"){
 		$model_value_1 = Read_model_curl($OSF_CDK_60507);		
 		$model_value_2 = Read_model_curl($OSF_ISIDA_70514);		
-		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
+		$model_value = 1/log((pow(10, 1/$model_value_1) + pow(10, 1/$model_value_2))/2, 10);
 		$model_value = round($model_value, 3);
 		Display_model_value($model_value, $mol_Weight, 'Oral Slope Factor', 'kg/(LogMole x day)', 'kg/(mg x day)');	
     	}
@@ -242,7 +242,7 @@ if ($any_model_needed){
 	if($_POST['ihalUnit'] == "true"){		
 		$model_value_1 = Read_model_curl($IUR_CDK_60549);		
 		$model_value_2 = Read_model_curl($IUR_ISIDA_60555);		
-		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
+		$model_value = 1/log((pow(10, 1/$model_value_1) + pow(10, 1/$model_value_2))/2, 10);
 		$model_value = round($model_value, 3);
 		Display_model_value($model_value, $mol_Weight, 'Inhalation Unit Risk', 'm<sup>3</sup>/LogMole', 'm<sup>3</sup>/&micro;g');	
     	}
@@ -250,7 +250,7 @@ if ($any_model_needed){
   	if($_POST['cancPot'] == "true"){  			
     	$model_value_1 = Read_model_curl($CPV_CDK_60537 );		
 		$model_value_2 = Read_model_curl($CPV_ISIDA_60543);		
-		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
+		$model_value = 1/log((pow(10, 1/$model_value_1) + pow(10, 1/$model_value_2))/2, 10);
 		$model_value = round($model_value, 3);
 		Display_model_value($model_value, $mol_Weight, 'Cancer Potency Value', 'kg/(LogMole x day)', 'kg/(mg x day)');	
     	}

@@ -91,7 +91,7 @@
 								<div style="width:auto; background-color:;">
 									<b>Enter compound name, CASRN, or SMILES below. Compounds will be searched using <a href="http://www.chemspider.com/" target="_blank">ChemSpider.</a> Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV.</b>
 								</div><br>
-								<textarea rows="3" id="compoundNames" placeholder="Enter compound name OR SMILES OR CAS Registry Number..ljo" style="width: 100%; "></textarea>
+								<textarea rows="3" id="compoundNames" placeholder="Enter compound name OR SMILES OR CAS Registry Number." style="width: 100%; "></textarea>
                                 <br><br> 
                                 
                                 <div style = "text-align:center;">
