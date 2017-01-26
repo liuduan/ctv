@@ -71,18 +71,18 @@ if($_POST['refConc'] == "true" && $value_RfC != 0 ){
 	}
 
 if($_POST['oralSlope'] == "true" && $value_OSF != 0 ){
-	Display_exist_value("Oral Slope Factor", $value_OSF, $source_OSF, 'mg/(kg x day)');
+	Display_exist_value("Oral Slope Factor", $value_OSF, $source_OSF, 'kg/(mg x day)');
 	$_POST['oralSlope'] = False;
 	}
 	
 if($_POST['ihalUnit'] == "true" && $value_IUR != 0 ){
-	Display_exist_value("Inhalation Unit Risk", $value_IUR, $source_IUR, '&#181;g/m<sup>3</sup>');
+	Display_exist_value("Inhalation Unit Risk", $value_IUR, $source_IUR, 'm<sup>3</sup>/&micro;g');
 	$_POST['ihalUnit'] = False;
 	}
 
 	
 if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
-	Display_exist_value("Cancer Potency Value", $value_CPV, $source_CPV, 'mg/(kg x day)');
+	Display_exist_value("Cancer Potency Value", $value_CPV, $source_CPV, 'kg/(mg x day)');
 	$_POST['cancPot'] = False;
 	}
 
@@ -197,14 +197,14 @@ if ($any_model_needed){
 		$model_value_1 = Read_model_curl($REFD_CDK_60561);		//$REFD_CDK
 		$model_value_2 = Read_model_curl($REFD_ISIDA_70526);		
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
-		Display_model_value(round($model_value, 3), $mol_Weight, 'Reference Dose', 'mg/(kg x day)');	
+		Display_model_value(round($model_value, 3), $mol_Weight, 'Reference Dose', '- LogMole/(kg x day)', 'mg/(kg x day)');	
 		}
 		
 	if($_POST['noel'] == "true")	{
 		$model_value_1 = Read_model_curl($NOEL_CDK_66220);	
 		$model_value_2 = Read_model_curl($NOEL_ISIDA_66226);		
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
-		Display_model_value(round($model_value, 3), $mol_Weight, 'Reference Dose NOEL', 'mg/(kg x day)');	
+		Display_model_value(round($model_value, 3), $mol_Weight, 'Reference Dose NOEL', '- LogMole/(kg x day)', 'mg/(kg x day)');	
 	  	}
 
   	if($_POST['refConc'] == "true"){
@@ -212,7 +212,7 @@ if ($any_model_needed){
 		$model_value_2 = Read_model_curl($RFC_ISIDA_70520);		
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
 		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Reference Concentration', 'mg/(kg x day)');	
+		Display_model_value($model_value, $mol_Weight, 'Reference Concentration', '- LogMole/m<sup>3</sup>', 'mg/m<sup>3</sup>');	
 	  	}
 	
   	if($_POST['onbd'] == "true"){  			
@@ -220,7 +220,7 @@ if ($any_model_needed){
 		$model_value_2 = Read_model_curl($ONBD_ISIDA_70508);
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
 		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Oral Noncancer Benchmark', 'mg/(kg x day)');
+		Display_model_value($model_value, $mol_Weight, 'Oral Noncancer Benchmark', '- LogMole/(kg x day)', 'mg/(kg x day)');
 		}
 	
 	if($_POST['onbdl'] == "true"){
@@ -228,7 +228,7 @@ if ($any_model_needed){
 		$model_value_2 = Read_model_curl($ONBDL_ISIDA_66214);		
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
 		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Oral Noncancer Benchmark Level', 'mg/(kg x day)');
+		Display_model_value($model_value, $mol_Weight, 'Oral Noncancer Benchmark Level', '- LogMole/(kg x day)', 'mg/(kg x day)');
 		}		  
 		  
   	if($_POST['oralSlope'] == "true"){
@@ -236,7 +236,7 @@ if ($any_model_needed){
 		$model_value_2 = Read_model_curl($OSF_ISIDA_70514);		
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
 		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Oral Slope', 'mg/(kg x day)');	
+		Display_model_value($model_value, $mol_Weight, 'Oral Slope Factor', 'kg/(LogMole x day)', 'kg/(mg x day)');	
     	}
 		  
 	if($_POST['ihalUnit'] == "true"){		
@@ -244,7 +244,7 @@ if ($any_model_needed){
 		$model_value_2 = Read_model_curl($IUR_ISIDA_60555);		
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
 		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Inhalation Unit Risk', '&#181;g/m<sup>3</sup>');	
+		Display_model_value($model_value, $mol_Weight, 'Inhalation Unit Risk', 'm<sup>3</sup>/LogMole', 'm<sup>3</sup>/&micro;g');	
     	}
 		    
   	if($_POST['cancPot'] == "true"){  			
@@ -252,7 +252,7 @@ if ($any_model_needed){
 		$model_value_2 = Read_model_curl($CPV_ISIDA_60543);		
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
 		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Cancer Potency', 'mg/(kg x day)');	
+		Display_model_value($model_value, $mol_Weight, 'Cancer Potency Value', 'kg/(LogMole x day)', 'kg/(mg x day)');	
     	}
         		
 	}		// end of if ($any_model_needed){}
@@ -302,7 +302,7 @@ function Read_model_curl($model_curl){
 	}
 
 		
-function Display_model_value($model_value, $mol_Weight, $model_name, $converted_unit){	
+function Display_model_value($model_value, $mol_Weight, $model_name, $model_unit, $converted_unit){	
 	echo'<tr id="title" style = "all: none; border: 5px; border-top: 8px solid black; border-bottom: 2px solid black; ">'. 
 		'<td colspan="2"><B>CTV '. $model_name. '</B></td></tr>';
 		
@@ -316,26 +316,48 @@ function Display_model_value($model_value, $mol_Weight, $model_name, $converted_
 		if ($SD >= 100 || $SD < 0.1){
 			$SD_f = sprintf("%.3e", $SD);}
 			else{$SD_f = round($SD, 3);}
+				
+				
+				
+		if ($model_name == 'Oral Slope Factor' || $model_name== 'Cancer Potency Value' || 
+			$model_name == 'Inhalation Unit Risk' ){		// three models that mole is on bottom.
 			
-		$model_value = $model_value * (-1);
-		$converted_value = pow(10, $model_value) * 1000 * $mol_Weight;
-		if ($converted_value >= 100 || $converted_value < 0.1){
-			$converted_value_f = sprintf("%.3e", $converted_value);}
-			else{$converted_value_f = sprintf("%.3f", $converted_value);}
+			$model_value = 1/$model_value;	
+			if ($model_name == 'Oral Slope Factor'){
+				$converted_value = pow(10, $model_value) / (1000 * 1000 * $mol_Weight);}
+				else{$converted_value = pow(10, $model_value) / (1000 * $mol_Weight);}
+			$converted_value = 1/$converted_value;
+			}		// end of three models that mole is on bottom.
+			
+			elseif($model_name == 'Reference Dose' || $model_name== 'Reference Concentration' || 
+				$model_name == 'Oral Noncancer Benchmark Level' || $model_name == 'Oral Noncancer Benchmark' || $model_name == 'Reference Dose NOEL'){
+							
+				$model_value = $model_value * (-1);
+				$converted_value = pow(10, $model_value) * 1000 * $mol_Weight;
+			
+				}		// end of three models that mole is on top.
+			
+			
+			
+			if ($converted_value >= 100 || $converted_value < 0.1){
+				$converted_value_f = sprintf("%.3e", $converted_value);}
+				else{$converted_value_f = sprintf("%.3f", $converted_value);}
 		
-		$converted_SD = sprintf("%.3e", $converted_value*0.05);
-		if ($converted_SD >= 100 || $converted_SD < 0.1){
-			$converted_SD_f = sprintf("%.3e", $converted_SD);}
-			else{$converted_SD_f = round($converted_SD, 3);}
+			$converted_SD = sprintf("%.3e", $converted_value*0.05);
+			if ($converted_SD >= 100 || $converted_SD < 0.1){
+				$converted_SD_f = sprintf("%.3e", $converted_SD);}
+				else{$converted_SD_f = round($converted_SD, 3);}
 	
-		echo'<tr style = "border: 2px; border-collapse: separate; "><td style = "text-align: center; text-indent: 3px; padding-right: 3px;">- LogMole/(kg x day)  &#177;SD</td>';
-		echo'<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
-		echo $converted_unit. ' &#177;SD</td></tr>';
-		echo '<tr style = "border-collapse: separate;"><td bgcolor="#56A0D3" style = "text-indent: 12px; ">';
-    	echo $model_value_f. " &#177;". $SD_f. "</td>";
-		echo '<td bgcolor="#56A0D3" >';
-	
-		echo $converted_value_f. " &#177;". $converted_SD_f. "</td></tr>";	
+			echo '<tr style = "border: 2px; border-collapse: separate; ">';
+			echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
+			echo $model_unit.  '&#177;SD</td>';
+			echo'<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
+			echo $converted_unit. ' &#177;SD</td></tr>';
+			echo '<tr style = "border-collapse: separate;">';
+			echo '<td bgcolor="#56A0D3" style = "text-indent: 12px; ">';
+    		echo $model_value_f. " &#177;". $SD_f. "</td>";
+			echo '<td bgcolor="#56A0D3" >'. $converted_value_f. " &#177;". $converted_SD_f. "</td></tr>";	
+			
 	}	// end of 	if ($model_value != 0){	)
 	else{
 		echo'<tr style = "border: 2px;">';
