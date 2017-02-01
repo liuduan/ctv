@@ -17,6 +17,7 @@ $mol_Weight =$_POST['MolWeight']; //Retrieve molecular weight
 
 
 echo '<link href="css/bootstrap.css" rel="stylesheet">';
+echo '<script type="text/javascript" src="js/customScript.js"></script>';
 echo '<br><br><br><div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:;">';
 
