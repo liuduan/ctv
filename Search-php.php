@@ -21,13 +21,13 @@ echo '<script type="text/javascript" src="js/customScript.js"></script>';
 echo '<br><br><br><div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:;">';
 
-
+echo '<h2>Step 4<small>: Results</small></h2>';
 
 
 
 echo '<div style = "width-max: 500px; float: right; background-color:; ">';
 	// this div holds the table.
-echo '<h4 style="text-align: left; background-color: ;"><b>Step 4: Results</b></h4>';	
+echo '<h4 style="text-align: left; background-color: ;"><b>Toxicity Values</b></h4>';	
 
 echo '	<table id="compResults" border="2" style="text-align: center; margin: auto; ">';
 
@@ -90,11 +90,16 @@ if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
 	
 // if any model is needed
 $any_model_needed = $_POST['refDose'] == "true" || $_POST['refConc'] == "true";
-$any_model_needed = $any_model_needed || $_POST['NOEL'] == "true";
+$any_model_needed = $any_model_needed || $_POST['noel'] == "true";
 $any_model_needed = $any_model_needed || $_POST['oralSlope'] == "true" || $_POST['ihalUnit'] == "true";
 $any_model_needed = $any_model_needed || $_POST['cancPot'] == "true" || $_POST['onbd'] == "true";
 $any_model_needed = $any_model_needed || $_POST['ocbd'] == "true";
 // exit("589, Model needed?: ". $any_model_needed);
+
+// echo '$_POST[refDose] '. $_POST['refDose'].'<br>';
+// echo '$_POST[noel] '. $_POST['noel'].'<br>';
+// echo '$any_model_needed: '. $any_model_needed;
+
 
 if ($any_model_needed){
 	
@@ -276,15 +281,21 @@ echo "<p>Common Name: $search_var </p></div>";
 echo '<ul class="legend">';
 echo '<li><span class="awesome"></span> <b>These values were predicted*.</B></li>';
 echo '<li><span class="superawesome"></span>';
-echo ' <B style="text-indent: -30;">These value were retrieved from publicly available sources ';
+echo ' <B style="text-indent: -30px;">These value were retrieved from publicly available sources ';
 echo '(<a href="CTV_data_2016-xls.xls" target="_blank">Data Table</a>).</B></li><br>';
 echo '</ul>';
 echo ' <p align="left">';
-echo '<input type="button" onclick="$(';
+echo '<input type="button" class="btn btn-primary" onclick="$(';
 echo "'#compResults').table2CSV()";
 echo '" value="Export as CSV">';
+echo ' <a class="btn btn-danger" href="index-catch.php">New Acessment</a>';
 echo '</p>';
-echo '</div></div>';
+echo '</div></div>';		// end of div row, and end of div colum
+echo '<br><br>* Each of the predicted values is an average of the predictions from two ';
+echo 'QSAR models (Random Forest with ';
+echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/24479757" target="_blank">CDK</a>';
+echo ' descriptors and Random Forest with ';
+echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/27464350" target="_blank">ISIDA</a> descripters).';
 
 
 

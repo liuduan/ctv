@@ -310,8 +310,8 @@
                         <br><br>
                         Prediction models are hosted on 
                         	<a href="https://chembench.mml.unc.edu/" target="_blank">
-                    		Chembench </a> web tools. Here is the <a href="CTV_data_2016-xls.xls"> 
-                        	data table </a>for the modeling.
+                    		Chembench </a> as web tools. The models are built on this 
+                            <a href="CTV_data_2016-xls.xls"> data table </a>.
                     </div>
                     
                     <div id="mcompoundSubmit" style="display:none;" align="right">
