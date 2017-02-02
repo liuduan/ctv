@@ -58,7 +58,7 @@
 	<div id="just_a_test" ></div>  
     <div id="results" title="Results">
     	<br>resultss<br>resultss<br>
-        <div id="resultss" title="Results-3" style="background-color:yellow;">
+        <div id="resultss" title="Results-3" style="background-color:;">
         	<br>resultss<br>resultss<br>res
             <p></p><br>resultss
         </div>
@@ -88,7 +88,7 @@
                         
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xsm-6" style="background-color:;">
-								<div style="width:auto; background-color:;">
+								<div style="width:auto; text-align:justify; background-color:;">
 									<b>Enter compound name, CASRN, or SMILES below. Compounds will be searched using <a href="http://www.chemspider.com/" target="_blank">ChemSpider.</a> Mixtures, inorganic compounds, and metallic compounds cannot be predicted by CTV.</b>
 								</div><br>
 								<textarea rows="3" id="compoundNames" placeholder="Enter compound name OR SMILES OR CAS Registry Number." style="width: 100%; "></textarea>
@@ -160,7 +160,7 @@
 
 
 			<div id="step2" style="display:none;">
-				<h2>Step 2</h2> 
+				<h2>Step 2<small>: Verification of chemical name and structure.</small></h2> 
                 <div id="ctvInfo"> </div>
             	<div class="row">
                 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -186,9 +186,7 @@
                     	</div>
                         
                       
-                        <br>
-                        <a href="https://chembench.mml.unc.edu/" target="_blank">
-                        	A link to Chembench</a>, where the prediction models are executed.
+                       
                         
                     	<div id="file_check" style="display:none; width: 100%;">
                         	<p align="right">
@@ -203,16 +201,64 @@
                 
                 
                 </div>		<!-- end of <div class="row"  -->
+                
+                 <br>
+                        The above chemical information was obtained from 
+                        	<a href="http://chemspider.com" target="_blank">ChemSpider.com</a> on 
+                            
+                            
+                            <script>
+                            	var currentdate = new Date(); 
+							   	var month = new Array();
+    							month[0] = "January";
+    							month[1] = "February";
+    							month[2] = "March";
+    							month[3] = "April";
+    							month[4] = "May";
+    							month[5] = "June";
+    							month[6] = "July";
+    							month[7] = "August";
+    							month[8] = "September";
+    							month[9] = "October";
+    							month[10] = "November";
+    							month[11] = "December";
+								var n = currentdate.getMonth();
+								
+								function addZero(i) {
+    								if (i < 10) {
+        								i = "0" + i;
+    									}
+    								return i;
+									}
+								var minutes = currentdate.getMinutes();
+								minutes = addZero(minutes);
+    							var datetime = month[n] + "  "
+									+ currentdate.getDate() + ", "
+                					+ currentdate.getFullYear() + " "  
+                					+ currentdate.getHours() + ":"  
+                					+ minutes;
+								document.write(datetime);
+                            </script>
+                            
+ 
+
+
+                            
+                        <br>
+                        
+                
+                
+                
             </div>		<!-- end of <div id="step2"  -->
 
             <div class="row" id="step3" style="display:none;">
                 <div id="stepper" class="col-lg-6">
-                    <h2>Step 3</h2>
+                    <h2>Step 3<small>: Searching or predicting toxicity values.</small></h2>
                     <label id="steptwoinstructions"><b> Select compound above before continuing </b>
                     </label>
                     <div id="steptwo" style="display:none;">
-                        <p>Select toxicity value. You can select multiple toxicity values </p>
-                        <p>Each toxicity value is an average of two predicted values using QSAR modeling, specifically, Random Forest with CDK and ISIDA descriptors. </p>
+                        <p>Please select toxicity value(s) of interest.</p>
+
                         <script language="JavaScript">
 							function Select_All(source) {
   								checkboxes = document.getElementsByName('model_selection');
@@ -221,30 +267,31 @@
   									}
 								}
 						</script>
+                        <h5 style="line-height: 200%;">
                         <input type="checkbox" onClick="Select_All(this)" >&nbsp;&nbsp; <b>Select All</b>
                         <br>
-                        <input type="checkbox" name="model_selection" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose
+                        <input type="checkbox" name="model_selection" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose <small>(Chembench models: 60561 and 70526)</small>
                         <br>
-                        <input type="checkbox" name="model_selection" id="NOEL" disabled="disabled" value="Ref_dose_NOEL1">&nbsp;&nbsp; CTV Reference Dose NOEL
+                        <input type="checkbox" name="model_selection" id="NOEL" disabled="disabled" value="Ref_dose_NOEL1">&nbsp;&nbsp; CTV Reference Dose NOEL <small>(Chembench models: 66220 and 66226)</small>
                         <br>
-                        <input type="checkbox" name="model_selection" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration
+                        <input type="checkbox" name="model_selection" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration <small>(Chembench models: 60573 and 70520)</small>
                         <BR>
                         
-                        <input type="checkbox" name="model_selection" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMD
+                        <input type="checkbox" name="model_selection" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMD <small>(Chembench models: 60471 and 70508)</small>
                         <BR>
-                        <input type="checkbox" name="model_selection" id="ONBDL" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMDL
+                        <input type="checkbox" name="model_selection" id="ONBDL" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMDL <small>(Chembench models: 66208 and 66214)</small>
                         <BR>
                         <!--
                         <input type="checkbox" id="OCBD" disabled="disabled" value="OCBD1">&nbsp;&nbsp; CTV Oral Cancer Benchmark Dose<BR>
                         -->
                         
-                        <input type="checkbox" name="model_selection" id="Oral_slope" disabled="disabled" value="Oral_slope1">&nbsp;&nbsp; CTV Oral Slope Factor
+                        <input type="checkbox" name="model_selection" id="Oral_slope" disabled="disabled" value="Oral_slope1">&nbsp;&nbsp; CTV Oral Slope Factor <small>(Chembench models: 60507 and 70514)</small>
                         <br>
-                        <input type="checkbox" name="model_selection" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk
+                        <input type="checkbox" name="model_selection" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk <small>(Chembench models: 60549 and 60555)</small>
                         <BR>
-                        <input type="checkbox" name="model_selection" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value
+                        <input type="checkbox" name="model_selection" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value <small>(Chembench models: 60537 and 60543)</small>
                         <BR>
-                      
+                      	</h5>
                         
                         <p></p>
 
@@ -256,9 +303,15 @@
 							<!--
                             <button type="submit" id="Run" class="btn btn-default btn-primary">Run</button>&nbsp;&nbsp; -->
                             <br>
-                            <button type="submit" id="Search-Data-and-Model" class="btn btn-default btn-primary">Search Data & Run Model</button>
-                            <a class="btn btn-default" id="returnStep2s">Cancel</a>
+                            <button type="submit" id="Search-Data-and-Model" class="btn btn-default btn-primary">Data Search and/or Predictions</button>
+                            <a class="btn btn-info" id="returnStep2s">One Step Back</a>
+                            <a class="btn btn-danger" href="index-catch.php">New Acessment</a>
                         </p>
+                        <br><br>
+                        Prediction models are hosted on 
+                        	<a href="https://chembench.mml.unc.edu/" target="_blank">
+                    		Chembench </a> web tools. Here is the <a href="CTV_data_2016-xls.xls"> 
+                        	data table </a>for the modeling.
                     </div>
                     
                     <div id="mcompoundSubmit" style="display:none;" align="right">
@@ -269,6 +322,7 @@
                         </p>
                     </div>
 
+					
                 </div>
             </div>
             <hr>
