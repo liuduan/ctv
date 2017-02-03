@@ -92,8 +92,8 @@ if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
 $any_model_needed = $_POST['refDose'] == "true" || $_POST['refConc'] == "true";
 $any_model_needed = $any_model_needed || $_POST['noel'] == "true";
 $any_model_needed = $any_model_needed || $_POST['oralSlope'] == "true" || $_POST['ihalUnit'] == "true";
-$any_model_needed = $any_model_needed || $_POST['cancPot'] == "true" || $_POST['onbd'] == "true";
-$any_model_needed = $any_model_needed || $_POST['ocbd'] == "true";
+$any_model_needed = $any_model_needed || $_POST['cancPot'] == "true" || $_POST['onbdl'] == "true";
+$any_model_needed = $any_model_needed || $_POST['onbd'] == "true";
 // exit("589, Model needed?: ". $any_model_needed);
 
 // echo '$_POST[refDose] '. $_POST['refDose'].'<br>';
@@ -202,21 +202,28 @@ if ($any_model_needed){
   	if($_POST['refDose'] == "true"){
 		$model_value_1 = Read_model_curl($REFD_CDK_60561);		//$REFD_CDK
 		$model_value_2 = Read_model_curl($REFD_ISIDA_70526);		
+		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
+		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
 		Display_model_value(round($model_value, 3), $mol_Weight, 'Reference Dose', '- Log<sub>10</sub>(Mole/kg)', 'mg/kg');	
 		}
 		
 	if($_POST['noel'] == "true")	{
 		$model_value_1 = Read_model_curl($NOEL_CDK_66220);	
 		$model_value_2 = Read_model_curl($NOEL_ISIDA_66226);		
+		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
+		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
 		Display_model_value(round($model_value, 3), $mol_Weight, 'Reference Dose NOEL', '- Log<sub>10</sub>(Mole/kg)', 'mg/kg');
 	  	}
 
   	if($_POST['refConc'] == "true"){
 		$model_value_1 = Read_model_curl($RFC_CDK_60573);		
-		$model_value_2 = Read_model_curl($RFC_ISIDA_70520);		
+		$model_value_2 = Read_model_curl($RFC_ISIDA_70520);	
+		// echo '$model_value_1 & 2: '. $model_value_1. $model_value_2;	
+		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
+		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
 		$model_value = round($model_value, 3);
 		Display_model_value($model_value, $mol_Weight, 'Reference Concentration', '- Log<sub>10</sub>(Mole/m<sup>3</sup>)', 'mg/m<sup>3</sup>');	
 	  	}
@@ -224,23 +231,29 @@ if ($any_model_needed){
   	if($_POST['onbd'] == "true"){  			
     	$model_value_1 = Read_model_curl($ONBD_CDK_60471);	
 		$model_value_2 = Read_model_curl($ONBD_ISIDA_70508);
+		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
+		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
 		$model_value = round($model_value, 3);
 		Display_model_value($model_value, $mol_Weight, 'Oral Noncancer Benchmark', '- Log<sub>10</sub>(Mole/kg)', 'mg/kg');
 		}
 	
 	if($_POST['onbdl'] == "true"){
 		$model_value_1 = Read_model_curl($ONBDL_CDK_66208);		
-		$model_value_2 = Read_model_curl($ONBDL_ISIDA_66214);		
+		$model_value_2 = Read_model_curl($ONBDL_ISIDA_66214);	
+		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}	
 		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
+		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
 		$model_value = round($model_value, 3);
 		Display_model_value($model_value, $mol_Weight, 'Oral Noncancer Benchmark Level', '- Log<sub>10</sub>(Mole/kg)', 'mg/kg');
 		}		  
 		  
   	if($_POST['oralSlope'] == "true"){
 		$model_value_1 = Read_model_curl($OSF_CDK_60507);		
-		$model_value_2 = Read_model_curl($OSF_ISIDA_70514);		
+		$model_value_2 = Read_model_curl($OSF_ISIDA_70514);	
+		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}	
 		$model_value = 1/log((pow(10, 1/$model_value_1) + pow(10, 1/$model_value_2))/2, 10);
+		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
 		$model_value = round($model_value, 3);
 		Display_model_value($model_value, $mol_Weight, 'Oral Slope Factor', 'Log<sub>10</sub>(kg/Mole)', 'kg/mg');	
     	}
@@ -248,15 +261,19 @@ if ($any_model_needed){
 	if($_POST['ihalUnit'] == "true"){		
 		$model_value_1 = Read_model_curl($IUR_CDK_60549);		
 		$model_value_2 = Read_model_curl($IUR_ISIDA_60555);		
+		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}
 		$model_value = 1/log((pow(10, 1/$model_value_1) + pow(10, 1/$model_value_2))/2, 10);
+		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
 		$model_value = round($model_value, 3);
 		Display_model_value($model_value, $mol_Weight, 'Inhalation Unit Risk', 'Log<sub>10</sub>(m<sup>3</sup>/Mole)', 'm<sup>3</sup>/&micro;g');	
     	}
 		    
   	if($_POST['cancPot'] == "true"){  			
     	$model_value_1 = Read_model_curl($CPV_CDK_60537 );		
-		$model_value_2 = Read_model_curl($CPV_ISIDA_60543);		
+		$model_value_2 = Read_model_curl($CPV_ISIDA_60543);	
+		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}	
 		$model_value = 1/log((pow(10, 1/$model_value_1) + pow(10, 1/$model_value_2))/2, 10);
+		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
 		$model_value = round($model_value, 3);
 		Display_model_value($model_value, $mol_Weight, 'Cancer Potency Value', 'Log<sub>10</sub>(kg/Mole)', 'kg/mg');	
     	}

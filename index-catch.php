@@ -251,8 +251,9 @@
                 
             </div>		<!-- end of <div id="step2"  -->
 
-            <div class="row" id="step3" style="display:none;">
-                <div id="stepper" class="col-lg-6">
+            <div id="step3" style="display:none; background-color: ;">
+            <div class="row" >
+                <div id="stepper" class="col-lg-6" style="background-color: ;">
                     <h2>Step 3<small>: Searching or predicting toxicity values.</small></h2>
                     <label id="steptwoinstructions"><b> Select compound above before continuing </b>
                     </label>
@@ -295,40 +296,31 @@
                         
                         <p></p>
 
-                    </div>
-                    <div id="scompoundSubmit" style="display:none;" align="left">
-                        <p>
-							<i></i>
+                    </div> <!-- end of id="steptwo"-->
+
                             
-							<!--
-                            <button type="submit" id="Run" class="btn btn-default btn-primary">Run</button>&nbsp;&nbsp; -->
-                            <br>
-                            <button type="submit" id="Search-Data-and-Model" class="btn btn-default btn-primary">Data Search and/or Predictions</button>
-                            <a class="btn btn-info" id="returnStep2s">One Step Back</a>
-                            <a class="btn btn-danger" href="index-catch.php">New Acessment</a>
-                        </p>
-                        <br><br>
-                        Prediction models are hosted on 
-                        	<a href="https://chembench.mml.unc.edu/" target="_blank">
-                    		Chembench </a> as web tools. The models are built on this 
-                            <a href="CTV_data_2016-xls.xls"> data table </a>.
-                    </div>
-                    
-                    <div id="mcompoundSubmit" style="display:none;" align="right">
-                        <p>
-							<i>(Please allow up to 5 mins for the analysis to run)</i>
-							<a class="btn btn-default" id="returnStep2c">Cancel</a>
-                            <button type="submit" id="Runfile" class="btn btn-default btn-primary">Run</button>
-                        </p>
-                    </div>
 
 					
-                </div>
-            </div>
-            <hr>
-            <footer>
-                <!-- <p>&copy; Company 2015</p> -->
-            </footer>
+                </div><!-- end of div column  -->
+                
+            </div><!-- end of div row?  -->
+            <div class="row" >
+				<div class="col-lg-12" style="background-color: ;">
+                	
+					<br>
+                	<button type="submit" id="Search-Data-and-Model" class="btn btn-default btn-primary">
+                		Data Search and/or Predictions</button>
+                	<a class="btn btn-info" id="returnStep2s">One Step Back</a>
+                	<a class="btn btn-danger" href="index-catch.php">New Acessment</a>
+                	<br><br>
+                	Prediction models are hosted on 
+                    	<a href="https://chembench.mml.unc.edu/" target="_blank">
+                		Chembench </a> as web tools. The models are built on this 
+                    	<a href="CTV_data_2016-xls.xls"> data table </a>.
+                    
+				</div><!-- end of clomn -->
+           </div><!-- end of row -->
+           </div><!-- end of Step 3 -->
         </div>
 
     </div>
