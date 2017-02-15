@@ -1,3 +1,39 @@
+var currentdate = new Date(); 
+var month = new Array();
+	month[0] = "January";
+	month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+	var n = currentdate.getMonth();
+								
+function addZero(i) {
+	if (i < 10) {
+    	i = "0" + i;
+    		}
+    return i;
+	}
+var minutes = currentdate.getMinutes();
+minutes = addZero(minutes);
+var datetime = currentdate.getFullYear() + month[n] 
+	+ currentdate.getDate() + "_"
+    + currentdate.getHours() 
+    + minutes;
+	
+
+
+
+
+
+
+
 jQuery.fn.table2CSV = function(options) {
     var options = jQuery.extend({
         separator: ',',
@@ -64,8 +100,9 @@ jQuery.fn.table2CSV = function(options) {
         var a = document.createElement('a');
         a.href = 'data:text/csv;charset=utf-8,'+escape(data);
         a.target = '_blank';
-        a.download = 'results.csv';
-
+        a.download = 'Toxvlue_' + datetime + '.csv';
+		// alert(datetime);
+		// a.download = 'results-2.csv';
         document.body.appendChild(a);
         a.click();
     }

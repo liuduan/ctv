@@ -49,6 +49,7 @@
     		border: 1px solid black;
 		}
 		#title{border-top: 10px;}
+		
 	</style>
 </head>
 <body >
@@ -74,7 +75,7 @@
                 <p align="center">
                     <img id="img-spinner" src="images/ajax-loader.gif" alt="Loading ..." />
                     Please wait, the analysis may last for 3 minutes.
-                    <div id="show_content">.</div>
+                    <div id="show_content"></div>
                 </p>
          </div>
 
@@ -160,7 +161,7 @@
 
 
 			<div id="step2" style="display:none;">
-				<h2>Step 2<small>: Verification of chemical name and structure.</small></h2> 
+				<h2>Step 2<small>: Verify Chemical Name and Structure</small></h2> 
                 <div id="ctvInfo"> </div>
             	<div class="row">
                 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -180,7 +181,7 @@
                         <div id="select_check" style="display:none; width: 100%; ">
                         	<p align="left">
                             	<a class="btn btn-primary btn-customctv" id="enable_check">Select</a>
-                            	<a class="btn btn-default" id="cancel_search">Cancel</a>
+                            	<a class="btn btn-danger" id="cancel_search">Cancel</a>
                             	
                         	</p>
                     	</div>
@@ -190,7 +191,7 @@
                         
                     	<div id="file_check" style="display:none; width: 100%;">
                         	<p align="right">
-                            	<a class="btn btn-default" id="cancel_file">Cancel</a>
+                            	<a class="btn btn-denger" id="cancel_file">Cancel</a>
                             	<a class="btn btn-primary btn-customctv" id="enable_model">Continue</a>
                         	</p>
                     	</div>		
@@ -203,8 +204,8 @@
                 </div>		<!-- end of <div class="row"  -->
                 
                  <br>
-                        The above chemical information was obtained from 
-                        	<a href="http://chemspider.com" target="_blank">ChemSpider.com</a> on 
+                        This information was obtained from 
+                        	<a href="http://chemspider.com" target="_blank">ChemSpider</a> on 
                             
                             
                             <script>
@@ -254,11 +255,11 @@
             <div id="step3" style="display:none; background-color: ;">
             <div class="row" >
                 <div id="stepper" class="col-lg-6" style="background-color: ;">
-                    <h2>Step 3<small>: Searching or predicting toxicity values.</small></h2>
+                    <h2>Step 3<small>: Look Up Toxicity Values or Make Predictions</small></h2>
                     <label id="steptwoinstructions"><b> Select compound above before continuing </b>
                     </label>
                     <div id="steptwo" style="display:none;">
-                        <p>Please select toxicity value(s) of interest.</p>
+                        <p>Please select a toxicity value of interest.</p>
 
                         <script language="JavaScript">
 							function Select_All(source) {
@@ -271,26 +272,26 @@
                         <h5 style="line-height: 200%;">
                         <input type="checkbox" onClick="Select_All(this)" >&nbsp;&nbsp; <b>Select All</b>
                         <br>
-                        <input type="checkbox" name="model_selection" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose <small>(Chembench models: 60561 and 70526)</small>
+                        <input type="checkbox" name="model_selection" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose (RfD) <small>(Chembench models: 60561 and 70526)</small>
                         <br>
-                        <input type="checkbox" name="model_selection" id="NOEL" disabled="disabled" value="Ref_dose_NOEL1">&nbsp;&nbsp; CTV Reference Dose NOEL <small>(Chembench models: 66220 and 66226)</small>
-                        <br>
-                        <input type="checkbox" name="model_selection" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration <small>(Chembench models: 60573 and 70520)</small>
+                        <input type="checkbox" name="model_selection" id="NOEL" disabled="disabled" value="Ref_dose_NOEL1">&nbsp;&nbsp; CTV Reference Dose NO(A)EL <small>(Chembench models: 66220 and 66226)</small>
+
+                        <BR>
+                        <input type="checkbox" name="model_selection" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Reference Dose (RfD) BMD <small>(Chembench models: 60471 and 70508)</small>
+                        <BR>
+                        <input type="checkbox" name="model_selection" id="ONBDL" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Reference Dose (RfD) BMDL <small>(Chembench models: 66208 and 66214)</small>
                         <BR>
                         
-                        <input type="checkbox" name="model_selection" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMD <small>(Chembench models: 60471 and 70508)</small>
-                        <BR>
-                        <input type="checkbox" name="model_selection" id="ONBDL" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Oral Noncancer BMDL <small>(Chembench models: 66208 and 66214)</small>
-                        <BR>
-                        <!--
-                        <input type="checkbox" id="OCBD" disabled="disabled" value="OCBD1">&nbsp;&nbsp; CTV Oral Cancer Benchmark Dose<BR>
-                        -->
                         
-                        <input type="checkbox" name="model_selection" id="Oral_slope" disabled="disabled" value="Oral_slope1">&nbsp;&nbsp; CTV Oral Slope Factor <small>(Chembench models: 60507 and 70514)</small>
-                        <br>
-                        <input type="checkbox" name="model_selection" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk <small>(Chembench models: 60549 and 60555)</small>
+                        <input type="checkbox" name="model_selection" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration (RfC)<small>(Chembench models: 60573 and 70520)</small>
                         <BR>
-                        <input type="checkbox" name="model_selection" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value <small>(Chembench models: 60537 and 60543)</small>
+                        
+                        <input type="checkbox" name="model_selection" id="Oral_slope" disabled="disabled" value="Oral_slope1">&nbsp;&nbsp; CTV Oral Slope Factor (OSF) <small>(Chembench models: 60507 and 70514)</small>
+                        <BR>
+                        <input type="checkbox" name="model_selection" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value (CPV) <small>(Chembench models: 60537 and 60543)</small>
+                        <br>
+                        <input type="checkbox" name="model_selection" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk (IUR) <small>(Chembench models: 60549 and 70496)</small>
+        
                         <BR>
                       	</h5>
                         
@@ -308,15 +309,14 @@
 				<div class="col-lg-12" style="background-color: ;">
                 	
 					<br>
-                	<button type="submit" id="Search-Data-and-Model" class="btn btn-default btn-primary">
-                		Data Search and/or Predictions</button>
+                	<button type="submit" id="Search-Data-and-Model" class="btn btn-primary">
+                		Search Data and/or Make Prediction</button>
                 	<a class="btn btn-info" id="returnStep2s">One Step Back</a>
-                	<a class="btn btn-danger" href="index-catch.php">New Acessment</a>
+                	<a class="btn btn-danger" href="index-catch.php">New Prediction</a>
                 	<br><br>
-                	Prediction models are hosted on 
-                    	<a href="https://chembench.mml.unc.edu/" target="_blank">
-                		Chembench </a> as web tools. The models are built on this 
-                    	<a href="CTV_data_2016-xls.xls"> data table </a>.
+                	<a href="CTV_data_2016-xls.xls">Data table </a>of the Toxicity Values Used for Modeling Prediction Models are hosted on <a href="https://chembench.mml.unc.edu/" target="_blank">
+                		Chembench </a> web tool.
+                    	
                     
 				</div><!-- end of clomn -->
            </div><!-- end of row -->

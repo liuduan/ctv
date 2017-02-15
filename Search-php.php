@@ -18,22 +18,62 @@ $mol_Weight =$_POST['MolWeight']; //Retrieve molecular weight
 
 echo '<link href="css/bootstrap.css" rel="stylesheet">';
 echo '<script type="text/javascript" src="js/customScript.js"></script>';
-echo '<br><br><br><div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:;">';
+echo '	<style>
+		td {
+    		border: 1px solid black;
+			padding-left: 1px;
+			padding-right: 1px;
+		}
+		#title{border-top: 10px;}
+		
+	</style>';
 
-echo '<h2>Step 4<small>: Results</small></h2>';
+echo '<br><br><br><div class="row">';
+echo '	<h2 style="background-color:;">Step 4<small>: Results</small></h2>';
+echo	'<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="background-color: ;">';
+		
+
+			$imageValue = $_POST['CompoundImage'];
+echo '';// '		<div style="text-align: left;">&nbsp; &nbsp; ';
+echo '			<img src="data:image/png;base64,' . $imageValue . '" />';
+
+		
+echo '		</div>';	// end first div in row.
+echo '	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="background-color:;"><br><br><br>';
+
+echo "		<p><b>Common Name: $search_var </b></p>";
+echo '		<ul class="legend">';
+echo '			<li><span class="superawesome" style="background-color: LightSkyBlue;">';
+echo '				</span> <b>These values were predicted*.</B></li>';
+
+echo '			<li><span class="superawesome" style="background-color: #f5febb;" ></span>';
+echo ' 				<B style="text-indent: -30px;">';
+echo 				'These value were retrieved from publicly available sources ';
+echo '				(<a href="CTV_data_2016-xls.xls" target="_blank">Data Table</a>).</B></li><br>';
+echo '		</ul>';
+
+
+
+echo '	</div>';	// end of second div in row
+echo '</div>';		// end of row
+
+
+
+
+
+
+
+echo '<div class="row">
+		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="background-color:;">';
+
+
 
 
 
 echo '<div style = "width-max: 500px; float: right; background-color:; ">';
 	// this div holds the table.
-echo '<h4 style="text-align: left; background-color: ;"><b>Toxicity Values</b></h4>';	
-
-echo '	<table id="compResults" border="2" style="text-align: center; margin: auto; ">';
-
-echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px;">'. $_POST['compoundName']. '<td></tr>';
-
-
+	
+echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
 
 
 for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
@@ -54,36 +94,39 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 		$value_CPV = $data->val($i, 47);
 		$source_CPV = $data->val($i, 52);	 
 		
-		$CAS = $data->val($i, 4);
-		echo '<tr><td colspan="2" style = "text-align: left; text-indent: 12px;">';
-		echo 'CAS Number: '. $CAS. '<td></tr>';
+		
+		echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
+		echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
+		echo '<td>Unit</td><td>Source</td></tr>';
+		
+		
 		break;
 		} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
 	}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
 
 if($_POST['refDose'] == "true" && $value_RfD != 0 ){
-	Display_exist_value("Reference Dose", $value_RfD, $source_RfD, 'mg/kg');
+	Display_exist_value($_POST['compoundName'], "Reference Dose", $value_RfD, $source_RfD, 'mg/kg');
 	$_POST['refDose'] = False;
 	}
 
 if($_POST['refConc'] == "true" && $value_RfC != 0 ){
-	Display_exist_value("Reference Concentration", $value_RfC, $source_RfC, 'mg/m<sup>3</sup>');
+	Display_exist_value($_POST['compoundName'], "Reference Concentration", $value_RfC, $source_RfC, 'mg/m<sup>3</sup>');
 	$_POST['refConc'] = False;
 	}
 
 if($_POST['oralSlope'] == "true" && $value_OSF != 0 ){
-	Display_exist_value("Oral Slope Factor", $value_OSF, $source_OSF, 'kg/mg');
+	Display_exist_value($_POST['compoundName'], "Oral Slope Factor", $value_OSF, $source_OSF, 'kg/mg');
 	$_POST['oralSlope'] = False;
 	}
 	
 if($_POST['ihalUnit'] == "true" && $value_IUR != 0 ){
-	Display_exist_value("Inhalation Unit Risk", $value_IUR, $source_IUR, 'm<sup>3</sup>/&micro;g');
+	Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'm<sup>3</sup>/&micro;g');
 	$_POST['ihalUnit'] = False;
 	}
 
 	
 if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
-	Display_exist_value("Cancer Potency Value", $value_CPV, $source_CPV, 'kg/mg');
+	Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'kg/mg');
 	$_POST['cancPot'] = False;
 	}
 
@@ -102,6 +145,13 @@ $any_model_needed = $any_model_needed || $_POST['onbd'] == "true";
 
 
 if ($any_model_needed){
+	
+	// display table header
+	echo '<tr ';
+	echo 'style = "all: none; border: 5px; border-top: 8px solid black; ';
+	echo 'border-bottom: 2px solid black; ">';
+	echo '<td>Chemical name</td><td>Model Name</td><td>Unit</td><td>Prediction</td>';
+	echo '<td>Lower 95%</td><td>Upper 95%</td><td>Appl Domain</td></tr>';
 	
 	//	login into chembench
   	$useDev = false;
@@ -166,11 +216,11 @@ if ($any_model_needed){
 		}
   	if($_POST['ihalUnit'] == "true"){
 		$IUR_CDK_60549 = Add_curl_to_multi_handle('60549');  
-		$IUR_ISIDA_60555 = Add_curl_to_multi_handle('60555');  
+		$IUR_ISIDA_70496 = Add_curl_to_multi_handle('70496');  
 		}
   	if($_POST['cancPot'] == "true"){
 	  $CPV_CDK_60537 = Add_curl_to_multi_handle('60537');  
-	  $CPV_ISIDA_60543 = Add_curl_to_multi_handle('60543');  
+	  $CPV_ISIDA_60543 = Add_curl_to_multi_handle('70490');  
 	  }  
 	// above, setup multi handle.
 
@@ -200,82 +250,148 @@ if ($any_model_needed){
 	// Start to read data and display.
 
   	if($_POST['refDose'] == "true"){
-		$model_value_1 = Read_model_curl($REFD_CDK_60561);		//$REFD_CDK
-		$model_value_2 = Read_model_curl($REFD_ISIDA_70526);		
-		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}
-		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
-		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
-		Display_model_value(round($model_value, 3), $mol_Weight, 'Reference Dose', '- Log<sub>10</sub>(Mole/kg)', 'mg/kg');	
+		$model_value_1 = Read_model_curl_2values($REFD_CDK_60561);
+		$log_value_1 = $model_value_1[0];
+		$sigma_value_1 = $model_value_1[1];
+		
+		$model_value_2 = Read_model_curl_2values($REFD_CDK_70526);
+		$log_value_2 = $model_value_2[0];
+		$sigma_value_2 = $model_value_2[1];
+		
+		if ($sigma_value_1 > $sigma_value_2){$sigma_value = $sigma_value_1;}
+			else {$sigma_value = $sigma_value_2;}
+		
+		$log_value = ($log_value_1 + $log_value_2)/2;
+		if($log_value_1 == 0 || $log_value_2 == 0 ){$log_value = $log_value_1 + $log_value_2; }
+		
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD)', $log_value, $mol_Weight, '- Log<sub>10</sub>(Mol/kg)', 'mg/kg', -1.365,  1.471, $sigma_value);
 		}
 		
 	if($_POST['noel'] == "true")	{
-		$model_value_1 = Read_model_curl($NOEL_CDK_66220);	
-		$model_value_2 = Read_model_curl($NOEL_ISIDA_66226);		
-		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}
-		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
-		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
-		Display_model_value(round($model_value, 3), $mol_Weight, 'Reference Dose NOEL', '- Log<sub>10</sub>(Mole/kg)', 'mg/kg');
+		$model_value_1 = Read_model_curl_2values($NOEL_CDK_66220);
+		$log_value_1 = $model_value_1[0];
+		$sigma_value_1 = $model_value_1[1];
+		
+		$model_value_2 = Read_model_curl_2values($NOEL_ISIDA_66226);
+		$log_value_2 = $model_value_2[0];
+		$sigma_value_2 = $model_value_2[1];
+		
+		if ($sigma_value_1 > $sigma_value_2){$sigma_value = $sigma_value_1;}
+			else {$sigma_value = $sigma_value_2;}
+		
+		$log_value = ($log_value_1 + $log_value_2)/2;
+		if($log_value_1 == 0 || $log_value_2 == 0 ){$log_value = $log_value_1 + $log_value_2; }
+		
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose NO(A)EL', $log_value, $mol_Weight, '- Log<sub>10</sub>(Mol/kg)', 'mg/kg', -1.258,  1.326, $sigma_value);		
 	  	}
 
   	if($_POST['refConc'] == "true"){
-		$model_value_1 = Read_model_curl($RFC_CDK_60573);		
-		$model_value_2 = Read_model_curl($RFC_ISIDA_70520);	
-		// echo '$model_value_1 & 2: '. $model_value_1. $model_value_2;	
-		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}
-		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
-		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
-		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Reference Concentration', '- Log<sub>10</sub>(Mole/m<sup>3</sup>)', 'mg/m<sup>3</sup>');	
+		$model_value_1 = Read_model_curl_2values($RFC_CDK_60573);	
+		$log_value_1 = $model_value_1[0];
+		$sigma_value_1 = $model_value_1[1];
+		
+		$model_value_2 = Read_model_curl_2values($RFC_ISIDA_70520);	
+		$log_value_2 = $model_value_2[0];
+		$sigma_value_2 = $model_value_2[1];
+		
+		if ($sigma_value_1 > $sigma_value_2){$sigma_value = $sigma_value_1;}
+			else {$sigma_value = $sigma_value_2;}
+		
+		$log_value = ($log_value_1 + $log_value_2)/2;
+		if($log_value_1 == 0 || $log_value_2 == 0 ){$log_value = $log_value_1 + $log_value_2; }
+		
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Concentration (RfC)', $log_value, $mol_Weight, '- Log<sub>10</sub>(Mol/m<sup>3</sup>)', 'mg/m<sup>3</sup>', -2.043,  2.156, $sigma_value);		
 	  	}
 	
   	if($_POST['onbd'] == "true"){  			
-    	$model_value_1 = Read_model_curl($ONBD_CDK_60471);	
-		$model_value_2 = Read_model_curl($ONBD_ISIDA_70508);
-		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}
-		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
-		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
-		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Oral Noncancer Benchmark', '- Log<sub>10</sub>(Mole/kg)', 'mg/kg');
+    	$model_value_1 = Read_model_curl_2values($ONBD_CDK_60471);	
+		$log_value_1 = $model_value_1[0];
+		$sigma_value_1 = $model_value_1[1];
+		
+		$model_value_2 = Read_model_curl_2values($ONBD_ISIDA_70508);	
+		$log_value_2 = $model_value_2[0];
+		$sigma_value_2 = $model_value_2[1];
+		
+		if ($sigma_value_1 > $sigma_value_2){$sigma_value = $sigma_value_1;}
+			else {$sigma_value = $sigma_value_2;}
+		
+		$log_value = ($log_value_1 + $log_value_2)/2;
+		if($log_value_1 == 0 || $log_value_2 == 0 ){$log_value = $log_value_1 + $log_value_2; }
+		
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMD', $log_value, $mol_Weight, '- Log<sub>10</sub>(Mol/kg)', 'mg/kg', -1.559,  1.523, $sigma_value);	
 		}
 	
 	if($_POST['onbdl'] == "true"){
-		$model_value_1 = Read_model_curl($ONBDL_CDK_66208);		
-		$model_value_2 = Read_model_curl($ONBDL_ISIDA_66214);	
-		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}	
-		$model_value = log((pow(10, $model_value_1) + pow(10, $model_value_2))/2, 10);
-		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
-		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Oral Noncancer Benchmark Level', '- Log<sub>10</sub>(Mole/kg)', 'mg/kg');
+		$model_value_1 = Read_model_curl_2values($ONBDL_CDK_66208);		
+		$log_value_1 = $model_value_1[0];
+		$sigma_value_1 = $model_value_1[1];
+		
+		$model_value_2 = Read_model_curl_2values($ONBDL_ISIDA_66214);	
+		$log_value_2 = $model_value_2[0];
+		$sigma_value_2 = $model_value_2[1];
+		
+		if ($sigma_value_1 > $sigma_value_2){$sigma_value = $sigma_value_1;}
+			else {$sigma_value = $sigma_value_2;}
+		
+		$log_value = ($log_value_1 + $log_value_2)/2;
+		if($log_value_1 == 0 || $log_value_2 == 0 ){$log_value = $log_value_1 + $log_value_2; }
+		
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMDL', $log_value, $mol_Weight, '- Log<sub>10</sub>(Mol/kg)', 'mg/kg', -1.696,  1.624, $sigma_value);		
 		}		  
-		  
+
   	if($_POST['oralSlope'] == "true"){
-		$model_value_1 = Read_model_curl($OSF_CDK_60507);		
-		$model_value_2 = Read_model_curl($OSF_ISIDA_70514);	
-		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}	
-		$model_value = 1/log((pow(10, 1/$model_value_1) + pow(10, 1/$model_value_2))/2, 10);
-		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
-		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Oral Slope Factor', 'Log<sub>10</sub>(kg/Mole)', 'kg/mg');	
+		$model_value_1 = Read_model_curl_2values($OSF_CDK_60507);
+		// echo 'OSF: '. $model_value_1;
+		$log_value_1 = $model_value_1[0];
+		$sigma_value_1 = $model_value_1[1];
+		
+		$model_value_2 = Read_model_curl_2values($OSF_ISIDA_70514);	
+		$log_value_2 = $model_value_2[0];
+		$sigma_value_2 = $model_value_2[1];
+		
+		if ($sigma_value_1 > $sigma_value_2){$sigma_value = $sigma_value_1;}
+			else {$sigma_value = $sigma_value_2;}
+		
+		$log_value = ($log_value_1 + $log_value_2)/2;
+		if($log_value_1 == 0 || $log_value_2 == 0 ){$log_value = $log_value_1 + $log_value_2; }
+		
+		Prediction_Display($_POST['compoundName'], 'CTV Oral Slope Factor (OSF)', $log_value, $mol_Weight, 'Log<sub>10</sub>(kg/Mol)', 'kg/mg', -1.663,  1.918, $sigma_value); 
     	}
-		  
+
 	if($_POST['ihalUnit'] == "true"){		
-		$model_value_1 = Read_model_curl($IUR_CDK_60549);		
-		$model_value_2 = Read_model_curl($IUR_ISIDA_60555);		
-		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}
-		$model_value = 1/log((pow(10, 1/$model_value_1) + pow(10, 1/$model_value_2))/2, 10);
-		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
-		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Inhalation Unit Risk', 'Log<sub>10</sub>(m<sup>3</sup>/Mole)', 'm<sup>3</sup>/&micro;g');	
+		$model_value_1 = Read_model_curl_2values($IUR_CDK_60549);	
+		$log_value_1 = $model_value_1[0];
+		$sigma_value_1 = $model_value_1[1];
+		
+		$model_value_2 = Read_model_curl_2values($IUR_ISIDA_70496);	
+		$log_value_2 = $model_value_2[0];
+		$sigma_value_2 = $model_value_2[1];
+		
+		if ($sigma_value_1 > $sigma_value_2){$sigma_value = $sigma_value_1;}
+			else {$sigma_value = $sigma_value_2;}
+		
+		$log_value = ($log_value_1 + $log_value_2)/2;
+		if($log_value_1 == 0 || $log_value_2 == 0 ){$log_value = $log_value_1 + $log_value_2; }
+		
+		Prediction_Display($_POST['compoundName'], 'CTV Inhalation Unit Risk (IUR)', $log_value, $mol_Weight, 'Log<sub>10</sub>(m<sup>3</sup>/Mol)', 'm<sup>3</sup>/&micro;g', -1.853,  2.372, $sigma_value); 
     	}
-		    
+
   	if($_POST['cancPot'] == "true"){  			
-    	$model_value_1 = Read_model_curl($CPV_CDK_60537 );		
-		$model_value_2 = Read_model_curl($CPV_ISIDA_60543);	
-		if($model_value_1 == 1){$model_value_1 = 0;} if($model_value_2 == 1){$model_value_2 = 0;}	
-		$model_value = 1/log((pow(10, 1/$model_value_1) + pow(10, 1/$model_value_2))/2, 10);
-		if($model_value_1 == 0 || $model_value_2 == 0 ){$model_value = $model_value_1 + $model_value_2; }
-		$model_value = round($model_value, 3);
-		Display_model_value($model_value, $mol_Weight, 'Cancer Potency Value', 'Log<sub>10</sub>(kg/Mole)', 'kg/mg');	
+    	$model_value_1 = Read_model_curl_2values($CPV_CDK_60537 );	
+		$log_value_1 = $model_value_1[0];
+		$sigma_value_1 = $model_value_1[1];
+		
+		$model_value_2 = Read_model_curl_2values($CPV_ISIDA_60543);	
+		$log_value_2 = $model_value_2[0];
+		$sigma_value_2 = $model_value_2[1];
+		
+		if ($sigma_value_1 > $sigma_value_2){$sigma_value = $sigma_value_1;}
+			else {$sigma_value = $sigma_value_2;}
+		
+		$log_value = ($log_value_1 + $log_value_2)/2;
+		if($log_value_1 == 0 || $log_value_2 == 0 ){$log_value = $log_value_1 + $log_value_2; }
+		
+		Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(kg/Mol)', 'kg/mg', -1.808,  1.708, $sigma_value); // update +/- needed.
     	}
         		
 	}		// end of if ($any_model_needed){}
@@ -290,70 +406,61 @@ if ($any_model_needed){
 
 
 echo'</table></div></div>';
-echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="background-color:;"><br><br>';
-$imageValue = $_POST['CompoundImage'];
-echo '<div style="text-align: left;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;';
-echo '<img src="data:image/png;base64,' . $imageValue . '" />';
-echo "<p>Common Name: $search_var </p></div>";
-echo '<ul class="legend">';
-echo '<li><span class="awesome"></span> <b>These values were predicted*.</B></li>';
-echo '<li><span class="superawesome"></span>';
-echo ' <B style="text-indent: -30px;">These value were retrieved from publicly available sources ';
-echo '(<a href="CTV_data_2016-xls.xls" target="_blank">Data Table</a>).</B></li><br>';
-echo '</ul>';
-echo ' <p align="left">';
-echo '<input type="button" class="btn btn-primary" onclick="$(';
-echo "'#compResults').table2CSV()";
-echo '" value="Export as CSV">';
-echo ' <a class="btn btn-danger" href="index-catch.php">New Acessment</a>';
-echo '</p>';
+echo '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="background-color:;">';
+echo ' 		<p align="left">';		// 2 buttons
+echo '			<input type="button" class="btn btn-primary" onclick="$(';
+echo " 				'#compResults').table2CSV()";
+echo ' 				" value="Export as CSV"><br><br>';
+echo ' 			<a class="btn btn-danger" href="index-catch.php">New Prediction</a>';
+echo '		</p>';
 echo '</div></div>';		// end of div row, and end of div colum
-echo '<br><br>* Each of the predicted values is an average of the predictions from two ';
+echo '<br><br>*, Each of the predicted values is an average of the predictions from two ';
 echo 'QSAR models (Random Forest with ';
 echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/24479757" target="_blank">CDK</a>';
 echo ' descriptors and Random Forest with ';
-echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/27464350" target="_blank">ISIDA</a> descripters).';
+echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/27464350" target="_blank">ISIDA</a> descripters)';
 
 
-
-
-function Read_model_curl($model_curl){
+function Read_model_curl_2values($model_curl){
 	if(curl_getinfo($model_curl, CURLINFO_HTTP_CODE) == 500)   // 500 is error
 		{
 		$http_response = 500;
 		$output = curl_multi_getcontent($model_curl);
 		}
 	else{
-		$model_value = curl_multi_getcontent($model_curl);
-        $model_value = explode('&',$model_value);
-		$results = explode('<td>', $model_value[1]);
+		$curl_content = curl_multi_getcontent($model_curl);
+        $curl_content = explode('&', $curl_content);
+		$results = explode('<td>', $curl_content[1]);
         $model_value = $results[2];
+		
+		$results_sigma = explode('<td>', $curl_content[2]);
+		$sigma_value = $results_sigma[2];
 		}
-	return $model_value;
+	return array ($model_value, $sigma_value);
 	}
 
-		
-function Display_model_value($model_value, $mol_Weight, $model_name, $model_unit, $converted_unit){	
-	echo '<tr id="title" ';
-	echo 'style = "all: none; border: 5px; border-top: 8px solid black; ';
-	echo 'border-bottom: 2px solid black; ">'. 
-		'<td colspan="2"><B>CTV '. $model_name. '</B></td></tr>';
+function E_or_point($input_value){
+	if ($input_value >= 100 || $input_value < 0.1){
+		$output_value = sprintf("%.3e", $input_value);}
+		else{$output_value = round($input_value, 3);}
+	return $output_value;
+	}
+
+function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weight, $model_unit, $converted_unit, $Lower_CI,  $Upper_CI, $sigma_value)
+	{	
+
 		
 	// echo '<br>$model_value: '. $model_value.'<br>';
 	if ($model_value != 0){		 
-		if ($model_value >= 100 || $model_value < 0.1){
-			$model_value_f = sprintf("%.3e", $model_value);}
-			else{$model_value_f = round($model_value, 3);}
-			
-		$SD = round(($model_value * 0.05), 3);
-		if ($SD >= 100 || $SD < 0.1){
-			$SD_f = sprintf("%.3e", $SD);}
-			else{$SD_f = round($SD, 3);}
+		
+		
+		$Lower_95 = $model_value + $Lower_CI;
+		$Upper_95 = $model_value + $Upper_CI;
+		
+		// echo '$Upper_95 = $model_value + $Upper_CI: '. $Upper_95, $model_value, $Upper_CI;;
 				
 				
-				
-		if ($model_name == 'Oral Slope Factor' || $model_name== 'Cancer Potency Value' || 
-			$model_name == 'Inhalation Unit Risk' ){		// three models that mole is on bottom.
+		if ($model_name == 'CTV Oral Slope Factor (OSF)' || $model_name== 'CTV Cancer Potency Value (CPV)' || $model_name == 'CTV Inhalation Unit Risk (IUR)' ){		// three models that mole is on bottom.
 			
 			$model_value = 1/$model_value;	
 			if ($model_name == 'Oral Slope Factor'){
@@ -362,41 +469,46 @@ function Display_model_value($model_value, $mol_Weight, $model_name, $model_unit
 			$converted_value = 1/$converted_value;
 			}		// end of three models that mole is on bottom.
 			
-			elseif($model_name == 'Reference Dose' || $model_name== 'Reference Concentration' || 
-				$model_name == 'Oral Noncancer Benchmark Level' || $model_name == 'Oral Noncancer Benchmark' || $model_name == 'Reference Dose NOEL'){
+			elseif($model_name == 'CTV Reference Dose (RfD)' || $model_name== 'CTV Reference Concentration (RfC)' || $model_name == 'CTV Reference Dose (RfD) BMDL' || $model_name == 'CTV Reference Dose (RfD) BMD' || $model_name == 'CTV Reference Dose NO(A)EL'){
 							
-				$model_value = $model_value * (-1);
-				$converted_value = pow(10, $model_value) * 1000 * $mol_Weight;
+				$converted_value = pow(10, $model_value*(-1)) * 1000 * $mol_Weight;
 			
 				}		// end of three models that mole is on top.
 			
-			
-			
-			if ($converted_value >= 100 || $converted_value < 0.1){
-				$converted_value_f = sprintf("%.3e", $converted_value);}
-				else{$converted_value_f = sprintf("%.3f", $converted_value);}
 		
-			$converted_SD = sprintf("%.3e", $converted_value*0.05);
-			if ($converted_SD >= 100 || $converted_SD < 0.1){
-				$converted_SD_f = sprintf("%.3e", $converted_SD);}
-				else{$converted_SD_f = round($converted_SD, 3);}
+			$converted_lower = pow(10, ($Lower_95*(-1))) * 1000 * $mol_Weight;
+			$converted_upper = pow(10, ($Upper_95*(-1))) * 1000 * $mol_Weight;
+			
+			$model_value_f = E_or_point($model_value);
+			$converted_value_f = E_or_point($converted_value);
+			
+			$Lower_95_f = E_or_point($Lower_95); 
+			$Upper_95_f = E_or_point($Upper_95); 
+			
+			$converted_lower_f = E_or_point($converted_lower); 
+			$converted_upper_f = E_or_point($converted_upper); 
+			
 	
-			echo '<tr style = "border: 2px; border-collapse: separate; ">';
+			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
 			echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
-			echo $model_unit.  ' &#177; SD</td>';
-			echo'<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
-			echo $converted_unit. ' &#177; SD</td></tr>';
-			echo '<tr style = "border-collapse: separate;">';
-			echo '<td bgcolor="#56A0D3" style = "text-indent: 12px; ">';
-    		echo $model_value_f. " &#177; ". $SD_f. "</td>";
-			echo '<td bgcolor="#56A0D3" >'. $converted_value_f. " &#177; ". $converted_SD_f. "</td></tr>";	
+			echo $Chemical_name. '</td><td>'. $model_name. '</td><td>'. $model_unit. '</td><td>';
+			echo $model_value_f. '</td><td>'. $Lower_95_f. '</td><td>'. $Upper_95_f. '</td><td>';
+			echo $sigma_value. '</td></tr>';
+			
+			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
+			echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
+			echo $Chemical_name. '</td><td>'. $model_name. '</td><td>'. $converted_unit. '</td><td>';
+			echo $converted_value_f. '</td><td>'. $converted_lower_f. '</td><td>'. $converted_upper_f. '</td><td>';
+			echo $sigma_value. '</td></tr>';
 			
 	}	// end of 	if ($model_value != 0){	)
 	else{
-		echo'<tr style = "border: 2px;">';
-		echo '<td colspan="2" bgcolor="#56A0D3"> Prediction not available</td>';
+		echo'<tr style = "border: 2px;" bgcolor="LightSkyBlue">';
+		echo '<td>'. $Chemical_name. '</td><td>'. $model_name. '</td>';
+		echo '<td colspan="5" > Prediction not available</td>';
 		}
     }
+
 	
 function Add_curl_to_multi_handle($Model_ID){
 	global $mh, $url, $cookieJar, $requesttimeout;
@@ -415,14 +527,16 @@ function Add_curl_to_multi_handle($Model_ID){
 }
 //Display_exist_value("Reference Dose", $value_RfD, $mol_Weight, 'mg/(kg x day)');
 
-function Display_exist_value($model_name, $value, $source, $converted_unit){
-    echo'<tr style = "all: none; border: 5px; border-top: 8px solid black; border-right: 2px;  border-bottom: 2px solid black; ">';
-	echo '<td colspan="2"><B>'. $model_name. '</B></td></tr>';
-    echo"<tr><td> $converted_unit</td><td>Source</td></tr>";
+function Display_exist_value($Chemical_name, $model_name, $value, $source, $converted_unit){
+    echo'<tr bgcolor="#f5febb" style = "all: none; border: 5px; border-right: 2px;  border-bottom: 2px solid black; ">';
+	
+    
 	if ($value >= 100 || $value < 0.1){
 		$field_1 = sprintf("%.3e",($value));}
 		else{$field_1 = round($value, 3);}
-    echo '<tr><td>'. $field_1. '</td><td>'. $source ."</td></tr>";
+	echo '<td>'. $Chemical_name. '</td><td colspan="2">'. $model_name. '</td>';
+    echo '<td colspan="2">'. $field_1. '</td>';
+	echo "<td> $converted_unit</td><td>". $source .'</td></tr>';
 }	  
 
 
