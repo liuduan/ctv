@@ -77,8 +77,8 @@ include("Header.html");
    -moz-box-shadow: 0 0 6px 4px black;
         box-shadow: 0 0 16px 4px black;">
 <br><br>
-<h1 style="text-align:center; font-size: 36px;"><b>CTV <br> Conditional Toxicity Value</b></h1>
-<h2 style="text-align:center; font-size: 24px;">An <i>In Silico</i> Approach for Generating Toxicity Values for Chemicals</h2>
+<h1 style="text-align:center;" class="text-primary">CTV <br> Conditional Toxicity Value<br>
+<small>An <i>In Silico</i> Approach for Generating Toxicity Values for Chemicals</small></h1>
 <br><br><br>
 
 <div style="text-align:center;">

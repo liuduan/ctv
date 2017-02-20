@@ -94,11 +94,11 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 		$value_CPV = $data->val($i, 47);
 		$source_CPV = $data->val($i, 52);	 
 		
-		
-		echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
-		echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
-		echo '<td>Unit</td><td>Source</td></tr>';
-		
+		if($value_RfD !=0 || $value_RfC !=0 || $value_OSF !=0 || $value_IUR !=0 || $value_CPV !=0 ) {	
+			echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
+			echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
+			echo '<td>Unit</td><td>Source</td></tr>';
+			}
 		
 		break;
 		} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
@@ -220,7 +220,7 @@ if ($any_model_needed){
 		}
   	if($_POST['cancPot'] == "true"){
 	  $CPV_CDK_60537 = Add_curl_to_multi_handle('60537');  
-	  $CPV_ISIDA_60543 = Add_curl_to_multi_handle('70490');  
+	  $CPV_ISIDA_70490 = Add_curl_to_multi_handle('70490');  
 	  }  
 	// above, setup multi handle.
 
@@ -254,7 +254,7 @@ if ($any_model_needed){
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
-		$model_value_2 = Read_model_curl_2values($REFD_CDK_70526);
+		$model_value_2 = Read_model_curl_2values($REFD_ISIDA_70526);
 		$log_value_2 = $model_value_2[0];
 		$sigma_value_2 = $model_value_2[1];
 		
@@ -262,6 +262,7 @@ if ($any_model_needed){
 			else {$sigma_value = $sigma_value_2;}
 		
 		$log_value = ($log_value_1 + $log_value_2)/2;
+		// echo '$log_value_1, $log_value_2, av: '. $log_value_1. ', '. $log_value_2. ', '. $log_value;
 		if($log_value_1 == 0 || $log_value_2 == 0 ){$log_value = $log_value_1 + $log_value_2; }
 		
 		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD)', $log_value, $mol_Weight, '- Log<sub>10</sub>(Mol/kg)', 'mg/kg', -1.365,  1.471, $sigma_value);
@@ -341,14 +342,13 @@ if ($any_model_needed){
 
   	if($_POST['oralSlope'] == "true"){
 		$model_value_1 = Read_model_curl_2values($OSF_CDK_60507);
-		// echo 'OSF: '. $model_value_1;
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
 		$model_value_2 = Read_model_curl_2values($OSF_ISIDA_70514);	
 		$log_value_2 = $model_value_2[0];
 		$sigma_value_2 = $model_value_2[1];
-		
+
 		if ($sigma_value_1 > $sigma_value_2){$sigma_value = $sigma_value_1;}
 			else {$sigma_value = $sigma_value_2;}
 		
@@ -381,7 +381,7 @@ if ($any_model_needed){
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
-		$model_value_2 = Read_model_curl_2values($CPV_ISIDA_60543);	
+		$model_value_2 = Read_model_curl_2values($CPV_ISIDA_70490);	
 		$log_value_2 = $model_value_2[0];
 		$sigma_value_2 = $model_value_2[1];
 		
@@ -390,6 +390,8 @@ if ($any_model_needed){
 		
 		$log_value = ($log_value_1 + $log_value_2)/2;
 		if($log_value_1 == 0 || $log_value_2 == 0 ){$log_value = $log_value_1 + $log_value_2; }
+		
+		// echo 'CPV: '. $log_value_1. ', '. $log_value_2. ', '. $log_value;
 		
 		Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(kg/Mol)', 'kg/mg', -1.808,  1.708, $sigma_value); // update +/- needed.
     	}
@@ -418,7 +420,7 @@ echo '<br><br>*, Each of the predicted values is an average of the predictions f
 echo 'QSAR models (Random Forest with ';
 echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/24479757" target="_blank">CDK</a>';
 echo ' descriptors and Random Forest with ';
-echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/27464350" target="_blank">ISIDA</a> descripters)';
+echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/27464350" target="_blank">ISIDA</a> descriptors)';
 
 
 function Read_model_curl_2values($model_curl){
@@ -429,9 +431,11 @@ function Read_model_curl_2values($model_curl){
 		}
 	else{
 		$curl_content = curl_multi_getcontent($model_curl);
+		// echo '$curl_content'. $curl_content;
         $curl_content = explode('&', $curl_content);
 		$results = explode('<td>', $curl_content[1]);
         $model_value = $results[2];
+		// echo '<pre>$curl_content[1], $model_value:'. $curl_content[1]. ', '. $model_value. '<br> <pre>';
 		
 		$results_sigma = explode('<td>', $curl_content[2]);
 		$sigma_value = $results_sigma[2];
@@ -462,22 +466,33 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 				
 		if ($model_name == 'CTV Oral Slope Factor (OSF)' || $model_name== 'CTV Cancer Potency Value (CPV)' || $model_name == 'CTV Inhalation Unit Risk (IUR)' ){		// three models that mole is on bottom.
 			
-			$model_value = 1/$model_value;	
+			$mole_model = 1/pow(10, $model_value);
+			$mole_lower = 1/pow(10, $Lower_95);
+			$mole_upper = 1/pow(10, $Upper_95);
+			
 			if ($model_name == 'Oral Slope Factor'){
-				$converted_value = pow(10, $model_value) / (1000 * 1000 * $mol_Weight);}
-				else{$converted_value = pow(10, $model_value) / (1000 * $mol_Weight);}
-			$converted_value = 1/$converted_value;
+				$Inverted_converted = $mole_model * (1000 * 1000 * $mol_Weight);
+				$Inverted_converted_lower = $mole_lower * (1000 * 1000 * $mol_Weight);
+				$Inverted_converted_upper = $mole_upper * (1000 * 1000 * $mol_Weight);
+				}
+				else{
+					$Inverted_converted = $mole_model * (1000 * $mol_Weight);
+					$Inverted_converted_lower = $mole_lower * (1000 * $mol_Weight);
+					$Inverted_converted_upper = $mole_upper * (1000 * $mol_Weight);
+					}
+			$converted_value = 1/$Inverted_converted;
+			$converted_lower = 1/$Inverted_converted_lower;
+			$converted_upper = 1/$Inverted_converted_upper;
+			// echo '$model_value. $Lower_95. $Upper_95: '.$model_value. ' '. $Lower_95. $Upper_95. ' '. $converted_value. ' '. $converted_lower. ' '. $converted_upper;
 			}		// end of three models that mole is on bottom.
 			
 			elseif($model_name == 'CTV Reference Dose (RfD)' || $model_name== 'CTV Reference Concentration (RfC)' || $model_name == 'CTV Reference Dose (RfD) BMDL' || $model_name == 'CTV Reference Dose (RfD) BMD' || $model_name == 'CTV Reference Dose NO(A)EL'){
 							
 				$converted_value = pow(10, $model_value*(-1)) * 1000 * $mol_Weight;
-			
+				$converted_lower = pow(10, $Lower_95*(-1)) * 1000 * $mol_Weight;
+				$converted_upper = pow(10, $Upper_95*(-1)) * 1000 * $mol_Weight;
+				
 				}		// end of three models that mole is on top.
-			
-		
-			$converted_lower = pow(10, ($Lower_95*(-1))) * 1000 * $mol_Weight;
-			$converted_upper = pow(10, ($Upper_95*(-1))) * 1000 * $mol_Weight;
 			
 			$model_value_f = E_or_point($model_value);
 			$converted_value_f = E_or_point($converted_value);

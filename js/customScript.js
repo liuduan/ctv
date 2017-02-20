@@ -14,18 +14,8 @@ var month = new Array();
     month[11] = "December";
 	var n = currentdate.getMonth();
 								
-function addZero(i) {
-	if (i < 10) {
-    	i = "0" + i;
-    		}
-    return i;
-	}
-var minutes = currentdate.getMinutes();
-minutes = addZero(minutes);
 var datetime = currentdate.getFullYear() + month[n] 
-	+ currentdate.getDate() + "_"
-    + currentdate.getHours() 
-    + minutes;
+	+ currentdate.getDate();
 	
 
 
@@ -100,7 +90,7 @@ jQuery.fn.table2CSV = function(options) {
         var a = document.createElement('a');
         a.href = 'data:text/csv;charset=utf-8,'+escape(data);
         a.target = '_blank';
-        a.download = 'Toxvlue_' + datetime + '.csv';
+        a.download = 'ToxValue_Results_' + datetime + '.csv';
 		// alert(datetime);
 		// a.download = 'results-2.csv';
         document.body.appendChild(a);
