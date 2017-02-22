@@ -44,7 +44,7 @@ echo '	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="background-color:
 echo "		<p><b>Common Name: $search_var </b></p>";
 echo '		<ul class="legend">';
 echo '			<li><span class="superawesome" style="background-color: LightSkyBlue;">';
-echo '				</span> <b>These values were predicted<sup>1</sup>.</B></li>';
+echo '				</span> <b>These values were predicted<sup>a</sup>.</B></li>';
 
 echo '			<li><span class="superawesome" style="background-color: #f5febb;" ></span>';
 echo ' 				<B style="text-indent: -30px;">';
@@ -151,7 +151,7 @@ if ($any_model_needed){
 	echo 'style = "all: none; border: 5px; border-top: 8px solid black; ';
 	echo 'border-bottom: 2px solid black; ">';
 	echo '<td>Chemical name</td><td>Model Name</td><td>Unit</td><td>Prediction</td>';
-	echo '<td>Lower 95%<sup>2</sup></td><td>Upper 95%<sup>2</sup></td><td>Appl Domain<sup>3</sup></td>';
+	echo '<td>Lower 95%<sup>b</sup></td><td>Upper 95%<sup>b</sup></td><td>Appl Domain<sup>c</sup></td>';
 	echo '<td>Note</td></tr>';
 	
 	//	login into chembench
@@ -190,37 +190,37 @@ if ($any_model_needed){
 
 	// Add each model to curl_multi
 	if($_POST['refDose'] == "true")	{
-	  	$REFD_CDK_60561 = Add_curl_to_multi_handle('60561'); 
+	  	$REFD_CDK_67612 = Add_curl_to_multi_handle('67612'); 
 	  	$REFD_ISIDA_70526 = Add_curl_to_multi_handle('70526');
 	  	}
 	if($_POST['noel'] == "true")	{
-	  	$NOEL_CDK_66220 = Add_curl_to_multi_handle('66220'); 
+	  	$NOEL_CDK_67624 = Add_curl_to_multi_handle('67624'); 
 	  	$NOEL_ISIDA_66226 = Add_curl_to_multi_handle('66226');
 	  	}
 	if($_POST['refConc'] == "true")	{
-		$RFC_CDK_60573 = Add_curl_to_multi_handle('60573');  
+		$RFC_CDK_67600 = Add_curl_to_multi_handle('67600');  
 		$RFC_ISIDA_70520 = Add_curl_to_multi_handle('70520');  
 		}
 
 	if($_POST['onbd'] == "true"){
-	  	$ONBD_CDK_60471 = Add_curl_to_multi_handle('60471');	
+	  	$ONBD_CDK_67570 = Add_curl_to_multi_handle('67570');	
 		$ONBD_ISIDA_70508 = Add_curl_to_multi_handle('70508');
 	  	}
 	if($_POST['onbdl'] == "true"){
-	  	$ONBDL_CDK_66208 = Add_curl_to_multi_handle('66208');
+	  	$ONBDL_CDK_67582 = Add_curl_to_multi_handle('67582');
 	  	$ONBDL_ISIDA_66214 = Add_curl_to_multi_handle('66214');
 	  	}
 		
 	if($_POST['oralSlope'] == "true"){
-		$OSF_CDK_60507 = Add_curl_to_multi_handle('60507');  
+		$OSF_CDK_67588 = Add_curl_to_multi_handle('67588');  
 		$OSF_ISIDA_70514 = Add_curl_to_multi_handle('70514'); 
 		}
   	if($_POST['ihalUnit'] == "true"){
-		$IUR_CDK_60549 = Add_curl_to_multi_handle('60549');  
+		$IUR_CDK_67546 = Add_curl_to_multi_handle('67546');  
 		$IUR_ISIDA_70496 = Add_curl_to_multi_handle('70496');  
 		}
   	if($_POST['cancPot'] == "true"){
-	  $CPV_CDK_60537 = Add_curl_to_multi_handle('60537');  
+	  $CPV_CDK_67534 = Add_curl_to_multi_handle('67534');  
 	  $CPV_ISIDA_70490 = Add_curl_to_multi_handle('70490');  
 	  }  
 	// above, setup multi handle.
@@ -252,7 +252,7 @@ if ($any_model_needed){
 	
 	$Note = '';
   	if($_POST['refDose'] == "true"){
-		$model_value_1 = Read_model_curl_2values($REFD_CDK_60561);
+		$model_value_1 = Read_model_curl_2values($REFD_CDK_67612);
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
@@ -277,7 +277,7 @@ if ($any_model_needed){
 		}
 		
 	if($_POST['noel'] == "true")	{
-		$model_value_1 = Read_model_curl_2values($NOEL_CDK_66220);
+		$model_value_1 = Read_model_curl_2values($NOEL_CDK_67624);
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
@@ -302,7 +302,7 @@ if ($any_model_needed){
 	  	}
 	
   	if($_POST['refConc'] == "true"){
-		$model_value_1 = Read_model_curl_2values($RFC_CDK_60573);	
+		$model_value_1 = Read_model_curl_2values($RFC_CDK_67600);	
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
@@ -326,7 +326,7 @@ if ($any_model_needed){
 	  	}
 	
   	if($_POST['onbd'] == "true"){  			
-    	$model_value_1 = Read_model_curl_2values($ONBD_CDK_60471);	
+    	$model_value_1 = Read_model_curl_2values($ONBD_CDK_67570);	
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
@@ -350,7 +350,7 @@ if ($any_model_needed){
 		}
 	
 	if($_POST['onbdl'] == "true"){
-		$model_value_1 = Read_model_curl_2values($ONBDL_CDK_66208);		
+		$model_value_1 = Read_model_curl_2values($ONBDL_CDK_67582);		
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
@@ -374,7 +374,7 @@ if ($any_model_needed){
 		}		  
 
   	if($_POST['oralSlope'] == "true"){
-		$model_value_1 = Read_model_curl_2values($OSF_CDK_60507);
+		$model_value_1 = Read_model_curl_2values($OSF_CDK_67588);
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
@@ -398,7 +398,7 @@ if ($any_model_needed){
     	}
 
 	if($_POST['ihalUnit'] == "true"){		
-		$model_value_1 = Read_model_curl_2values($IUR_CDK_60549);	
+		$model_value_1 = Read_model_curl_2values($IUR_CDK_67546);	
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
@@ -422,7 +422,7 @@ if ($any_model_needed){
 		}
 
   	if($_POST['cancPot'] == "true"){  			
-    	$model_value_1 = Read_model_curl_2values($CPV_CDK_60537 );	
+    	$model_value_1 = Read_model_curl_2values($CPV_CDK_67534 );	
 		$log_value_1 = $model_value_1[0];
 		$sigma_value_1 = $model_value_1[1];
 		
@@ -470,13 +470,13 @@ echo '		</p>';
 echo '</div>';		// end of div for 2 buttons
 
 
-echo '<br><br>1. Unless otherwise noted, each of the predicted values is an average of the predictions from two ';
+echo '<br><br>a. Unless otherwise noted, each of the predicted values is an average of the predictions from two ';
 echo 'QSAR models (Random Forest with ';
 echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/24479757" target="_blank">CDK</a>';
 echo ' descriptors and Random Forest with ';
 echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/27464350" target="_blank">ISIDA</a> descriptors).<br>';
-echo '2. One-tailed confidence boundries on residuals from cross validation.<br>';
-echo '3. Number of &sigma;. Typical applicability domain cutoffs are 1&sigma; for a more restrictive dormain and 3&sigma; for a less restrictive domain.<br>';
+echo 'b. One-tailed confidence boundries on residuals from cross validation.<br>';
+echo 'c. Number of &sigma;. Typical applicability domain cutoffs are 1&sigma; for a more restrictive dormain and 3&sigma; for a less restrictive domain.<br>';
 
 
 function Read_model_curl_2values($model_curl){
