@@ -89,7 +89,7 @@ include("Header.html");
 
 <div style = "padding:100px; font-size: 18px; text-indent: 50px; text-align: justify;">
 <p style = "text-indent: 50px; ">
-     Human health assessments produce quantitative toxicity values or standards by relying on epidemiological data or animal studies. Such assessments are data-, time-, and resource-intensive, and cannot be realistically expected for most environmental chemicals. The National Research Council's "Science and Decisions" report (2009) called for development of default approaches to support risk estimation for toxicants lacking chemical-specific information.</p>
+     Human health assessments produce quantitative toxicity values or standards by relying on epidemiological data or animal studies. Such assessments are data-, time-, and resource-intensive, and cannot be realistically expected for most environmental chemicals. The National Research Council's "Science and Decisions" report (2009) called for development of default approaches to support risk estimation for toxicants lacking chemical-specific information.   <a href = "index_R.php" target = "_blank"> &reg;</a></p>
      
 	<p style = "text-indent: 50px; ">
     To address the challenge of risk management for data-poor chemicals, we developed quantitative structure-activity relationship (QSAR) models that use chemical properties to predict toxicity values. These models were developed based on a comprehensive database of existing toxicity values from US Federal and State agencies.  </p>

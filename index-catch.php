@@ -181,7 +181,7 @@
                         <div id="select_check" style="display:none; width: 100%; ">
                         	<p align="left">
                             	<a class="btn btn-primary btn-customctv" id="enable_check">Select</a>
-                            	<a class="btn btn-danger" id="cancel_search">Cancel</a>
+                            	<a class="btn btn-default" id="cancel_search">Cancel</a>
                             	
                         	</p>
                     	</div>
@@ -312,7 +312,7 @@
                 	<button type="submit" id="Search-Data-and-Model" class="btn btn-primary">
                 		Search Data and/or Make Prediction</button>
                 	<a class="btn btn-info" id="returnStep2s">One Step Back</a>
-                	<a class="btn btn-danger" href="index-catch.php">New Prediction</a>
+                	<a class="btn btn-success" href="index-catch.php">New Prediction</a>
                 	<br><br>
                 	<a href="CTV_data_2016-xls.xls">Data table </a>of the toxicity values used for modeling prediction models are hosted on <a href="https://chembench.mml.unc.edu/" target="_blank">
                 		Chembench </a> web tool.

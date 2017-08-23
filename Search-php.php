@@ -465,7 +465,7 @@ echo ' 		<p align="center">';		// 2 buttons
 echo '			<input type="button" class="btn btn-primary" onclick="$(';
 echo " 				'#compResults').table2CSV()";
 echo ' 				" value="Export as CSV">';
-echo ' 			<a class="btn btn-danger" href="index-catch.php">New Prediction</a>';
+echo ' 			<a class="btn btn-success" href="index-catch.php">New Prediction</a>';
 echo '		</p>';
 echo '</div>';		// end of div for 2 buttons
 
@@ -476,7 +476,7 @@ echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/24479757" target="_blank">CDK
 echo ' descriptors and Random Forest with ';
 echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/27464350" target="_blank">ISIDA</a> descriptors).<br>';
 echo '** One-tailed confidence boundries on residuals from cross validation.<br>';
-echo '*** Number of &sigma;. Typical applicability domain cutoffs are &plusmn;1&sigma; for a more restrictive domain and &plusmn;3&sigma; for a less restrictive domain.<br>';
+echo '*** Number of &sigma;. Typical applicability domain cutoffs are +1&sigma; for a more restrictive domain and +3&sigma; for a less restrictive domain. A negative value indicates the chemical is within the applicability domain. <br>';
 
 
 function Read_model_curl_2values($model_curl){
@@ -569,7 +569,7 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
 			echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
 			echo $Chemical_name. '</td><td>'. $model_name. '</td><td>'. $converted_unit. '</td><td>';
-			echo $converted_value_f. '</td><td>'. $converted_lower_f. '</td><td>'. $converted_upper_f. '</td><td>';
+			echo $converted_value_f. '</td><td>'. $converted_upper_f. '</td><td>'. $converted_lower_f. '</td><td>';
 			echo $sigma_value. '</td><td>'. $Note. '</td></tr>';
 			
 	}	// end of 	if ($model_value != 0){	)
