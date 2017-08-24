@@ -263,7 +263,7 @@ echo ' 		<p align="center">';		// 2 buttons
 echo '			<input type="button" class="btn btn-primary" onclick="$(';
 echo " 				'#compResults').table2CSV()";
 echo ' 				" value="Export as CSV">';
-echo ' 			<a class="btn btn-success" href="index-catch.php">New Prediction</a>';
+echo ' 			<a class="btn btn-success" href="index_R.php">New Prediction</a>';
 echo '		</p>';
 echo '</div>';		// end of div for 2 buttons
 

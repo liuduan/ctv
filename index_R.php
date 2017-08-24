@@ -53,7 +53,7 @@
 	</style>
 </head>
 <body >
-<?php include("Header.html"); ?>
+<?php include("Header_R.html"); ?>
 
 <div class = "container-fluid" style = "padding-bottom: 50px;  ">  
 	<div id="just_a_test" ></div>  
@@ -74,7 +74,7 @@
 		 <div id="spinner" class="spinner" style="display:none;">
                 <p align="center">
                     <img id="img-spinner" src="images/ajax-loader.gif" alt="Loading ..." />
-                    Please wait, the analysis may last for 3 minutes.
+                    Please wait, this process normally last about 30 seconds.
                     <div id="show_content"></div>
                 </p>
          </div>
@@ -272,25 +272,25 @@
                         <h5 style="line-height: 200%;">
                         <input type="checkbox" onClick="Select_All(this)" >&nbsp;&nbsp; <b>Select All</b>
                         <br>
-                        <input type="checkbox" name="model_selection" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose (RfD) <small>(Chembench models: 67612 and 70526)</small>
+                        <input type="checkbox" name="model_selection" id="Ref_dose" disabled="disabled" value="Ref_dose1">&nbsp;&nbsp; CTV Reference Dose (RfD) <small></small>
                         <br>
-                        <input type="checkbox" name="model_selection" id="NOEL" disabled="disabled" value="Ref_dose_NOEL1">&nbsp;&nbsp; CTV Reference Dose (RfD) NO(A)EL <small>(Chembench models: 67624 and 66226)</small>
+                        <input type="checkbox" name="model_selection" id="NOEL" disabled="disabled" value="Ref_dose_NOEL1">&nbsp;&nbsp; CTV Reference Dose (RfD) NO(A)EL <small></small>
 
                         <BR>
-                        <input type="checkbox" name="model_selection" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Reference Dose (RfD) BMD <small>(Chembench models: 67570 and 70508)</small>
+                        <input type="checkbox" name="model_selection" id="ONBD" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Reference Dose (RfD) BMD <small></small>
                         <BR>
-                        <input type="checkbox" name="model_selection" id="ONBDL" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Reference Dose (RfD) BMDL <small>(Chembench models: 67582 and 66214)</small>
-                        <BR>
-                        
-                        
-                        <input type="checkbox" name="model_selection" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration (RfC) <small>(Chembench models: 67600 and 70520)</small>
+                        <input type="checkbox" name="model_selection" id="ONBDL" disabled="disabled" value="ONBD1">&nbsp;&nbsp; CTV Reference Dose (RfD) BMDL <small></small>
                         <BR>
                         
-                        <input type="checkbox" name="model_selection" id="Oral_slope" disabled="disabled" value="Oral_slope1">&nbsp;&nbsp; CTV Oral Slope Factor (OSF) <small>(Chembench models: 67588 and 70514)</small>
+                        
+                        <input type="checkbox" name="model_selection" id="Ref_conc" disabled="disabled" value="Ref_conc1">&nbsp;&nbsp; CTV Reference Concentration (RfC) <small></small>
                         <BR>
-                        <input type="checkbox" name="model_selection" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value (CPV) <small>(Chembench models: 67534 and 70490)</small>
+                        
+                        <input type="checkbox" name="model_selection" id="Oral_slope" disabled="disabled" value="Oral_slope1">&nbsp;&nbsp; CTV Oral Slope Factor (OSF) <small></small>
+                        <BR>
+                        <input type="checkbox" name="model_selection" id="Canc_pot" disabled="disabled" value="Canc_pot1">&nbsp;&nbsp; CTV Cancer Potency Value (CPV) <small></small>
                         <br>
-                        <input type="checkbox" name="model_selection" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk (IUR) <small>(Chembench models: 67546 and 70496)</small>
+                        <input type="checkbox" name="model_selection" id="Ihal_unit" disabled="disabled" value="Ihal_unit1">&nbsp;&nbsp; CTV Inhalation Unit Risk (IUR) <small></small>
         
                         <BR>
                       	</h5>
@@ -312,10 +312,9 @@
                 	<button type="submit" id="Search-Data-and-Model" class="btn btn-primary">
                 		Search Data and/or Make Prediction</button>
                 	<a class="btn btn-info" id="returnStep2s">One Step Back</a>
-                	<a class="btn btn-success" href="index-catch.php">New Prediction</a>
+                	<a class="btn btn-success" href="index_R.php">New Prediction</a>
                 	<br><br>
-                	<a href="CTV_data_2016-xls.xls">Data table </a>of the toxicity values used for modeling prediction models are hosted on <a href="https://chembench.mml.unc.edu/" target="_blank">
-                		Chembench </a> web tool.
+                	Here is the <a href="CTV_data_2016-xls.xls">Data table </a>of the toxicity values used for modeling prediction.
                     	
                     
 				</div><!-- end of clomn -->
