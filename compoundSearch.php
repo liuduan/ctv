@@ -28,8 +28,11 @@ $result = $SoapiClient->SimpleSearch($thearray);
 // echo "From compoundsearch.php";
 
 if (is_soap_fault($result) || ($result->SimpleSearchResult->int == null)):
-echo "<h4>No Information was found on $query </h4><pre></pre>";
-
+	echo "<h4>No Information was found on $query </h4><pre></pre>";
+	echo '<script>';
+	echo '	$(document).ready(function(){';
+	echo '		$("#enable_check").hide();});';
+	echo '	</script>';
 
 
 
@@ -60,8 +63,9 @@ $thearray = array('CSID' => $query, 'token' => $token);
 $result = $SoapiClients->GetExtendedCompoundInfo($thearray);
 
 if (is_soap_fault($result)):
-echo "<h1>No Information was found on </h1>";
-//echo '<pre></pre>';
+	echo "<h1>No Information was found on: </h1>";
+
+	//echo '<pre></pre>';
 
 else:
 
@@ -107,6 +111,7 @@ $InChI = $result->GetExtendedCompoundInfoResult->InChI;
 		   //*******Get image*********
 		  		   //*******Get image*********
 		   $url = "http://chemspider.com/Search.asmx/GetCompoundThumbnail?id=".$query."&token=".$token; //25798fdf-c956-4e7b-8294-4c92597cd614";
+		   // echo "URL: ". $url;
               $ch = curl_init();
    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
    curl_setopt($ch, CURLOPT_URL, $url);

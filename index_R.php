@@ -181,7 +181,7 @@
                         <div id="select_check" style="display:none; width: 100%; ">
                         	<p align="left">
                             	<a class="btn btn-primary btn-customctv" id="enable_check">Select</a>
-                            	<a class="btn btn-default" id="cancel_search">Cancel</a>
+                            	<a class="btn btn-success" id="cancel_search">Cancel / Back</a>
                             	
                         	</p>
                     	</div>

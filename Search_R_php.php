@@ -96,7 +96,7 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 	}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
 
 if($_POST['refDose'] == "true" && $value_RfD != 0 ){
-	Display_exist_value($_POST['compoundName'], "Reference Dose", $value_RfD, $source_RfD, 'mg/kg');
+	Display_exist_value($_POST['compoundName'], "Reference Dose", $value_RfD, $source_RfD, 'mg/(kg&middot;day)');
 	$_POST['refDose'] = False;
 	}
 
@@ -106,18 +106,18 @@ if($_POST['refConc'] == "true" && $value_RfC != 0 ){
 	}
 
 if($_POST['oralSlope'] == "true" && $value_OSF != 0 ){
-	Display_exist_value($_POST['compoundName'], "Oral Slope Factor", $value_OSF, $source_OSF, 'kg/mg');
+	Display_exist_value($_POST['compoundName'], "Oral Slope Factor", $value_OSF, $source_OSF, 'risk per mg/(kg&middot;day)');
 	$_POST['oralSlope'] = False;
 	}
 	
 if($_POST['ihalUnit'] == "true" && $value_IUR != 0 ){
-	Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'm<sup>3</sup>/&micro;g');
+	Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'risk per &micro;g/m<sup>3</sup>');
 	$_POST['ihalUnit'] = False;
 	}
 
 	
 if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
-	Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'kg/mg');
+	Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'risk per mg/(kg&middot;day)');
 	$_POST['cancPot'] = False;
 	}
 
@@ -142,8 +142,8 @@ if ($any_model_needed){
 	echo 'style = "all: none; border: 5px; border-top: 8px solid black; ';
 	echo 'border-bottom: 2px solid black; ">';
 	echo '<td>Chemical name</td><td>Model Name</td><td>Unit</td><td>Prediction</td>';
-	echo '<td>Lower 95%<sup>**</sup></td><td>Upper 95%<sup>**</sup></td><td>Appl Domain<sup>***</sup></td>';
-	echo '<td>Note</td></tr>';
+	echo '<td>Lower 95%<sup>*</sup></td><td>Upper 95%<sup>*</sup></td><td>Appl Domain<sup>**</sup></td>';
+	echo '</tr>';
 	
 
   	// Start model 
@@ -166,15 +166,14 @@ if ($any_model_needed){
 	$csv = array_map('str_getcsv', file('C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_output.csv'));
 
 	
-	$Note = '';
+	
 	if($_POST['refDose'] == "true"){
 		$log_value = $csv[1][1];
 		$Lower_CI = $csv[1][2];  
 		$Upper_CI = $csv[1][3]; 
 		$sigma_value = $csv[1][4];
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/kg', 'mg/kg', $Lower_CI,  $Upper_CI,  $sigma_value, $Note);
-		$Note = '';
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
 	}
 	
 	if($_POST['noel'] == "true")	{
@@ -183,8 +182,7 @@ if ($any_model_needed){
 		$Upper_CI = $csv[2][3]; 
 		$sigma_value = $csv[2][4];
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose NO(A)EL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/kg', 'mg/kg', $Lower_CI,  $Upper_CI,  $sigma_value, $Note);
-		$Note = '';
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose NO(A)EL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
 	}
 	
 	if($_POST['refConc'] == "true"){
@@ -193,8 +191,7 @@ if ($any_model_needed){
 		$Upper_CI = $csv[7][3]; 
 		$sigma_value = $csv[7][4];
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Concentration (RfC)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/m<sup>3</sup>', 'mg/m<sup>3</sup>', $Lower_CI,  $Upper_CI, $sigma_value, $Note);		
-		$Note = '';
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Concentration (RfC)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/m<sup>3</sup>', 'mg/m<sup>3</sup>', $Lower_CI,  $Upper_CI, $sigma_value);		
 	}
 	
 	if($_POST['onbd'] == "true"){  				
@@ -203,8 +200,7 @@ if ($any_model_needed){
 		$Upper_CI = $csv[4][3];
 		$sigma_value = $csv[4][4];
 	
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMD', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/kg', 'mg/kg', 	$Lower_CI,  $Upper_CI,  $sigma_value, $Note);
-		$Note = '';
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMD', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', 	$Lower_CI,  $Upper_CI,  $sigma_value);
 	}
 	
 	if($_POST['onbdl'] == "true"){
@@ -213,8 +209,7 @@ if ($any_model_needed){
 		$Upper_CI = $csv[3][3];
 		$sigma_value = $csv[3][4];
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMDL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/kg', 'mg/kg', $Lower_CI,  $Upper_CI,  $sigma_value, $Note);
-		$Note = '';
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMDL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
 	}	
 	
 	if($_POST['oralSlope'] == "true"){
@@ -223,8 +218,7 @@ if ($any_model_needed){
 		$Upper_CI = $csv[5][3];
 		$sigma_value = $csv[5][4];
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Oral Slope Factor (OSF)', $log_value, $mol_Weight, 'Log<sub>10</sub>(kg/Mol)', 'kg/mg', $Lower_CI,  $Upper_CI,  $sigma_value, $Note);
-		$Note = '';
+		Prediction_Display($_POST['compoundName'], 'CTV Oral Slope Factor (OSF)', $log_value, $mol_Weight, 'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
     }
 	
 	if($_POST['ihalUnit'] == "true"){		
@@ -233,8 +227,7 @@ if ($any_model_needed){
 		$Upper_CI = $csv[8][3];
 		$sigma_value = $csv[8][4];
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Inhalation Unit Risk (IUR)', $log_value, $mol_Weight, 'Log<sub>10</sub>(m<sup>3</sup>/Mol)', 'm<sup>3</sup>/&micro;g', $Lower_CI,  $Upper_CI,  $sigma_value, $Note);
-		$Note = '';
+		Prediction_Display($_POST['compoundName'], 'CTV Inhalation Unit Risk (IUR)', $log_value, $mol_Weight, 'Log<sub>10</sub>(m<sup>3</sup>/Mol)', 'm<sup>3</sup>/&micro;g', $Lower_CI,  $Upper_CI,  $sigma_value);
 		}
 
   	if($_POST['cancPot'] == "true"){  			
@@ -245,12 +238,11 @@ if ($any_model_needed){
 		
 		// echo 'CPV: '. $log_value_1. ', '. $log_value_2. ', '. $log_value;
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(kg/Mol)', 'kg/mg', $Lower_CI,  $Upper_CI,  $sigma_value, $Note);
-		$Note = '';
+		Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
     }
 	
 	
-	// function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weight, $model_unit, $converted_unit, $Lower_CI,  $Upper_CI, $sigma_value, $Note)
+	// function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weight, $model_unit, $converted_unit, $Lower_CI,  $Upper_CI, $sigma_value)
 
 }		// end of if ($any_model_needed){}
 
@@ -268,13 +260,9 @@ echo '		</p>';
 echo '</div>';		// end of div for 2 buttons
 
 
-echo '<br><br>* Unless otherwise noted, each of the predicted values is an average of the predictions from two ';
-echo 'QSAR models (Random Forest with ';
-echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/24479757" target="_blank">CDK</a>';
-echo ' descriptors and Random Forest with ';
-echo '<a href="https://www.ncbi.nlm.nih.gov/pubmed/27464350" target="_blank">ISIDA</a> descriptors).<br>';
-echo '** One-tailed confidence boundries on residuals from cross validation.<br>';
-echo '*** Number of &sigma;. Typical applicability domain cutoffs are +1&sigma; for a more restrictive domain and +3&sigma; for a less restrictive domain. A negative value indicates the chemical is within the applicability domain. <br>';
+echo '<br><br>';
+echo '* One-tailed confidence boundries on residuals from cross validation.<br>';
+echo '** Number of &sigma;. Typical applicability domain cutoffs are +1&sigma; for a more restrictive domain and +3&sigma; for a less restrictive domain. A negative value indicates the chemical is within the applicability domain. <br>';
 
 
 
@@ -286,16 +274,13 @@ function E_or_point($input_value){
 	return $output_value;
 	}
 
-function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weight, $model_unit, $converted_unit, $Lower_CI,  $Upper_CI, $sigma_value, $Note)
-	{	
-
-		
+function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weight, $model_unit, $converted_unit, $Lower_CI,  $Upper_CI, $sigma_value)
+	{		
 	// echo '<br>$model_value: '. $model_value.'<br>';
 	if ($model_value != 0){		 
 		
-		
-		$Lower_95 = $model_value + $Lower_CI;
-		$Upper_95 = $model_value + $Upper_CI;
+		$Lower_95 = $Lower_CI;
+		$Upper_95 = $Upper_CI;
 		
 		// echo '$Upper_95 = $model_value + $Upper_CI: '. $Upper_95, $model_value, $Upper_CI;;
 				
