@@ -14,10 +14,11 @@ $SoapiClient = new soapclient('http://www.chemspider.com/Search.asmx?WSDL', arra
 // $q_name = $_POST['compoundName']; 
 
 // $query=$_POST['compoundName']; 
+// test this one later: 1401-55-4
 
-$q_name = "endrin"; 
+$q_name = "1401-55-4"; 
 
-$query= "endrin"; 
+$query= "1401-55-4"; 
 
 $token="25798fdf-c956-4e7b-8294-4c92597cd614"; // the provided password
 

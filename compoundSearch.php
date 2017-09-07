@@ -88,7 +88,7 @@ $InChI = $result->GetExtendedCompoundInfoResult->InChI;
 
 		   echo '  <div class="row">';
 		   echo '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">';
-		   echo '<div style = "width-max: 500px; float: right; background-color:; ">';
+		   echo '<div style = "float: right; background-color:; width: 100%; ">';
 				// this div holds the table.
 		   echo "<p><i>Your query was: $q_name</i></p> ";
            echo "<u>ChemSpider information on query:</u><br>"; 		   

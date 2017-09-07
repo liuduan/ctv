@@ -160,9 +160,11 @@
             </div>
 
 
-			<div id="step2" style="display:none;">
+			<div id="step2" style="display:none; background-color:;">
 				<h2>Step 2<small>: Verify Chemical Name and Structure</small></h2> 
-                <div id="ctvInfo"> </div>
+				
+				<div id="ctvInfo" style="background-color: ;"> hello</div>
+					
             	<div class="row">
                 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     	
