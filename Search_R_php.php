@@ -227,7 +227,7 @@ if ($any_model_needed){
 		$Upper_CI = $csv[8][3];
 		$sigma_value = $csv[8][4];
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Inhalation Unit Risk (IUR)', $log_value, $mol_Weight, 'Log<sub>10</sub>(m<sup>3</sup>/Mol)', 'm<sup>3</sup>/&micro;g', $Lower_CI,  $Upper_CI,  $sigma_value);
+		Prediction_Display($_POST['compoundName'], 'CTV Inhalation Unit Risk (IUR)', $log_value, $mol_Weight, 'Log<sub>10</sub>(m<sup>3</sup>/Mol)', 'risk per &micro;g/m<sup>3</sup>', $Lower_CI,  $Upper_CI,  $sigma_value);
 		}
 
   	if($_POST['cancPot'] == "true"){  			

@@ -105,7 +105,7 @@ for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 	}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
 
 if($_POST['refDose'] == "true" && $value_RfD != 0 ){
-	Display_exist_value($_POST['compoundName'], "Reference Dose", $value_RfD, $source_RfD, 'mg/kg');
+	Display_exist_value($_POST['compoundName'], "Reference Dose", $value_RfD, $source_RfD, 'mg/(kg&middot;day)');
 	$_POST['refDose'] = False;
 	}
 
@@ -115,18 +115,18 @@ if($_POST['refConc'] == "true" && $value_RfC != 0 ){
 	}
 
 if($_POST['oralSlope'] == "true" && $value_OSF != 0 ){
-	Display_exist_value($_POST['compoundName'], "Oral Slope Factor", $value_OSF, $source_OSF, 'kg/mg');
+	Display_exist_value($_POST['compoundName'], "Oral Slope Factor", $value_OSF, $source_OSF, 'risk per mgl/(kg&middot;day)');
 	$_POST['oralSlope'] = False;
 	}
 	
 if($_POST['ihalUnit'] == "true" && $value_IUR != 0 ){
-	Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'm<sup>3</sup>/&micro;g');
+	Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'risk per &micro;g/m<sup>3</sup>');
 	$_POST['ihalUnit'] = False;
 	}
 
 	
 if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
-	Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'kg/mg');
+	Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'risk per mgl/(kg&middot;day)');
 	$_POST['cancPot'] = False;
 	}
 
@@ -272,7 +272,7 @@ if ($any_model_needed){
 				else $Note = 'CDK Only';
 			}
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/kg', 'mg/kg', -1.365,  1.471, $sigma_value, $Note);
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', -1.365,  1.471, $sigma_value, $Note);
 		$Note = '';
 		}
 		
@@ -297,7 +297,7 @@ if ($any_model_needed){
 				else $Note = 'CDK Only';
 			}
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose NO(A)EL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/kg', 'mg/kg', -1.258,  1.326, $sigma_value, $Note);		
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose NO(A)EL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', -1.258,  1.326, $sigma_value, $Note);		
 		$Note = '';
 	  	}
 	
@@ -345,7 +345,7 @@ if ($any_model_needed){
 				else $Note = 'CDK Only';
 			}
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMD', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/kg', 'mg/kg', -1.559,  1.523, $sigma_value, $Note);
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMD', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', -1.559,  1.523, $sigma_value, $Note);
 		$Note = '';
 		}
 	
@@ -369,7 +369,7 @@ if ($any_model_needed){
 				else $Note = 'CDK Only';
 			}
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMDL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/kg', 'mg/kg', -1.696,  1.624, $sigma_value, $Note);	
+		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMDL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', -1.696,  1.624, $sigma_value, $Note);	
 		$Note = '';
 		}		  
 
@@ -393,7 +393,7 @@ if ($any_model_needed){
 				else $Note = 'CDK Only';
 			}
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Oral Slope Factor (OSF)', $log_value, $mol_Weight, 'Log<sub>10</sub>(kg/Mol)', 'kg/mg', -1.663,  1.918, $sigma_value, $Note);
+		Prediction_Display($_POST['compoundName'], 'CTV Oral Slope Factor (OSF)', $log_value, $mol_Weight, 'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mgl/(kg&middot;day)', -1.663,  1.918, $sigma_value, $Note);
 		$Note = '';
     	}
 
@@ -417,7 +417,7 @@ if ($any_model_needed){
 				else $Note = 'CDK Only';
 			}
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Inhalation Unit Risk (IUR)', $log_value, $mol_Weight, 'Log<sub>10</sub>(m<sup>3</sup>/Mol)', 'm<sup>3</sup>/&micro;g', -1.853,  2.372, $sigma_value, $Note);
+		Prediction_Display($_POST['compoundName'], 'CTV Inhalation Unit Risk (IUR)', $log_value, $mol_Weight, 'Log<sub>10</sub>(m<sup>3</sup>/Mol)', 'risk per &micro;g/m<sup>3</sup>', -1.853,  2.372, $sigma_value, $Note);
 		$Note = '';
 		}
 
@@ -443,7 +443,7 @@ if ($any_model_needed){
 		
 		// echo 'CPV: '. $log_value_1. ', '. $log_value_2. ', '. $log_value;
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(kg/Mol)', 'kg/mg', -1.808,  1.708, $sigma_value, $Note);
+		Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mgl/(kg&middot;day)', -1.808,  1.708, $sigma_value, $Note);
 		$Note = '';
     	}
         		
