@@ -69,7 +69,7 @@ a:active {
 <!-- <body background="images/Carpet.jpg"> -->
 <div id="container" style = "padding-bottom: 50px;  ">
 <?php
-include("Header.html");
+include("Header_R.html");
 ?>
 <div class="container-2" style = "min-height: 300px; width: 95%; 
     margin: auto; padding: 40px; padding-top: 25px;  
@@ -77,7 +77,7 @@ include("Header.html");
    -moz-box-shadow: 0 0 6px 4px black;
         box-shadow: 0 0 16px 4px black;">
 <br><br>
-<h1 style="text-align:center;" class="text-primary">CTV <br> Conditional Toxicity Value<br>
+<h1 style="text-align:center;" class="text-primary">CTV <br> Conditional Toxicity Value Predictor<br>
 <small>An <i>In Silico</i> Approach for Generating Toxicity Values for Chemicals</small></h1>
 <br><br><br>
 
@@ -97,16 +97,16 @@ include("Header.html");
  
 
 	<p style = "text-indent: 50px; "> 
-	Mean model errors ranged from 0.66 to 1.0 log10 units of concentration/dose. Because a diverse set of chemicals was used to build these models, they have a large applicability domain that covers >90% of environmental chemicals. </p>
+	Mean model errors ranged from 0.70 to 1.11 log10 units of concentration/dose. Because a diverse set of chemicals was used to build these models, the models generally have a large applicability domain that covers >80% of environmental chemicals. </p>
 
 
     
 	<p style = "text-indent: 50px; "> 
-	An <i>in silico</i> tool can predict a toxicity value with an error of less than a factor of 10, filling a critical gap in the current risk management paradigm. It can be used to quickly assess relative hazards of environmental exposures when toxicity data or risk assessments are unavailable.</p>
+	This <i>in silico</i> tool can predict a toxicity value with an error of less than a factor of 10, filling a critical gap in the current risk management paradigm. It can be used to quickly assess relative hazards of environmental exposures when toxicity data or risk assessments are unavailable.</p>
     
     
        <p style = "text-indent: 50px; ">
-    This website serves as a publicly accessible web-based tool that allows end-users to calculate predicted toxicity values for the chemicals of interest, or to retrieve the existing toxicity values used to build the QSAR models. This website is maintained by the research groups of Dr. Ivan Rusyn and Dr. Weihsueh Chiu at Texas A&M University</p>
+    This website serves as a publicly accessible web-based portal that allows end-users to calculate predicted toxicity values for the chemicals of interest, or to retrieve the existing toxicity values used to build the QSAR models. This website is maintained by the research groups of Dr. Ivan Rusyn and Dr. Weihsueh Chiu at Texas A&M University</p>
 </div>
 
 </div>

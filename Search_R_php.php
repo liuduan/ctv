@@ -255,21 +255,39 @@ echo ' 		<p align="center">';		// 2 buttons
 echo '			<input type="button" class="btn btn-primary" onclick="$(';
 echo " 				'#compResults').table2CSV()";
 echo ' 				" value="Export as CSV">';
-echo ' 			<a class="btn btn-success" href="index_R.php">New Prediction</a>';
+echo ' 			<a class="btn btn-success" href="index_R.php">Start Over</a>';
 echo '		</p>';
 echo '</div>';		// end of div for 2 buttons
 
 
 echo '<br><br>';
-echo '* One-tailed confidence boundries on residuals from cross validation.<br>';
-echo '** Number of &sigma;. Typical applicability domain cutoffs are +1&sigma; for a more restrictive domain and +3&sigma; for a less restrictive domain. A negative value indicates the chemical is within the applicability domain. <br>';
+echo '* One-tailed confidence bounds based on residuals from cross validation.<br>';
+echo '** Number of &sigma;. Typical applicability domain cutoffs are <3&sigma; for a less restrictive domain and <1&sigma; for a more restrictive domain. A negative value indicates the chemical is within the applicability domain. <br>';
 
 
 
 
 function E_or_point($input_value){
-	if ($input_value >= 100 || $input_value < 0.1){
-		$output_value = sprintf("%.3e", $input_value);}
+	if (($input_value >= 1000 || $input_value < 0.001) && $input_value <> 0){
+		$output_value = sprintf("%.2e", $input_value);}
+		elseif($input_value >= 100 && $input_value < 1000){
+			$output_value = round($input_value, 0);
+		}
+		elseif($input_value >= 10 && $input_value < 100){
+			$output_value = sprintf("%01.1f", round($input_value, 1));
+		}
+		elseif(($input_value >= 1 && $input_value < 10) || $input_value == 0){
+			$output_value = sprintf("%01.2f", round($input_value, 2));
+		}
+		elseif($input_value >= 0.1 && $input_value < 1){
+			$output_value = sprintf("%01.3f", round($input_value, 3));
+		}
+		elseif($input_value >= 0.01 && $input_value < 0.1){
+			$output_value = sprintf("%01.4f", round($input_value, 4));
+		}
+		elseif($input_value >= 0.001 && $input_value < 0.01){
+			$output_value = sprintf("%01.5f", round($input_value, 5));
+		}
 		else{$output_value = round($input_value, 3);}
 	return $output_value;
 	}
@@ -279,6 +297,7 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 	// echo '<br>$model_value: '. $model_value.'<br>';
 	if ($model_value != 0){		 
 		
+		$sigma_value_f = E_or_point($sigma_value);
 		$Lower_95 = $Lower_CI;
 		$Upper_95 = $Upper_CI;
 		
@@ -318,24 +337,39 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 			$model_value_f = E_or_point($model_value);
 			$converted_value_f = E_or_point($converted_value);
 			
+			
+			
+			if ($Lower_95 > $Upper_95){			// switch lower and higher
+				$middle = $Lower_95;
+				$Lower_95 = $Upper_95;
+				$Upper_95 = $middle;
+			}
+			
+			if ($converted_lower > $converted_upper){			// switch lower and higher
+				$middle = $converted_lower;
+				$converted_lower = $converted_upper;
+				$converted_upper = $middle;
+			}
+			
 			$Lower_95_f = E_or_point($Lower_95); 
 			$Upper_95_f = E_or_point($Upper_95); 
 			
 			$converted_lower_f = E_or_point($converted_lower); 
 			$converted_upper_f = E_or_point($converted_upper); 
 			
+			
 	
 			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
 			echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
 			echo $Chemical_name. '</td><td>'. $model_name. '</td><td>'. $model_unit. '</td><td>';
 			echo $model_value_f. '</td><td>'. $Lower_95_f. '</td><td>'. $Upper_95_f. '</td><td>';
-			echo $sigma_value. '</td><td>'. $Note. '</td></tr>';
+			echo $sigma_value_f. '</td></tr>';
 			
 			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
 			echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
 			echo $Chemical_name. '</td><td>'. $model_name. '</td><td>'. $converted_unit. '</td><td>';
-			echo $converted_value_f. '</td><td>'. $converted_upper_f. '</td><td>'. $converted_lower_f. '</td><td>';
-			echo $sigma_value. '</td><td>'. $Note. '</td></tr>';
+			echo $converted_value_f. '</td><td>'. $converted_lower_f. '</td><td>'. $converted_upper_f. '</td><td>';
+			echo $sigma_value_f.  '</td></tr>';
 			
 	}	// end of 	if ($model_value != 0){	)
 	else{
