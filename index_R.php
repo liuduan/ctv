@@ -314,10 +314,8 @@
                 	<button type="submit" id="Search-Data-and-Model" class="btn btn-primary">
                 		Search Data and/or Make Prediction</button>
                 	<a class="btn btn-info" id="returnStep2s">One Step Back</a>
-                	<a class="btn btn-success" href="index_R.php">New Prediction</a>
-                	<br><br>
-                	Here is the <a href="CTV_data_2016-xls.xls">Data table </a>of the toxicity values used for modeling prediction.
-                    	
+                	<a class="btn btn-success" href="index_R.php">Start Over</a>
+                	<br><br>                    	
                     
 				</div><!-- end of clomn -->
            </div><!-- end of row -->
