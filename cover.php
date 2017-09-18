@@ -77,19 +77,21 @@ include("Header_R.html");
    -moz-box-shadow: 0 0 6px 4px black;
         box-shadow: 0 0 16px 4px black;">
 <br><br>
-<h1 style="text-align:center;" class="text-primary">CTV <br> Conditional Toxicity Value Predictor<br>
+<h1 style="text-align:center;" class="text-primary">CTV <br> Conditional Toxicity Value Predictor
+<a href = "index-catch.php" target = "_blank"> <sup>&copy;</sup></a><br>
+
 <small>An <i>In Silico</i> Approach for Generating Toxicity Values for Chemicals</small></h1>
 <br><br><br>
 
 <div style="text-align:center;">
-<a href = "index-catch.php">
+<a href = "index_R.php" >
 <img src = "images/Continue-button.png" style="height: 45px;" align="middle"/></a>
 
 </div>
 
 <div style = "padding:100px; font-size: 18px; text-indent: 50px; text-align: justify;">
 <p style = "text-indent: 50px; ">
-     Human health assessments produce quantitative toxicity values or standards by relying on epidemiological data or animal studies. Such assessments are data-, time-, and resource-intensive, and cannot be realistically expected for most environmental chemicals. The National Research Council's "Science and Decisions" report (2009) called for development of default approaches to support risk estimation for toxicants lacking chemical-specific information.   <a href = "index_R.php" target = "_blank"> &reg;</a></p>
+     Human health assessments produce quantitative toxicity values or standards by relying on epidemiological data or animal studies. Such assessments are data-, time-, and resource-intensive, and cannot be realistically expected for most environmental chemicals. The National Research Council's "Science and Decisions" report (2009) called for development of default approaches to support risk estimation for toxicants lacking chemical-specific information.   </p>
      
 	<p style = "text-indent: 50px; ">
     To address the challenge of risk management for data-poor chemicals, we developed quantitative structure-activity relationship (QSAR) models that use chemical properties to predict toxicity values. These models were developed based on a comprehensive database of existing toxicity values from US Federal and State agencies.  </p>

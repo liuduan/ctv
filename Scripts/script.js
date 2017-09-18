@@ -202,12 +202,17 @@ $(document).ready(
         });
 
 		$('#Contact').click(function() {
-			// alert(".");
-			$( "#Contact_dialog" ).dialog({autoOpen: true, position: ['right','top'], width:'400',});
+			var myWindow = window.open("message.php?type=Contact", "", 
+				"width=200,height=100,top=200,left=600,menubar=no，status=no，titlebar=no，toolbar=no，location=no");
+			// alert("..");
+			// alert('For any questions or to be notified of future updates to ToxValue.org, please send an email to <a href="mailto:conditionaltoxvalue@gmail.com" target="_blank">conditionaltoxvalue@gmail.com</a>.');
+			// $( "#Contact_dialog" ).dialog({autoOpen: true, position: ['right','top'], width:'400',});
 			});
 		$('#About').click(function() {
 			// alert(".2");
-			$( "#About_dialog" ).dialog({autoOpen: true, position: ['right','top'], width:'200',});
+			var myWindow = window.open("message.php?type=About", "", 
+				"width=200,height=100,top=200,left=600,menubar=no，status=no，titlebar=no，toolbar=no，location=no");
+			//$( "#About_dialog" ).dialog({autoOpen: true, position: ['right','top'], width:'200',});
 			});
 
         $("#dialog").dialog({

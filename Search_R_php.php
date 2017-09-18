@@ -64,191 +64,204 @@ echo '<div class="row">
 echo '<div style = "width-max: 500px; margin:auto; background-color:; ">';
 	// this div holds the table.
 	
-echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
-
-
-for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
-	if(strcasecmp(strtolower($data->val($i,3)), strtolower($_POST['compoundName'])) ==0) {	
-		// if the compound name matches
-		$value_RfD = $data->val($i, 15);
-		$source_RfD = $data->val($i, 20);
-		
-		$value_RfC = $data->val($i, 23);
-		$source_RfC = $data->val($i, 28);
-		
-		$value_OSF = $data->val($i, 31);
-		$source_OSF = $data->val($i, 36);
-		
-		$value_IUR = $data->val($i, 39);
-		$source_IUR = $data->val($i, 44);
-		
-		$value_CPV = $data->val($i, 47);
-		$source_CPV = $data->val($i, 52);	 
-		
-		if(($_POST['refDose'] == "true" && $value_RfD != 0 )|| ($_POST['refConc'] == "true" && $value_RfC != 0 ) || ($_POST['oralSlope'] == "true" && $value_OSF != 0 ) || ($_POST['ihalUnit'] == "true" && $value_IUR != 0 ) || ($_POST['cancPot'] == "true" && $value_CPV != 0 )) {	
-			echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
-			echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
-			echo '<td>Unit</td><td colspan="2">Source</td></tr>';
-			}
-		
-		break;
-		} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
-	}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
-
-if($_POST['refDose'] == "true" && $value_RfD != 0 ){
-	Display_exist_value($_POST['compoundName'], "Reference Dose", $value_RfD, $source_RfD, 'mg/(kg&middot;day)');
-	$_POST['refDose'] = False;
-	}
-
-if($_POST['refConc'] == "true" && $value_RfC != 0 ){
-	Display_exist_value($_POST['compoundName'], "Reference Concentration", $value_RfC, $source_RfC, 'mg/m<sup>3</sup>');
-	$_POST['refConc'] = False;
-	}
-
-if($_POST['oralSlope'] == "true" && $value_OSF != 0 ){
-	Display_exist_value($_POST['compoundName'], "Oral Slope Factor", $value_OSF, $source_OSF, 'risk per mg/(kg&middot;day)');
-	$_POST['oralSlope'] = False;
-	}
 	
-if($_POST['ihalUnit'] == "true" && $value_IUR != 0 ){
-	Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'risk per &micro;g/m<sup>3</sup>');
-	$_POST['ihalUnit'] = False;
-	}
+	
+	
+for ($j = 0; $j <= 2; $j++) {		// produce two tables one for display and one for download.
+	
+	
+	if($j==0)
+		{echo '<table id="compResults_display" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';}
+	if($j==1){echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';}
+
+	for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
+		if(strcasecmp(strtolower($data->val($i,3)), strtolower($_POST['compoundName'])) ==0) {	
+			// if the compound name matches
+			$value_RfD = $data->val($i, 15);
+			$source_RfD = $data->val($i, 20);
+		
+			$value_RfC = $data->val($i, 23);
+			$source_RfC = $data->val($i, 28);
+		
+			$value_OSF = $data->val($i, 31);
+			$source_OSF = $data->val($i, 36);
+		
+			$value_IUR = $data->val($i, 39);
+			$source_IUR = $data->val($i, 44);
+		
+			$value_CPV = $data->val($i, 47);
+			$source_CPV = $data->val($i, 52);	 
+		
+			if(($_POST['refDose'] == "true" && $value_RfD != 0 )|| ($_POST['refConc'] == "true" && $value_RfC != 0 ) || ($_POST['oralSlope'] == 	"true" && $value_OSF != 0 ) || ($_POST['ihalUnit'] == "true" && $value_IUR != 0 ) || ($_POST['cancPot'] == "true" && $value_CPV != 0 )) 	{	
+				echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
+				echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
+				echo '<td>Unit</td><td colspan="2">Source</td></tr>';
+				}
+		
+			break;
+			} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
+		}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
+
+	if($_POST['refDose'] == "true" && $value_RfD != 0 ){
+		Display_exist_value($_POST['compoundName'], "Reference Dose", $value_RfD, $source_RfD, 'mg/(kg&middot;day)');
+		$_POST['refDose'] = False;
+		}
+
+	if($_POST['refConc'] == "true" && $value_RfC != 0 ){
+		Display_exist_value($_POST['compoundName'], "Reference Concentration", $value_RfC, $source_RfC, 'mg/m<sup>3</sup>');
+		$_POST['refConc'] = False;
+		}
+
+	if($_POST['oralSlope'] == "true" && $value_OSF != 0 ){
+		Display_exist_value($_POST['compoundName'], "Oral Slope Factor", $value_OSF, $source_OSF, 'risk per mg/(kg&middot;day)');
+		$_POST['oralSlope'] = False;
+		}
+	
+	if($_POST['ihalUnit'] == "true" && $value_IUR != 0 ){
+		Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'risk per &micro;g/m<sup>3</sup>');
+		$_POST['ihalUnit'] = False;
+		}
 
 	
-if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
-	Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'risk per mg/(kg&middot;day)');
-	$_POST['cancPot'] = False;
-	}
+	if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
+		Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'risk per mg/(kg&middot;day)');
+		$_POST['cancPot'] = False;
+		}
 
 	
-// if any model is needed
-$any_model_needed = $_POST['refDose'] == "true" || $_POST['refConc'] == "true";
-$any_model_needed = $any_model_needed || $_POST['noel'] == "true";
-$any_model_needed = $any_model_needed || $_POST['oralSlope'] == "true" || $_POST['ihalUnit'] == "true";
-$any_model_needed = $any_model_needed || $_POST['cancPot'] == "true" || $_POST['onbdl'] == "true";
-$any_model_needed = $any_model_needed || $_POST['onbd'] == "true";
-// exit("589, Model needed?: ". $any_model_needed);
+	// if any model is needed
+	$any_model_needed = $_POST['refDose'] == "true" || $_POST['refConc'] == "true";
+	$any_model_needed = $any_model_needed || $_POST['noel'] == "true";
+	$any_model_needed = $any_model_needed || $_POST['oralSlope'] == "true" || $_POST['ihalUnit'] == "true";
+	$any_model_needed = $any_model_needed || $_POST['cancPot'] == "true" || $_POST['onbdl'] == "true";
+	$any_model_needed = $any_model_needed || $_POST['onbd'] == "true";
+	// exit("589, Model needed?: ". $any_model_needed);
 
-// echo '$_POST[refDose] '. $_POST['refDose'].'<br>';
-// echo '$_POST[noel] '. $_POST['noel'].'<br>';
-// echo '$any_model_needed: '. $any_model_needed;
+	// echo '$_POST[refDose] '. $_POST['refDose'].'<br>';
+	// echo '$_POST[noel] '. $_POST['noel'].'<br>';
+	// echo '$any_model_needed: '. $any_model_needed;
 
 
-if ($any_model_needed){
+	if ($any_model_needed){
 	
 	// display table header
-	echo '<tr ';
-	echo 'style = "all: none; border: 5px; border-top: 8px solid black; ';
-	echo 'border-bottom: 2px solid black; ">';
-	echo '<td>Chemical name</td><td>Model Name</td><td>Unit</td><td>Prediction</td>';
-	echo '<td>Lower 95%<sup>*</sup></td><td>Upper 95%<sup>*</sup></td><td>Appl Domain<sup>**</sup></td>';
-	echo '</tr>';
+		echo '<tr ';
+		echo 'style = "all: none; border: 5px; border-top: 8px solid black; ';
+		echo 'border-bottom: 2px solid black; ">';
+		echo '<td>Chemical name</td><td>Model Name</td><td>Unit</td><td>Prediction</td>';
+		echo '<td>Lower 95%<sup>*</sup></td><td>Upper 95%<sup>*</sup></td><td>Appl Domain<sup>**</sup></td>';
+		echo '</tr>';
 	
 
   	// Start model 
-  	$smilesValue = $_POST['smilee'];
+		$smilesValue = $_POST['smilee'];
 	
-	$process_id = "pi_". rand ( 100000 , 999999);
+		$process_id = "pi_". rand ( 100000 , 999999);
 	
-	$file = 'C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_input.txt';
+		$file = 'C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_input.txt';
 
-	// Write the contents back to the file
-	file_put_contents($file, $smilesValue);
+		// Write the contents back to the file
+		file_put_contents($file, $smilesValue);
 	
-	$R_command = 
-	'cmd.exe /c C:\"Program Files"\R\R-3.4.1\bin\Rscript C:\4_R\ToxValue\Prediction\Prediction_Script\Predict_new_chemical_Rscript_v2.R '. $process_id;
+		$R_command = 
+		'cmd.exe /c C:\"Program Files"\R\R-3.4.1\bin\Rscript C:\4_R\ToxValue\Prediction\Prediction_Script\Predict_new_chemical_Rscript_v2.R '. $process_id;
 	
 
-	// execute shell command.
-	shell_exec ( $R_command );
+		// execute shell command.
+		shell_exec ( $R_command );
 	
-	$csv = array_map('str_getcsv', file('C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_output.csv'));
+		$csv = array_map('str_getcsv', file('C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_output.csv'));
 
 	
 	
-	if($_POST['refDose'] == "true"){
-		$log_value = $csv[1][1];
-		$Lower_CI = $csv[1][2];  
-		$Upper_CI = $csv[1][3]; 
-		$sigma_value = $csv[1][4];
+		if($_POST['refDose'] == "true"){
+			$log_value = $csv[1][1];
+			$Lower_CI = $csv[1][2];  
+			$Upper_CI = $csv[1][3]; 
+			$sigma_value = $csv[1][4];
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
-	}
-	
-	if($_POST['noel'] == "true")	{
-		$log_value = $csv[2][1];
-		$Lower_CI = $csv[2][2];  
-		$Upper_CI = $csv[2][3]; 
-		$sigma_value = $csv[2][4];
-		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose NO(A)EL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
-	}
-	
-	if($_POST['refConc'] == "true"){
-		$log_value = $csv[7][1];
-		$Lower_CI = $csv[7][2];  
-		$Upper_CI = $csv[7][3]; 
-		$sigma_value = $csv[7][4];
-		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Concentration (RfC)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/m<sup>3</sup>', 'mg/m<sup>3</sup>', $Lower_CI,  $Upper_CI, $sigma_value);		
-	}
-	
-	if($_POST['onbd'] == "true"){  				
-		$log_value = $csv[4][1];
-		$Lower_CI = $csv[4][2];  
-		$Upper_CI = $csv[4][3];
-		$sigma_value = $csv[4][4];
-	
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMD', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', 	$Lower_CI,  $Upper_CI,  $sigma_value);
-	}
-	
-	if($_POST['onbdl'] == "true"){
-		$log_value = $csv[3][1];
-		$Lower_CI = $csv[3][2];  
-		$Upper_CI = $csv[3][3];
-		$sigma_value = $csv[3][4];
-		
-		Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMDL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
-	}	
-	
-	if($_POST['oralSlope'] == "true"){
-		$log_value = $csv[5][1];
-		$Lower_CI = $csv[5][2];  
-		$Upper_CI = $csv[5][3];
-		$sigma_value = $csv[5][4];
-		
-		Prediction_Display($_POST['compoundName'], 'CTV Oral Slope Factor (OSF)', $log_value, $mol_Weight, 'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
-    }
-	
-	if($_POST['ihalUnit'] == "true"){		
-		$log_value = $csv[8][1];
-		$Lower_CI = $csv[8][2];  
-		$Upper_CI = $csv[8][3];
-		$sigma_value = $csv[8][4];
-		
-		Prediction_Display($_POST['compoundName'], 'CTV Inhalation Unit Risk (IUR)', $log_value, $mol_Weight, 'Log<sub>10</sub>(m<sup>3</sup>/Mol)', 'risk per &micro;g/m<sup>3</sup>', $Lower_CI,  $Upper_CI,  $sigma_value);
+			Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
 		}
+	
+		if($_POST['noel'] == "true")	{
+			$log_value = $csv[2][1];
+			$Lower_CI = $csv[2][2];  
+			$Upper_CI = $csv[2][3]; 
+			$sigma_value = $csv[2][4];
+		
+			Prediction_Display($_POST['compoundName'], 'CTV Reference Dose NO(A)EL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
+		}
+	
+		if($_POST['refConc'] == "true"){
+			$log_value = $csv[7][1];
+			$Lower_CI = $csv[7][2];  
+			$Upper_CI = $csv[7][3]; 
+			$sigma_value = $csv[7][4];
+		
+			Prediction_Display($_POST['compoundName'], 'CTV Reference Concentration (RfC)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/m<sup>3</sup>', 'mg/m<sup>3</sup>', $Lower_CI,  $Upper_CI, $sigma_value);		
+		}
+	
+		if($_POST['onbd'] == "true"){  				
+			$log_value = $csv[4][1];
+			$Lower_CI = $csv[4][2];  
+			$Upper_CI = $csv[4][3];
+			$sigma_value = $csv[4][4];
+	
+			Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMD', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', 	$Lower_CI,  $Upper_CI,  $sigma_value);
+		}
+	
+		if($_POST['onbdl'] == "true"){
+			$log_value = $csv[3][1];
+			$Lower_CI = $csv[3][2];  
+			$Upper_CI = $csv[3][3];
+			$sigma_value = $csv[3][4];
+		
+			Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMDL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
+		}	
+	
+		if($_POST['oralSlope'] == "true"){
+			$log_value = $csv[5][1];
+			$Lower_CI = $csv[5][2];  
+			$Upper_CI = $csv[5][3];
+			$sigma_value = $csv[5][4];
+		
+			Prediction_Display($_POST['compoundName'], 'CTV Oral Slope Factor (OSF)', $log_value, $mol_Weight, 'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
+		}
+	
+		if($_POST['ihalUnit'] == "true"){		
+			$log_value = $csv[8][1];
+			$Lower_CI = $csv[8][2];  
+			$Upper_CI = $csv[8][3];
+			$sigma_value = $csv[8][4];
+		
+			Prediction_Display($_POST['compoundName'], 'CTV Inhalation Unit Risk (IUR)', $log_value, $mol_Weight, 'Log<sub>10</sub>(m<sup>3</sup>/Mol)', 'risk per &micro;g/m<sup>3</sup>', $Lower_CI,  $Upper_CI,  $sigma_value);
+			}
 
-  	if($_POST['cancPot'] == "true"){  			
-    	$log_value = $csv[6][1];
-		$Lower_CI = $csv[6][2];  
-		$Upper_CI = $csv[6][3];
-		$sigma_value = $csv[6][4];
+		if($_POST['cancPot'] == "true"){  			
+			$log_value = $csv[6][1];
+			$Lower_CI = $csv[6][2];  
+			$Upper_CI = $csv[6][3];
+			$sigma_value = $csv[6][4];
 		
-		// echo 'CPV: '. $log_value_1. ', '. $log_value_2. ', '. $log_value;
+			// echo 'CPV: '. $log_value_1. ', '. $log_value_2. ', '. $log_value;
 		
-		Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
-    }
+			Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
+		}
 	
 	
-	// function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weight, $model_unit, $converted_unit, $Lower_CI,  $Upper_CI, $sigma_value)
+		// function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weight, $model_unit, $converted_unit, $Lower_CI,  $Upper_CI, $sigma_value)
 
-}		// end of if ($any_model_needed){}
+	}		// end of if ($any_model_needed){}
 
 
 
-echo'</table></div></div>';
+	echo '</table>';
+
+}	// end of for ($j = 0; $j <= 2; $j++)
+
+
+
+echo '</div></div>';
 echo '</div></div><br>';		// end of div row, and end of div colum
 echo '<div style="background-color:;">';
 echo ' 		<p align="center">';		// 2 buttons
