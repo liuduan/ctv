@@ -63,6 +63,8 @@ echo '<div class="row">
 
 echo '<div style = "width-max: 500px; margin:auto; background-color:; ">';
 	// this div holds the table.
+
+$chem_rowspan = 0;
 	
 	
 	
@@ -71,7 +73,7 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 	
 	
 	if($j==0){
-		echo '<table id="compResults_display" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
+		echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
 		
 		for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 			$compound_match = 0;
@@ -110,37 +112,49 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 		}
 		
 	if($j==1){
-		echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
+		echo '<table id="compResults_display" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
 		if($compound_match == 1 && $has_a_value == 1){
-			echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
+			echo '<tr style = "border-top: 8px solid black;">';
+			echo '<td>Chemical name</td>';
 			echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
 			echo '<td>Unit</td><td colspan="2">Source</td></tr>';		
 			}
 		}
 		
+	$GLOBALS['chem_display'] = 1;
 	if(($_POST['refDose'] == "true" || $_POST['refDose'] == "true_2") && $value_RfD != 0 ){
 		Display_exist_value($_POST['compoundName'], "Reference Dose", $value_RfD, $source_RfD, 'mg/(kg&middot;day)');
 		$_POST['refDose'] = "true_2";
+		if($j==0){$chem_rowspan += 1;}
+		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 
 	if(($_POST['refConc'] == "true" || $_POST['refConc'] == "true_2") && $value_RfD != 0 ){
 		Display_exist_value($_POST['compoundName'], "Reference Concentration", $value_RfC, $source_RfC, 'mg/m<sup>3</sup>');
 		$_POST['refConc'] = "true_2";
+		if($j==0){$chem_rowspan += 1;}
+		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 
 	if(($_POST['oralSlope'] == "true" || $_POST['oralSlope'] == "true_2") && $value_RfD != 0 ){
 		Display_exist_value($_POST['compoundName'], "Oral Slope Factor", $value_OSF, $source_OSF, 'risk per mg/(kg&middot;day)');
 		$_POST['oralSlope'] = "true_2";
+		if($j==0){$chem_rowspan += 1;}
+		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
 	if(($_POST['ihalUnit'] == "true" || $_POST['ihalUnit'] == "true_2") && $value_RfD != 0 ){
 		Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'risk per &micro;g/m<sup>3</sup>');
 		$_POST['ihalUnit'] = "true_2";
+		if($j==0){$chem_rowspan += 1;}
+		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 
 	if(($_POST['cancPot'] == "true" || $_POST['cancPot'] == "true_2") && $value_RfD != 0 ){
 		Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'risk per mg/(kg&middot;day)');
 		$_POST['cancPot'] = "true_2";
+		if($j==0){$chem_rowspan += 1;}
+		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 
 	
@@ -163,7 +177,8 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 		echo '<tr ';
 		echo 'style = "all: none; border: 5px; border-top: 8px solid black; ';
 		echo 'border-bottom: 2px solid black; ">';
-		echo '<td>Chemical name</td><td>Model Name</td><td>Unit</td><td>Prediction</td>';
+		if ($GLOBALS['chem_display'] == 1){echo '<td>Chemical name</td>';}
+		echo '<td>Model Name</td><td>Unit</td><td>Prediction</td>';
 		echo '<td>Lower 95%<sup>*</sup></td><td>Upper 95%<sup>*</sup></td><td>Appl Domain<sup>**</sup></td>';
 		echo '</tr>';
 	
@@ -195,6 +210,8 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			$sigma_value = $csv[1][4];
 		
 			Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
+			if($j==0){$chem_rowspan += 2;}
+			if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
 		if($_POST['noel'] == "true")	{
@@ -204,6 +221,8 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			$sigma_value = $csv[2][4];
 		
 			Prediction_Display($_POST['compoundName'], 'CTV Reference Dose NO(A)EL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
+			if($j==0){$chem_rowspan += 2;}
+			if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
 		if($_POST['refConc'] == "true"){
@@ -213,6 +232,8 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			$sigma_value = $csv[7][4];
 		
 			Prediction_Display($_POST['compoundName'], 'CTV Reference Concentration (RfC)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/m<sup>3</sup>', 'mg/m<sup>3</sup>', $Lower_CI,  $Upper_CI, $sigma_value);		
+			if($j==0){$chem_rowspan += 2;}
+			if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
 		if($_POST['onbd'] == "true"){  				
@@ -222,6 +243,8 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			$sigma_value = $csv[4][4];
 	
 			Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMD', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', 	$Lower_CI,  $Upper_CI,  $sigma_value);
+			if($j==0){$chem_rowspan += 2;}
+			if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
 		if($_POST['onbdl'] == "true"){
@@ -231,6 +254,8 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			$sigma_value = $csv[3][4];
 		
 			Prediction_Display($_POST['compoundName'], 'CTV Reference Dose (RfD) BMDL', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/(kg&middot;day)', 'mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
+			if($j==0){$chem_rowspan += 2;}
+			if($j==1){$GLOBALS['chem_display'] =  0; }
 		}	
 	
 		if($_POST['oralSlope'] == "true"){
@@ -240,6 +265,8 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			$sigma_value = $csv[5][4];
 		
 			Prediction_Display($_POST['compoundName'], 'CTV Oral Slope Factor (OSF)', $log_value, $mol_Weight, 'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
+			if($j==0){$chem_rowspan += 2;}
+			if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
 		if($_POST['ihalUnit'] == "true"){		
@@ -249,6 +276,8 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			$sigma_value = $csv[8][4];
 		
 			Prediction_Display($_POST['compoundName'], 'CTV Inhalation Unit Risk (IUR)', $log_value, $mol_Weight, 'Log<sub>10</sub>(m<sup>3</sup>/Mol)', 'risk per &micro;g/m<sup>3</sup>', $Lower_CI,  $Upper_CI,  $sigma_value);
+			if($j==0){$chem_rowspan += 2;}
+			if($j==1){$GLOBALS['chem_display'] =  0; }
 			}
 
 		if($_POST['cancPot'] == "true"){  			
@@ -260,6 +289,8 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			// echo 'CPV: '. $log_value_1. ', '. $log_value_2. ', '. $log_value;
 		
 			Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
+			if($j==0){$chem_rowspan += 2;}
+			if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
 	
@@ -269,7 +300,7 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 
 
 
-	echo '</table><br> end of table<br>';
+	echo '</table><br> end of table, rowspan: '. $chem_rowspan. '<br>';
 
 }	// end of for ($j = 0; $j <= 2; $j++)
 
@@ -387,21 +418,24 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 			
 	
 			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
-			echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
-			echo $Chemical_name. '</td><td>'. $model_name. '</td><td>'. $model_unit. '</td><td>';
+			if ($GLOBALS['chem_display'] == 1){
+				echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">'. $Chemical_name. '</td>';}
+			echo '<td>'. $model_name. '</td><td>'. $model_unit. '</td><td>';
 			echo $model_value_f. '</td><td>'. $Lower_95_f. '</td><td>'. $Upper_95_f. '</td><td>';
 			echo $sigma_value_f. '</td></tr>';
 			
 			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
-			echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">';
-			echo $Chemical_name. '</td><td>'. $model_name. '</td><td>'. $converted_unit. '</td><td>';
+			if ($GLOBALS['chem_display'] == 1){
+				echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">'. $Chemical_name. '</td>';}
+			echo '<td>'. $model_name. '</td><td>'. $converted_unit. '</td><td>';
 			echo $converted_value_f. '</td><td>'. $converted_lower_f. '</td><td>'. $converted_upper_f. '</td><td>';
 			echo $sigma_value_f.  '</td></tr>';
 			
 	}	// end of 	if ($model_value != 0){	)
 	else{
 		echo'<tr style = "border: 2px;" bgcolor="LightSkyBlue">';
-		echo '<td>'. $Chemical_name. '</td><td>'. $model_name. '</td>';
+		if ($GLOBALS['chem_display'] == 1){echo '<td>'. $Chemical_name. '</td>';}
+		echo '<td>'. $model_name. '</td>';
 		echo '<td colspan="6" > Prediction not available</td>';
 		}
 }
@@ -413,7 +447,9 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 function Display_exist_value($Chemical_name, $model_name, $value, $source, $converted_unit){
     echo'<tr bgcolor="#f5febb" style = "all: none; border: 5px; border-right: 2px;  border-bottom: 2px solid black; ">';
 	$field_1 = E_or_point($value);
-	echo '<td rowspan="2">'. $Chemical_name. '</td><td colspan="2">'. $model_name. '</td>';
+	if ($GLOBALS['chem_display'] == 1){echo '<td>'. $Chemical_name. '</td>';}
+	echo '<td colspan="2">'. $model_name. '</td>';
+	// echo '<td rowspan="2">'. $Chemical_name. '</td><td colspan="2">'. $model_name. '</td>';
     echo '<td colspan="2">'. $field_1. '</td>';
 	echo "<td> $converted_unit</td><td colspan='2'>". $source .'</td></tr>';
 }	  
