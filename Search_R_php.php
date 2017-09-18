@@ -67,65 +67,80 @@ echo '<div style = "width-max: 500px; margin:auto; background-color:; ">';
 	
 	
 	
-for ($j = 0; $j <= 2; $j++) {		// produce two tables one for display and one for download.
+for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for download.
 	
 	
-	if($j==0)
-		{echo '<table id="compResults_display" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';}
-	if($j==1){echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';}
-
-	for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
-		if(strcasecmp(strtolower($data->val($i,3)), strtolower($_POST['compoundName'])) ==0) {	
-			// if the compound name matches
-			$value_RfD = $data->val($i, 15);
-			$source_RfD = $data->val($i, 20);
+	if($j==0){
+		echo '<table id="compResults_display" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
 		
-			$value_RfC = $data->val($i, 23);
-			$source_RfC = $data->val($i, 28);
+		for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
+			$compound_match = 0;
+			if(strcasecmp(strtolower($data->val($i,3)), strtolower($_POST['compoundName'])) ==0) {	
+				// if the compound name matches
+				$compound_match = 1;
+			
+				$value_RfD = $data->val($i, 15);
+				$source_RfD = $data->val($i, 20);
 		
-			$value_OSF = $data->val($i, 31);
-			$source_OSF = $data->val($i, 36);
+				$value_RfC = $data->val($i, 23);
+				$source_RfC = $data->val($i, 28);
 		
-			$value_IUR = $data->val($i, 39);
-			$source_IUR = $data->val($i, 44);
+				$value_OSF = $data->val($i, 31);
+				$source_OSF = $data->val($i, 36);
 		
-			$value_CPV = $data->val($i, 47);
-			$source_CPV = $data->val($i, 52);	 
+				$value_IUR = $data->val($i, 39);
+				$source_IUR = $data->val($i, 44);
 		
-			if(($_POST['refDose'] == "true" && $value_RfD != 0 )|| ($_POST['refConc'] == "true" && $value_RfC != 0 ) || ($_POST['oralSlope'] == 	"true" && $value_OSF != 0 ) || ($_POST['ihalUnit'] == "true" && $value_IUR != 0 ) || ($_POST['cancPot'] == "true" && $value_CPV != 0 )) 	{	
-				echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
-				echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
-				echo '<td>Unit</td><td colspan="2">Source</td></tr>';
-				}
+				$value_CPV = $data->val($i, 47);
+				$source_CPV = $data->val($i, 52);	 
+			
+				$has_a_value = 0;
+				if(($_POST['refDose'] == "true" && $value_RfD != 0 )|| ($_POST['refConc'] == "true" && $value_RfC != 0 ) || ($_POST['oralSlope'] == 	"true" && $value_OSF != 0 ) || ($_POST['ihalUnit'] == "true" && $value_IUR != 0 ) || ($_POST['cancPot'] == "true" && $value_CPV 	!= 0 )) 	{	
+						// if there is any value available.
+				
+					$has_a_value = 1;
+					echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
+					echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
+					echo '<td>Unit</td><td colspan="2">Source</td></tr>';
+					}
 		
-			break;
-			} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
-		}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
-
-	if($_POST['refDose'] == "true" && $value_RfD != 0 ){
+				break;
+				} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
+			}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
+		}
+		
+	if($j==1){
+		echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
+		if($compound_match == 1 && $has_a_value == 1){
+			echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
+			echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
+			echo '<td>Unit</td><td colspan="2">Source</td></tr>';		
+			}
+		}
+		
+	if(($_POST['refDose'] == "true" || $_POST['refDose'] == "true_2") && $value_RfD != 0 ){
 		Display_exist_value($_POST['compoundName'], "Reference Dose", $value_RfD, $source_RfD, 'mg/(kg&middot;day)');
-		$_POST['refDose'] = False;
+		$_POST['refDose'] = "true_2";
 		}
 
-	if($_POST['refConc'] == "true" && $value_RfC != 0 ){
+	if(($_POST['refConc'] == "true" || $_POST['refConc'] == "true_2") && $value_RfD != 0 ){
 		Display_exist_value($_POST['compoundName'], "Reference Concentration", $value_RfC, $source_RfC, 'mg/m<sup>3</sup>');
-		$_POST['refConc'] = False;
+		$_POST['refConc'] = "true_2";
 		}
 
-	if($_POST['oralSlope'] == "true" && $value_OSF != 0 ){
+	if(($_POST['oralSlope'] == "true" || $_POST['oralSlope'] == "true_2") && $value_RfD != 0 ){
 		Display_exist_value($_POST['compoundName'], "Oral Slope Factor", $value_OSF, $source_OSF, 'risk per mg/(kg&middot;day)');
-		$_POST['oralSlope'] = False;
+		$_POST['oralSlope'] = "true_2";
 		}
 	
-	if($_POST['ihalUnit'] == "true" && $value_IUR != 0 ){
+	if(($_POST['ihalUnit'] == "true" || $_POST['ihalUnit'] == "true_2") && $value_RfD != 0 ){
 		Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'risk per &micro;g/m<sup>3</sup>');
-		$_POST['ihalUnit'] = False;
+		$_POST['ihalUnit'] = "true_2";
 		}
 
-	
-	if($_POST['cancPot'] == "true" && $value_CPV != 0 ){
+	if(($_POST['cancPot'] == "true" || $_POST['cancPot'] == "true_2") && $value_RfD != 0 ){
 		Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'risk per mg/(kg&middot;day)');
-		$_POST['cancPot'] = False;
+		$_POST['cancPot'] = "true_2";
 		}
 
 	
@@ -152,27 +167,26 @@ for ($j = 0; $j <= 2; $j++) {		// produce two tables one for display and one for
 		echo '<td>Lower 95%<sup>*</sup></td><td>Upper 95%<sup>*</sup></td><td>Appl Domain<sup>**</sup></td>';
 		echo '</tr>';
 	
+		if($j==0){
+			// Start model 
+			$smilesValue = $_POST['smilee'];
+	
+			$process_id = "pi_". rand ( 100000 , 999999);
+	
+			$file = 'C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_input.txt';
 
-  	// Start model 
-		$smilesValue = $_POST['smilee'];
+			// Write the contents back to the file
+			file_put_contents($file, $smilesValue);
 	
-		$process_id = "pi_". rand ( 100000 , 999999);
-	
-		$file = 'C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_input.txt';
-
-		// Write the contents back to the file
-		file_put_contents($file, $smilesValue);
-	
-		$R_command = 
-		'cmd.exe /c C:\"Program Files"\R\R-3.4.1\bin\Rscript C:\4_R\ToxValue\Prediction\Prediction_Script\Predict_new_chemical_Rscript_v2.R '. $process_id;
+			$R_command = 
+				'cmd.exe /c C:\"Program Files"\R\R-3.4.1\bin\Rscript C:\4_R\ToxValue\Prediction\Prediction_Script\Predict_new_chemical_Rscript_v2.R '. $process_id;
 	
 
-		// execute shell command.
-		shell_exec ( $R_command );
+			// execute shell command.
+			shell_exec ( $R_command );
+			}		// end of start model.
 	
 		$csv = array_map('str_getcsv', file('C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_output.csv'));
-
-	
 	
 		if($_POST['refDose'] == "true"){
 			$log_value = $csv[1][1];
@@ -255,7 +269,7 @@ for ($j = 0; $j <= 2; $j++) {		// produce two tables one for display and one for
 
 
 
-	echo '</table>';
+	echo '</table><br> end of table<br>';
 
 }	// end of for ($j = 0; $j <= 2; $j++)
 
@@ -398,11 +412,8 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 
 function Display_exist_value($Chemical_name, $model_name, $value, $source, $converted_unit){
     echo'<tr bgcolor="#f5febb" style = "all: none; border: 5px; border-right: 2px;  border-bottom: 2px solid black; ">';
-    
-	if ($value >= 100 || $value < 0.1){
-		$field_1 = sprintf("%.3e",($value));}
-		else{$field_1 = round($value, 3);}
-	echo '<td>'. $Chemical_name. '</td><td colspan="2">'. $model_name. '</td>';
+	$field_1 = E_or_point($value);
+	echo '<td rowspan="2">'. $Chemical_name. '</td><td colspan="2">'. $model_name. '</td>';
     echo '<td colspan="2">'. $field_1. '</td>';
 	echo "<td> $converted_unit</td><td colspan='2'>". $source .'</td></tr>';
 }	  
