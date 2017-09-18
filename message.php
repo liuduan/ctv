@@ -12,10 +12,10 @@
 <div id="container" style = "padding-bottom: ;  ">
 <?php
 if($_GET['type'] == "About"){
-	echo '<div style="margin:auto;">CTV Predictor Version 0.9 (Beta)</div>';
+	echo '<div style="margin:auto; text-align: center; ">CTV Predictor Version 0.9 (Beta)</div>';
 }
 if($_GET['type'] == "Contact"){
-	echo '<div style="margin:auto;">';
+	echo '<div style="margin:auto; text-align: center; ">';
 	echo 'For any questions or to be notified of future updates to ToxValue.org, please send an email to <a href="mailto:conditionaltoxvalue@gmail.com" target="_blank">conditionaltoxvalue@gmail.com</a>.';
 	echo '</div>';
 }
