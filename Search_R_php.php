@@ -73,7 +73,7 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 	
 	
 	if($j==0){
-		echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px; display:;">';
+		echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px; display: none;">';
 		
 		for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 			$compound_match = 0;
@@ -130,28 +130,28 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 
-	if(($_POST['refConc'] == "true" || $_POST['refConc'] == "true_2") && $value_RfD != 0 ){
+	if(($_POST['refConc'] == "true" || $_POST['refConc'] == "true_2") && $value_RfC != 0 ){
 		Display_exist_value($_POST['compoundName'], "Reference Concentration", $value_RfC, $source_RfC, 'mg/m<sup>3</sup>');
 		$_POST['refConc'] = "true_2";
 		if($j==0){$chem_rowspan += 1;}
 		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 
-	if(($_POST['oralSlope'] == "true" || $_POST['oralSlope'] == "true_2") && $value_RfD != 0 ){
+	if(($_POST['oralSlope'] == "true" || $_POST['oralSlope'] == "true_2") && $value_OSF != 0 ){
 		Display_exist_value($_POST['compoundName'], "Oral Slope Factor", $value_OSF, $source_OSF, 'risk per mg/(kg&middot;day)');
 		$_POST['oralSlope'] = "true_2";
 		if($j==0){$chem_rowspan += 1;}
 		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
-	if(($_POST['ihalUnit'] == "true" || $_POST['ihalUnit'] == "true_2") && $value_RfD != 0 ){
+	if(($_POST['ihalUnit'] == "true" || $_POST['ihalUnit'] == "true_2") && $value_IUR != 0 ){
 		Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'risk per &micro;g/m<sup>3</sup>');
 		$_POST['ihalUnit'] = "true_2";
 		if($j==0){$chem_rowspan += 1;}
 		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 
-	if(($_POST['cancPot'] == "true" || $_POST['cancPot'] == "true_2") && $value_RfD != 0 ){
+	if(($_POST['cancPot'] == "true" || $_POST['cancPot'] == "true_2") && $value_CPV != 0 ){
 		Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'risk per mg/(kg&middot;day)');
 		$_POST['cancPot'] = "true_2";
 		if($j==0){$chem_rowspan += 1;}
@@ -301,7 +301,7 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 
 
 
-	echo '</table><br> end of table, rowspan: '. $chem_rowspan. '<br>';
+	echo '</table><br><br>';
 
 }	// end of for ($j = 0; $j <= 2; $j++)
 
@@ -311,14 +311,18 @@ echo '</div></div>';
 echo '</div></div><br>';		// end of div row, and end of div colum
 echo '<div style="background-color:;">';
 echo ' 		<p align="center">';		// 2 buttons
-echo '			<input type="button" class="btn btn-primary" onclick="$(';
-echo " 				'#compResults').table2CSV()";
-echo ' 				" value="Export as CSV">';
+echo '			<input type="button" class="btn btn-primary" id = "Export_CSV" value="Export as CSV">';
 echo ' 			<a class="btn btn-success" href="index_R.php">Start Over</a>';
 echo '		</p>';
 echo '</div>';		// end of div for 2 buttons
-
-
+echo '<script> 
+		$("#Export_CSV").click(function() {
+			// alert("");
+			$("#compResults").show();
+			$("#compResults").table2CSV();
+			$("#compResults").hide();
+		})</script>
+';
 echo '<br><br>';
 echo '* One-tailed confidence bounds based on residuals from cross validation.<br>';
 echo '** Number of &sigma;. Typical applicability domain cutoffs are <3&sigma; for a less restrictive domain and <1&sigma; for a more restrictive domain. A negative value indicates the chemical is within the applicability domain. <br>';
@@ -327,24 +331,24 @@ echo '** Number of &sigma;. Typical applicability domain cutoffs are <3&sigma; f
 
 
 function E_or_point($input_value){
-	if (($input_value >= 1000 || $input_value < 0.001) && $input_value <> 0){
+	if ((abs($input_value) >= 1000 || abs($input_value) < 0.001) && $input_value <> 0){
 		$output_value = sprintf("%.2e", $input_value);}
-		elseif($input_value >= 100 && $input_value < 1000){
+		elseif(abs($input_value) >= 100 && abs($input_value) < 1000){
 			$output_value = round($input_value, 0);
 		}
-		elseif($input_value >= 10 && $input_value < 100){
+		elseif(abs($input_value) >= 10 && abs($input_value) < 100){
 			$output_value = sprintf("%01.1f", round($input_value, 1));
 		}
-		elseif(($input_value >= 1 && $input_value < 10) || $input_value == 0){
+		elseif((abs($input_value) >= 1 && abs($input_value) < 10) || $input_value == 0){
 			$output_value = sprintf("%01.2f", round($input_value, 2));
 		}
-		elseif($input_value >= 0.1 && $input_value < 1){
+		elseif(abs($input_value) >= 0.1 && abs($input_value) < 1){
 			$output_value = sprintf("%01.3f", round($input_value, 3));
 		}
-		elseif($input_value >= 0.01 && $input_value < 0.1){
+		elseif(abs($input_value) >= 0.01 && abs($input_value) < 0.1){
 			$output_value = sprintf("%01.4f", round($input_value, 4));
 		}
-		elseif($input_value >= 0.001 && $input_value < 0.01){
+		elseif(abs($input_value) >= 0.001 && abs($input_value) < 0.01){
 			$output_value = sprintf("%01.5f", round($input_value, 5));
 		}
 		else{$output_value = round($input_value, 3);}
@@ -395,56 +399,54 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 				
 				}		// end of three models that mole is on top.
 			
-			$model_value_f = E_or_point($model_value);
-			$converted_value_f = E_or_point($converted_value);
+		$model_value_f = E_or_point($model_value);
+		$converted_value_f = E_or_point($converted_value);
 			
-			
-			
-			if ($Lower_95 > $Upper_95){			// switch lower and higher
-				$middle = $Lower_95;
-				$Lower_95 = $Upper_95;
-				$Upper_95 = $middle;
+		if ($Lower_95 > $Upper_95){			// switch lower and higher
+			$middle = $Lower_95;
+			$Lower_95 = $Upper_95;
+			$Upper_95 = $middle;
 			}
 			
-			if ($converted_lower > $converted_upper){			// switch lower and higher
-				$middle = $converted_lower;
-				$converted_lower = $converted_upper;
-				$converted_upper = $middle;
+		if ($converted_lower > $converted_upper){			// switch lower and higher
+			$middle = $converted_lower;
+			$converted_lower = $converted_upper;
+			$converted_upper = $middle;
 			}
 			
-			$Lower_95_f = E_or_point($Lower_95); 
-			$Upper_95_f = E_or_point($Upper_95); 
+		$Lower_95_f = E_or_point($Lower_95); 
+		$Upper_95_f = E_or_point($Upper_95); 
 			
-			$converted_lower_f = E_or_point($converted_lower); 
-			$converted_upper_f = E_or_point($converted_upper); 
-			
-			
-	
-			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
+		$converted_lower_f = E_or_point($converted_lower); 
+		$converted_upper_f = E_or_point($converted_upper); 
+
+		echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
 			
 			
-			if ($GLOBALS['chem_display'] == 1) {
-				if ($j == 0){ echo '<td>'. $Chemical_name. '</td>'; }
-				if ($j == 1){ echo '<td rowspan = '. $GLOBALS["chem_rowspan"]. '>'. $Chemical_name. '</td>'; }
-				}
+		if ($GLOBALS['chem_display'] == 1) {
+			if ($j == 0){ echo '<td>'. $Chemical_name. '</td>'; }
+			if ($j == 1){ echo '<td rowspan = '. $GLOBALS["chem_rowspan"]. '>'. $Chemical_name. '</td>'; }
+			}
 				
-			if ($j == 0){echo '<td>'. $model_name. '</td>';}
-			if ($j == 1){echo '<td rowspan = "2">'. $model_name. '</td>';}
+		if ($j == 0){echo '<td>'. $model_name. '</td>';}
+		if ($j == 1){echo '<td rowspan = "2">'. $model_name. '</td>';}
 			
-			echo '<td>'. $model_unit. '</td><td>';
-			echo $model_value_f. '</td><td>'. $Lower_95_f. '</td><td>'. $Upper_95_f. '</td><td>';
-			echo $sigma_value_f. '</td></tr>';
+		echo '<td>'. $model_unit. '</td><td>';
+		echo $model_value_f. '</td><td>'. $Lower_95_f. '</td><td>'. $Upper_95_f. '</td>';
+		if ($j == 0){echo '<td>'. $sigma_value_f. '</td></tr>';}
+		if ($j == 1){echo '<td rowspan = "2">'. $sigma_value_f. '</td></tr>';}
 			
-			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
-			if ($GLOBALS['chem_display'] == 1 && $j == 0){
-				echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">'. $Chemical_name. '</td>';}
-			if ($j == 0){echo '<td>'. $model_name. '</td>';}
-			echo '<td>'. $converted_unit. '</td><td>';
-			echo $converted_value_f. '</td><td>'. $converted_lower_f. '</td><td>'. $converted_upper_f. '</td><td>';
-			echo $sigma_value_f.  '</td></tr>';
+		echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
+		if ($GLOBALS['chem_display'] == 1 && $j == 0){
+			echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">'. $Chemical_name. '</td>';}
+		if ($j == 0){echo '<td>'. $model_name. '</td>';}
+		echo '<td>'. $converted_unit. '</td><td>';
+		echo $converted_value_f. '</td><td>'. $converted_lower_f. '</td><td>'. $converted_upper_f. '</td>';
+		if ($j == 0){echo '<td>'. $sigma_value_f.  '</td>';}
+		echo '</tr>';
 			
-	}	// end of 	if ($model_value != 0){	)
-	else{
+		}	// end of 	if ($model_value != 0){	)
+	else{		// $model_value == 0
 		echo'<tr style = "border: 2px;" bgcolor="LightSkyBlue">';
 		if ($GLOBALS['chem_display'] == 1) {
 				if ($j == 0){echo '<td>'. $Chemical_name. '</td>';}
