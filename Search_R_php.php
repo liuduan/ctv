@@ -73,7 +73,7 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 	
 	
 	if($j==0){
-		echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
+		echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px; display:;">';
 		
 		for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
 			$compound_match = 0;
@@ -112,6 +112,7 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 		}
 		
 	if($j==1){
+		$GLOBALS['chem_rowspan'] = $chem_rowspan;
 		echo '<table id="compResults_display" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
 		if($compound_match == 1 && $has_a_value == 1){
 			echo '<tr style = "border-top: 8px solid black;">';
@@ -353,6 +354,8 @@ function E_or_point($input_value){
 function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weight, $model_unit, $converted_unit, $Lower_CI,  $Upper_CI, $sigma_value)
 	{		
 	// echo '<br>$model_value: '. $model_value.'<br>';
+	global $j;
+	
 	if ($model_value != 0){		 
 		
 		$sigma_value_f = E_or_point($sigma_value);
@@ -418,23 +421,34 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 			
 	
 			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
-			if ($GLOBALS['chem_display'] == 1){
-				echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">'. $Chemical_name. '</td>';}
-			echo '<td>'. $model_name. '</td><td>'. $model_unit. '</td><td>';
+			
+			
+			if ($GLOBALS['chem_display'] == 1) {
+				if ($j == 0){ echo '<td>'. $Chemical_name. '</td>'; }
+				if ($j == 1){ echo '<td rowspan = '. $GLOBALS["chem_rowspan"]. '>'. $Chemical_name. '</td>'; }
+				}
+				
+			if ($j == 0){echo '<td>'. $model_name. '</td>';}
+			if ($j == 1){echo '<td rowspan = "2">'. $model_name. '</td>';}
+			
+			echo '<td>'. $model_unit. '</td><td>';
 			echo $model_value_f. '</td><td>'. $Lower_95_f. '</td><td>'. $Upper_95_f. '</td><td>';
 			echo $sigma_value_f. '</td></tr>';
 			
 			echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
-			if ($GLOBALS['chem_display'] == 1){
+			if ($GLOBALS['chem_display'] == 1 && $j == 0){
 				echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">'. $Chemical_name. '</td>';}
-			echo '<td>'. $model_name. '</td><td>'. $converted_unit. '</td><td>';
+			if ($j == 0){echo '<td>'. $model_name. '</td>';}
+			echo '<td>'. $converted_unit. '</td><td>';
 			echo $converted_value_f. '</td><td>'. $converted_lower_f. '</td><td>'. $converted_upper_f. '</td><td>';
 			echo $sigma_value_f.  '</td></tr>';
 			
 	}	// end of 	if ($model_value != 0){	)
 	else{
 		echo'<tr style = "border: 2px;" bgcolor="LightSkyBlue">';
-		if ($GLOBALS['chem_display'] == 1){echo '<td>'. $Chemical_name. '</td>';}
+		if ($GLOBALS['chem_display'] == 1) {
+				if ($j == 0){echo '<td>'. $Chemical_name. '</td>';}
+				elseif ($j == 1){echo '<td rowspan = '. $GLOBALS["chem_rowspan"]. '>'. $Chemical_name. '</td>';}}
 		echo '<td>'. $model_name. '</td>';
 		echo '<td colspan="6" > Prediction not available</td>';
 		}
@@ -447,7 +461,10 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 function Display_exist_value($Chemical_name, $model_name, $value, $source, $converted_unit){
     echo'<tr bgcolor="#f5febb" style = "all: none; border: 5px; border-right: 2px;  border-bottom: 2px solid black; ">';
 	$field_1 = E_or_point($value);
-	if ($GLOBALS['chem_display'] == 1){echo '<td>'. $Chemical_name. '</td>';}
+	global $j;
+	if ($GLOBALS['chem_display'] == 1) {
+		if ($j == 0){echo '<td>'. $Chemical_name. '</td>';}
+		elseif ($j == 1){echo '<td rowspan = '. ($GLOBALS["chem_rowspan"] + 1). '>'. $Chemical_name. '</td>';}}
 	echo '<td colspan="2">'. $model_name. '</td>';
 	// echo '<td rowspan="2">'. $Chemical_name. '</td><td colspan="2">'. $model_name. '</td>';
     echo '<td colspan="2">'. $field_1. '</td>';
