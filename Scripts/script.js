@@ -203,7 +203,7 @@ $(document).ready(
 
 		$('#Contact').click(function() {
 			var myWindow = window.open("Contact.php", "", 
-				"width=300,height=100,top=200,left=600,menubar=no，status=no，titlebar=no，toolbar=no，location=no");
+				"width=350,height=290,top=200,left=600,menubar=no，status=no，titlebar=no，toolbar=no，location=no");
 			// alert("..");
 			// alert('For any questions or to be notified of future updates to ToxValue.org, please send an email to <a href="mailto:conditionaltoxvalue@gmail.com" target="_blank">conditionaltoxvalue@gmail.com</a>.');
 			// $( "#Contact_dialog" ).dialog({autoOpen: true, position: ['right','top'], width:'400',});
