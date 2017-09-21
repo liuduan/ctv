@@ -29,7 +29,7 @@ echo '	<style>
 	</style>';
 
 echo '<br><br><div class="row">';
-echo '	<h2 style="background-color:;">Step 4<small>: Results.</small></h2>';
+echo '	<h2 style="background-color:;">Step 4<small>: Results</small></h2>';
 echo	'<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="background-color: ;">';
 		
 
@@ -43,13 +43,12 @@ echo '	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="background-color:
 
 echo "		<p><b>Common Name: $search_var </b></p>";
 echo '		<ul class="legend">';
-echo '			<li><span class="superawesome" style="background-color: LightSkyBlue;">';
-echo '				</span> <b>These values were predicted<sup>*</sup>.</B></li>';
-
-echo '			<li><span class="superawesome" style="background-color: #f5febb;" ></span>';
+echo '			<li><span class="superawesome" style="background-color: Beige;" ></span>';
 echo ' 				<B style="text-indent: -30px;">';
 echo 				'These value were retrieved from publicly available sources ';
-echo '				(<a href="CTV_data_2016-xls.xls" target="_blank">Data Table</a>).</B></li><br>';
+echo '				(<a href="CTV_data_2016-xls.xls" target="_blank">Data Table</a>).</B></li>';
+echo '			<li><span class="superawesome" style="background-color: LightCyan;">';
+echo '				</span> <b>These values were predicted.</B></li>';
 echo '		</ul>';
 
 
@@ -324,7 +323,7 @@ echo '<script>
 		})</script>
 ';
 echo '<br><br>';
-echo '* One-tailed confidence bounds based on residuals from cross validation.<br>';
+echo '* One-tailed confidence bounds, based on residuals from cross validation.<br>';
 echo '** Number of &sigma;. Typical applicability domain cutoffs are <3&sigma; for a less restrictive domain and <1&sigma; for a more restrictive domain. A negative value indicates the chemical is within the applicability domain. <br>';
 
 
@@ -420,7 +419,7 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 		$converted_lower_f = E_or_point($converted_lower); 
 		$converted_upper_f = E_or_point($converted_upper); 
 
-		echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
+		echo '<tr bgcolor="LightCyan" style = "border: 2px; border-collapse: separate; ">';
 			
 			
 		if ($GLOBALS['chem_display'] == 1) {
@@ -436,7 +435,7 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 		if ($j == 0){echo '<td>'. $sigma_value_f. '</td></tr>';}
 		if ($j == 1){echo '<td rowspan = "2">'. $sigma_value_f. '</td></tr>';}
 			
-		echo '<tr bgcolor="LightSkyBlue" style = "border: 2px; border-collapse: separate; ">';
+		echo '<tr bgcolor="LightCyan" style = "border: 2px; border-collapse: separate; ">';
 		if ($GLOBALS['chem_display'] == 1 && $j == 0){
 			echo '<td style = "text-align: center; text-indent: 3px; padding-right: 3px;">'. $Chemical_name. '</td>';}
 		if ($j == 0){echo '<td>'. $model_name. '</td>';}
@@ -447,7 +446,7 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 			
 		}	// end of 	if ($model_value != 0){	)
 	else{		// $model_value == 0
-		echo'<tr style = "border: 2px;" bgcolor="LightSkyBlue">';
+		echo'<tr style = "border: 2px;" bgcolor="LightCyan">';
 		if ($GLOBALS['chem_display'] == 1) {
 				if ($j == 0){echo '<td>'. $Chemical_name. '</td>';}
 				elseif ($j == 1){echo '<td rowspan = '. $GLOBALS["chem_rowspan"]. '>'. $Chemical_name. '</td>';}}
@@ -461,7 +460,7 @@ function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weig
 //Display_exist_value("Reference Dose", $value_RfD, $mol_Weight, 'mg/(kg x day)');
 
 function Display_exist_value($Chemical_name, $model_name, $value, $source, $converted_unit){
-    echo'<tr bgcolor="#f5febb" style = "all: none; border: 5px; border-right: 2px;  border-bottom: 2px solid black; ">';
+    echo'<tr bgcolor="Beige" style = "all: none; border: 5px; border-right: 2px;  border-bottom: 2px solid black; ">';
 	$field_1 = E_or_point($value);
 	global $j;
 	if ($GLOBALS['chem_display'] == 1) {

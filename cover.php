@@ -78,7 +78,7 @@ include("Header_R.html");
         box-shadow: 0 0 16px 4px black;">
 <br><br>
 <h1 style="text-align:center;" class="text-primary">CTV <br> Conditional Toxicity Value Predictor
-<a href = "index-catch.php" target = "_blank"> <sup>&copy;</sup></a><br>
+<br>
 
 <small>An <i>In Silico</i> Approach for Generating Toxicity Values for Chemicals</small></h1>
 <br><br><br>

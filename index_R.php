@@ -74,7 +74,7 @@
 		 <div id="spinner" class="spinner" style="display:none;">
                 <p align="center">
                     <img id="img-spinner" src="images/ajax-loader.gif" alt="Loading ..." />
-                    Please wait, this process normally last about 30 seconds.
+                    Please wait, this process normally lasts about 30 seconds.
                     <div id="show_content"></div>
                 </p>
          </div>
