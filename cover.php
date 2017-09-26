@@ -109,6 +109,8 @@ include("Header_R.html");
     
        <p style = "text-indent: 50px; ">
     This website serves as a publicly accessible web-based portal that allows end-users to calculate predicted toxicity values for the chemicals of interest, or to retrieve the existing toxicity values used to build the QSAR models. This website is maintained by the research groups of Dr. Ivan Rusyn and Dr. Weihsueh Chiu at Texas A&M University</p>
+	
+	
 </div>
 
 </div>
@@ -124,6 +126,40 @@ $(document).ready(function(){
 
 });		//end of $(document).ready(function(){
 </script>
+
+
+
+<?php
+// The following PHP script check 15 day old file names and delete the files.
+
+$dir = 'C:\4_R\ToxValue\Prediction\Prediction_temp_files';
+$dp = opendir($dir) or die ('Could not open '.$dir);
+$file = readdir($dp);
+print_r ($file);
+while ($file = readdir($dp)) {
+if ((filemtime($dir.'/'.$file)) < (strtotime('-6 hours')))
+ 	{
+	unlink($dir.'/'.$file);
+	}
+}
+closedir($dp);
+
+// echo "hello.";
+// echo "September";
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </body>

@@ -29,7 +29,7 @@ rel="stylesheet">
 
 </head>
 
-<body>
+<body style="background: linear-gradient(to right, Teal, DarkSeaGreen ); ">
 
 	<div class="container">
 

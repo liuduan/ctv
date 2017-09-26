@@ -2,6 +2,9 @@
 <html lang="en">
 <!-- Scripts/script.js was used to sense the click of buttons -->
 <head>
+
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -51,6 +54,17 @@
 		#title{border-top: 10px;}
 		
 	</style>
+	
+		<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107014652-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments)};
+		gtag('js', new Date());
+
+		gtag('config', 'UA-107014652-1');
+		// alert("G");
+	</script>
 </head>
 <body >
 <?php include("Header_R.html"); ?>

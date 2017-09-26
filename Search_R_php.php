@@ -143,20 +143,19 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
-	if(($_POST['ihalUnit'] == "true" || $_POST['ihalUnit'] == "true_2") && $value_IUR != 0 ){
-		Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'risk per &micro;g/m<sup>3</sup>');
-		$_POST['ihalUnit'] = "true_2";
-		if($j==0){$chem_rowspan += 1;}
-		if($j==1){$GLOBALS['chem_display'] =  0; }
-		}
-
 	if(($_POST['cancPot'] == "true" || $_POST['cancPot'] == "true_2") && $value_CPV != 0 ){
 		Display_exist_value($_POST['compoundName'], "Cancer Potency Value", $value_CPV, $source_CPV, 'risk per mg/(kg&middot;day)');
 		$_POST['cancPot'] = "true_2";
 		if($j==0){$chem_rowspan += 1;}
 		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
-
+	
+	if(($_POST['ihalUnit'] == "true" || $_POST['ihalUnit'] == "true_2") && $value_IUR != 0 ){
+		Display_exist_value($_POST['compoundName'], "Inhalation Unit Risk", $value_IUR, $source_IUR, 'risk per &micro;g/m<sup>3</sup>');
+		$_POST['ihalUnit'] = "true_2";
+		if($j==0){$chem_rowspan += 1;}
+		if($j==1){$GLOBALS['chem_display'] =  0; }
+		}
 	
 	// if any model is needed
 	$any_model_needed = $_POST['refDose'] == "true" || $_POST['refConc'] == "true";
@@ -225,17 +224,6 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
-		if($_POST['refConc'] == "true"){
-			$log_value = $csv[7][1];
-			$Lower_CI = $csv[7][2];  
-			$Upper_CI = $csv[7][3]; 
-			$sigma_value = $csv[7][4];
-		
-			Prediction_Display($_POST['compoundName'], 'CTV Reference Concentration (RfC)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/m<sup>3</sup>', 'mg/m<sup>3</sup>', $Lower_CI,  $Upper_CI, $sigma_value);		
-			if($j==0){$chem_rowspan += 2;}
-			if($j==1){$GLOBALS['chem_display'] =  0; }
-		}
-	
 		if($_POST['onbd'] == "true"){  				
 			$log_value = $csv[4][1];
 			$Lower_CI = $csv[4][2];  
@@ -258,6 +246,17 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			if($j==1){$GLOBALS['chem_display'] =  0; }
 		}	
 	
+		if($_POST['refConc'] == "true"){
+			$log_value = $csv[7][1];
+			$Lower_CI = $csv[7][2];  
+			$Upper_CI = $csv[7][3]; 
+			$sigma_value = $csv[7][4];
+		
+			Prediction_Display($_POST['compoundName'], 'CTV Reference Concentration (RfC)', $log_value, $mol_Weight, '  -Log<sub>10</sub>Mol/m<sup>3</sup>', 'mg/m<sup>3</sup>', $Lower_CI,  $Upper_CI, $sigma_value);		
+			if($j==0){$chem_rowspan += 2;}
+			if($j==1){$GLOBALS['chem_display'] =  0; }
+		}
+	
 		if($_POST['oralSlope'] == "true"){
 			$log_value = $csv[5][1];
 			$Lower_CI = $csv[5][2];  
@@ -265,6 +264,19 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			$sigma_value = $csv[5][4];
 		
 			Prediction_Display($_POST['compoundName'], 'CTV Oral Slope Factor (OSF)', $log_value, $mol_Weight, 'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
+			if($j==0){$chem_rowspan += 2;}
+			if($j==1){$GLOBALS['chem_display'] =  0; }
+		}
+	
+		if($_POST['cancPot'] == "true"){  			
+			$log_value = $csv[6][1];
+			$Lower_CI = $csv[6][2];  
+			$Upper_CI = $csv[6][3];
+			$sigma_value = $csv[6][4];
+		
+			// echo 'CPV: '. $log_value_1. ', '. $log_value_2. ', '. $log_value;
+		
+			Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
 			if($j==0){$chem_rowspan += 2;}
 			if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
@@ -280,19 +292,6 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			if($j==1){$GLOBALS['chem_display'] =  0; }
 			}
 
-		if($_POST['cancPot'] == "true"){  			
-			$log_value = $csv[6][1];
-			$Lower_CI = $csv[6][2];  
-			$Upper_CI = $csv[6][3];
-			$sigma_value = $csv[6][4];
-		
-			// echo 'CPV: '. $log_value_1. ', '. $log_value_2. ', '. $log_value;
-		
-			Prediction_Display($_POST['compoundName'], 'CTV Cancer Potency Value (CPV)', $log_value, $mol_Weight,'Log<sub>10</sub>(risk per Mol/(kg&middot;day))', 'risk per mg/(kg&middot;day)', $Lower_CI,  $Upper_CI,  $sigma_value);
-			if($j==0){$chem_rowspan += 2;}
-			if($j==1){$GLOBALS['chem_display'] =  0; }
-		}
-	
 	
 		// function Prediction_Display($Chemical_name, $model_name, $model_value, $mol_Weight, $model_unit, $converted_unit, $Lower_CI,  $Upper_CI, $sigma_value)
 
