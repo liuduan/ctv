@@ -193,7 +193,7 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 			file_put_contents($file, $smilesValue);
 	
 			$R_command = 
-				'cmd.exe /c C:\"Program Files"\R\R-3.4.1\bin\Rscript C:\4_R\ToxValue\Prediction\Prediction_Script\Predict_new_chemical_Rscript_v2.R '. $process_id;
+				'cmd.exe /c C:\"Program Files"\R\R-3.4.1\bin\Rscript C:\4_R\ToxValue\Prediction\Prediction_Script\Predict_new_chemical_Rscript_v3.R '. $process_id;
 	
 
 			// execute shell command.

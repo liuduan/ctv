@@ -16,12 +16,14 @@
     <script type="text/javascript" src="js/jquery.form.js"></script>
     <script type="text/javascript" src="Scripts/script.js"></script>
     <script type="text/javascript" src="Scripts/Search_R_js.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script type="text/javascript" language="javascript" src="Scripts/jsme.nocache.js"></script>
 	
+    <link rel="stylesheet" href="css/jquery-ui.css"> 
+    <script src="js/jquery-ui.js"></script>	
+    <script type="text/javascript" language="javascript" src="Scripts/jsme.nocache.js"></script>
+
     <!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css"><!---->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><!-- with glyaphicons-->
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	
     <!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
