@@ -171,16 +171,6 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 
 
 	if ($any_model_needed){
-	
-	// display table header
-		echo '<tr ';
-		echo 'style = "all: none; border: 5px; border-top: 8px solid black; ';
-		echo 'border-bottom: 2px solid black; ">';
-		if ($GLOBALS['chem_display'] == 1){echo '<td>Chemical name</td>';}
-		echo '<td>Model Name</td><td>Unit</td><td>Prediction</td>';
-		echo '<td>Lower 95%<sup>*</sup></td><td>Upper 95%<sup>*</sup></td><td>Appl Domain<sup>**</sup></td>';
-		echo '</tr>';
-	
 		if($j==0){
 			// Start model 
 			$smilesValue = $_POST['smilee'];
@@ -198,7 +188,34 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 
 			// execute shell command.
 			shell_exec ( $R_command );
-			}		// end of start model.
+			
+			
+			$warning_file = 'C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_warn.txt';
+			$warning = file_exists($warning_file);
+			// echo "Warning: ". $warning;
+			
+			$warn_message = file_get_contents($warning_file);
+			$warn_message = str_replace ("use" , "use. <br>" , $warn_message);
+			$warn_message = str_replace ("imputed" , "imputed." , $warn_message);
+
+		}	// end of if j==0 execute R, retrieve warning message.
+		
+		if($warning){
+			echo '<tr><td colspan="7" bgcolor="Salmon" align = "left" style="color:;"><div style="margin-left: 20px;"> ';
+			echo $warn_message;
+			echo '</div></tr></td> ';
+			}
+			
+	// display table header
+		echo '<tr ';
+		echo 'style = "all: none; border: 5px; border-top: 8px solid black; ';
+		echo 'border-bottom: 2px solid black; ">';
+		if ($GLOBALS['chem_display'] == 1){echo '<td>Chemical name</td>';}
+		echo '<td>Model Name</td><td>Unit</td><td>Prediction</td>';
+		echo '<td>Lower 95%<sup>*</sup></td><td>Upper 95%<sup>*</sup></td><td>Appl Domain<sup>**</sup></td>';
+		echo '</tr>';
+	
+	// end of start model.
 	
 		$csv = array_map('str_getcsv', file('C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_output.csv'));
 	
