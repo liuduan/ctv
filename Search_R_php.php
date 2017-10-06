@@ -65,51 +65,98 @@ echo '<div style = "width-max: 500px; margin:auto; background-color:; ">';
 
 $chem_rowspan = 0;
 	
+
+	
+// Search data table
+for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
+	$compound_match = 0;
+	if(strcasecmp(strtolower($data->val($i,3)), strtolower($_POST['compoundName'])) ==0) {	
+		// if the compound name matches
+		$compound_match = 1;
+			
+		$value_RfD = $data->val($i, 15);
+		$source_RfD = $data->val($i, 20);
+		
+		$value_RfC = $data->val($i, 23);
+		$source_RfC = $data->val($i, 28);
+	
+		$value_OSF = $data->val($i, 31);
+		$source_OSF = $data->val($i, 36);
+		
+		$value_IUR = $data->val($i, 39);
+		$source_IUR = $data->val($i, 44);
+		
+		$value_CPV = $data->val($i, 47);
+		$source_CPV = $data->val($i, 52);	 
+			
+		$has_a_value = 0;
+		if(($_POST['refDose'] == "true" && $value_RfD != 0 )|| ($_POST['refConc'] == "true" && $value_RfC != 0 ) || ($_POST['oralSlope'] == 	"true" && $value_OSF != 0 ) || ($_POST['ihalUnit'] == "true" && $value_IUR != 0 ) || ($_POST['cancPot'] == "true" && $value_CPV 	!= 0 )) 	{	
+			// if there is any value available.
+			$has_a_value = 1;
+			}
+		
+		break;
+		} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
+	}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
+	
+	// if any model is needed
+$any_model_needed = $_POST['refDose'] == "true" && $value_RfD == 0;
+$any_model_needed = $any_model_needed || ($_POST['refConc'] == "true" && $value_RfC == 0);
+$any_model_needed = $any_model_needed || ($_POST['oralSlope'] == "true" && $value_OSF == 0);
+$any_model_needed = $any_model_needed || ($_POST['ihalUnit'] == "true" && $value_IUR == 0);
+$any_model_needed = $any_model_needed || ($_POST['cancPot'] == "true" && $value_CPV == 0);
+$any_model_needed = $any_model_needed || $_POST['onbd'] == "true";
+$any_model_needed = $any_model_needed || $_POST['noel'] == "true" || $_POST['onbdl'] == "true";
+
+	
+if ($any_model_needed){
+	// Start model 
+	$smilesValue = $_POST['smilee'];
+	
+	$process_id = "pi_". rand ( 100000 , 999999);
+	
+	$file = 'C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_input.txt';
+
+	// Write the contents back to the file
+	file_put_contents($file, $smilesValue);
+	
+	$R_command = 
+		'cmd.exe /c C:\"Program Files"\R\R-3.4.1\bin\Rscript C:\4_R\ToxValue\Prediction\Prediction_Script\Predict_new_chemical_Rscript_v3.R '. $process_id;
+	
+
+	// execute shell command.
+	shell_exec ( $R_command );
+	
+	$warning_file = 'C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_warn.txt';
+	$warning = file_exists($warning_file);
+	// echo "Warning: ". $warning;
+			
+	$warn_message = file_get_contents($warning_file);
+	$warn_message = str_replace ("use" , "use. <br>" , $warn_message);
+	$warn_message = str_replace ("imputed" , "imputed." , $warn_message);
+	
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
 for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for download.
 	
-	
 	if($j==0){
-		echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px; display: none;">';
-		
-		for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {
-			$compound_match = 0;
-			if(strcasecmp(strtolower($data->val($i,3)), strtolower($_POST['compoundName'])) ==0) {	
-				// if the compound name matches
-				$compound_match = 1;
-			
-				$value_RfD = $data->val($i, 15);
-				$source_RfD = $data->val($i, 20);
-		
-				$value_RfC = $data->val($i, 23);
-				$source_RfC = $data->val($i, 28);
-		
-				$value_OSF = $data->val($i, 31);
-				$source_OSF = $data->val($i, 36);
-		
-				$value_IUR = $data->val($i, 39);
-				$source_IUR = $data->val($i, 44);
-		
-				$value_CPV = $data->val($i, 47);
-				$source_CPV = $data->val($i, 52);	 
-			
-				$has_a_value = 0;
-				if(($_POST['refDose'] == "true" && $value_RfD != 0 )|| ($_POST['refConc'] == "true" && $value_RfC != 0 ) || ($_POST['oralSlope'] == 	"true" && $value_OSF != 0 ) || ($_POST['ihalUnit'] == "true" && $value_IUR != 0 ) || ($_POST['cancPot'] == "true" && $value_CPV 	!= 0 )) 	{	
-						// if there is any value available.
-				
-					$has_a_value = 1;
-					echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
-					echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
-					echo '<td>Unit</td><td colspan="2">Source</td></tr>';
-					}
-		
-				break;
-				} 	// end of text match, if(strcasecmp($data->val($i,2), $_POST['compoundName']) ==0) {}
-			}		// end of going through rows, for ($i = 1; $i <= $data->rowcount($sheet_index=0); $i++) {}
+		echo '<table id="compResults" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px; display: ;">';
+
+		if($has_a_value == 1){
+			echo '<tr style = "border-top: 8px solid black;"><td>Chemical name</td>';
+			echo '<td colspan="2">Endpoint</td><td colspan="2">Toxicity value</td>';
+			echo '<td>Unit</td><td colspan="2">Source</td></tr>';
 		}
-		
+	}
+	
 	if($j==1){
 		$GLOBALS['chem_rowspan'] = $chem_rowspan;
 		echo '<table id="compResults_display" border="2" style="text-align: center; margin: auto; padding-right: 3px; padding-left: 3px;">';
@@ -157,51 +204,13 @@ for ($j = 0; $j < 2; $j++) {		// produce two tables one for display and one for 
 		if($j==1){$GLOBALS['chem_display'] =  0; }
 		}
 	
-	// if any model is needed
-	$any_model_needed = $_POST['refDose'] == "true" || $_POST['refConc'] == "true";
-	$any_model_needed = $any_model_needed || $_POST['noel'] == "true";
-	$any_model_needed = $any_model_needed || $_POST['oralSlope'] == "true" || $_POST['ihalUnit'] == "true";
-	$any_model_needed = $any_model_needed || $_POST['cancPot'] == "true" || $_POST['onbdl'] == "true";
-	$any_model_needed = $any_model_needed || $_POST['onbd'] == "true";
-	// exit("589, Model needed?: ". $any_model_needed);
-
-	// echo '$_POST[refDose] '. $_POST['refDose'].'<br>';
-	// echo '$_POST[noel] '. $_POST['noel'].'<br>';
-	// echo '$any_model_needed: '. $any_model_needed;
 
 
 	if ($any_model_needed){
-		if($j==0){
-			// Start model 
-			$smilesValue = $_POST['smilee'];
-	
-			$process_id = "pi_". rand ( 100000 , 999999);
-	
-			$file = 'C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_input.txt';
 
-			// Write the contents back to the file
-			file_put_contents($file, $smilesValue);
-	
-			$R_command = 
-				'cmd.exe /c C:\"Program Files"\R\R-3.4.1\bin\Rscript C:\4_R\ToxValue\Prediction\Prediction_Script\Predict_new_chemical_Rscript_v3.R '. $process_id;
-	
-
-			// execute shell command.
-			shell_exec ( $R_command );
-			
-			
-			$warning_file = 'C:\\4_R\\ToxValue\\Prediction\\Prediction_temp_files\\'. $process_id. '_warn.txt';
-			$warning = file_exists($warning_file);
-			// echo "Warning: ". $warning;
-			
-			$warn_message = file_get_contents($warning_file);
-			$warn_message = str_replace ("use" , "use. <br>" , $warn_message);
-			$warn_message = str_replace ("imputed" , "imputed." , $warn_message);
-
-		}	// end of if j==0 execute R, retrieve warning message.
 		
 		if($warning){
-			echo '<tr><td colspan="7" bgcolor="Salmon" align = "left" style="color:;"><div style="margin-left: 20px;"> ';
+			echo '<tr><td colspan="7" bgcolor="Salmon" align = "left" style="color:;"><div style="margin-left: 20px; font-weight: bold;"> ';
 			echo $warn_message;
 			echo '</div></tr></td> ';
 			}
